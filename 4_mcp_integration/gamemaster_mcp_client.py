@@ -1,15 +1,15 @@
-# TODO: Import Agent from strands
-# TODO: Import MCPClient from strands.tools.mcp
-# TODO: Import streamablehttp_client from mcp.client.streamable_http
+from strands import Agent
+from strands.tools.mcp import MCPClient
+from mcp.client.streamable_http import streamablehttp_client
 
 def main():
     # Connect to the dice roll MCP server
     print("\nConnecting to D&D Dice Roll MCP Server...")
-    # TODO: Create MCPClient connecting to "http://localhost:8080/mcp"
+    mcp_dice_server = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
     
     try:
-        # TODO: Use the MCP client in a context manager (with statement)
-            # TODO: Create the gamemaster agent with Lady Luck system prompt
+        with mcp_dice_server:
+            # Create the gamemaster agent with access to dice rolling
             gamemaster = Agent(
                 system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
                 You speak with theatrical flair and always announce dice rolls with appropriate drama.
@@ -17,10 +17,12 @@ def main():
                 You know all about D&D mechanics, always use the appropriate tools when applicable - never make up results!"""
             )
             
-            # TODO: Get available tools from MCP server using list_tools_sync()
-            # TODO: Print the available tool names
+            # Get available tools from MCP server
+            mcp_tools = mcp_dice_server.list_tools_sync()
+            print(f"Available tools: {[tool.tool_name for tool in mcp_tools]}")
             
-            # TODO: Add MCP tools to the agent using tool_registry.process_tools()
+            # Add MCP tools to the agent
+            gamemaster.tool_registry.process_tools(mcp_tools)
             
             # Start interactive session
             print("\n🎲 Lady Luck - D&D Gamemaster with MCP Dice Rolling")
@@ -42,4 +44,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-

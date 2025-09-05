@@ -35,12 +35,15 @@ class QuestionRequest(BaseModel):
 def health_check():
     return {"status": "healthy"}
 
+@app.get("/messages")
+def get_messages():
+    return agent.messages
 
-# TODO: Create A2A Client for agent communication
-# Initialize A2AClientToolProvider with known_agent_urls containing:
-# - "http://127.0.0.1:8000" (Rules Agent)
-# - "http://127.0.0.1:8001" (Character Agent)
-a2a_provider = None
+# A2A Client for agent communication (workshop-compatible version)
+a2a_provider = A2AClientToolProvider(known_agent_urls=[
+    "http://127.0.0.1:8000",  # Rules Agent
+    "http://127.0.0.1:8001",  # Character Agent
+])
 
 # Initialize A2A tools
 a2a_tools = list(a2a_provider.tools) if a2a_provider else []
@@ -86,13 +89,12 @@ If you rool dices, please mention it in the response and provide the results of 
 
 In the "details" of the json, provide the details of the tools and agents you used to generate the response
 
-Remember, the response should ONLY be a PURE json with no markdown or text arount it.
+Remember, the response should ONLY be a PURE json with no markdown or text arount it
 """
 )
 
-# TODO: Create MCP Client for dice rolling service
-# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
-mcp_dice_client = None
+# MCP Client for dice rolling service
+mcp_dice_client = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
 
 # Add MCP tools to agent
 if mcp_dice_client:
@@ -136,6 +138,4 @@ async def ask_agent(request: QuestionRequest):
 
     
 if __name__ == "__main__":
-    # TODO: Start the FastAPI server
-    # Use uvicorn.run() with app, host="0.0.0.0", and port=8009
-    pass
+    uvicorn.run(app, host="0.0.0.0", port=8009)

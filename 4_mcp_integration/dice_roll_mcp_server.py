@@ -1,12 +1,19 @@
-# TODO: Import FastMCP from mcp.server
-# TODO: Import random and logging modules
+# Strands already includes MCP, no additional install required
+from mcp.server import FastMCP
+import random
+import logging
 
 # Configure logging to show dice roll results
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# TODO: Create an MCP server with name "D&D Dice Roll Service" on port 8080
+# Create an MCP server to expose the dice rolling tool
+mcp = FastMCP(
+    name="D&D Dice Roll Service",
+    host="0.0.0.0",
+    port=8080
+)
 
-# TODO: Add the @mcp.tool() decorator to transform the function into an MCP tool
+@mcp.tool()
 def roll_dice(faces: int = 6) -> dict:
     """
     🎲 Roll a dice with a specified number of faces.
@@ -33,6 +40,7 @@ def roll_dice(faces: int = 6) -> dict:
         "message": f"🎲 Rolled a d{faces}: {result}!"
     }
 
+# Start the MCP server
 if __name__ == "__main__":
     print("Starting D&D Dice Roll MCP Server on port 8080...")
-    # TODO: Add the line to run the MCP server
+    mcp.run(transport="streamable-http")
