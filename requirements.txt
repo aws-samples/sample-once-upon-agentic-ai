@@ -1,0 +1,23 @@
+# Strands AI Framework
+strands-agents>=1.0.0
+strands-agents-tools>=0.2.0
+strands-agents[a2a]
+
+# Web Framework for APIs
+fastapi[standard]
+pydantic
+uvicorn
+
+# Configuration Management
+python-dotenv
+
+# Knowledge Base & Document Processing
+chromadb>=0.4.0
+PyPDF2>=3.0.0
+
+#database
+tinydb
+
+# LangChain Integration
+langchain_aws
+langchain_chroma

@@ -1,0 +1,59 @@
+###
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "Roll a d20"
+}
+###
+POST http://0.0.0.0:8009/inquire
+
+{
+  "question": "Show me what agents are currently discovered."
+}
+
+###
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "What are the rules for a dexterity check roll?"
+}
+
+###
+
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "What is the constitution of Arnaud?"
+}
+
+###
+
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "Create a character for player 'Alice' named 'Thorin Ironbeard', a male Dwarf Fighter with these stats: strength 16, dexterity 12, constitution 15, intelligence 10, wisdom 13, charisma 8"
+}
+
+###
+
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "The player's name is Arnaud and you can welcome them to the game. The player is a male Human Fighter. Describe the surroundings of the player and create an atmosphere that the player can bounce off of. Don't make more than 100 words."
+}
+
+###
+
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "Tell me about all the characters"
+}
+
+###
+
+POST http://0.0.0.0:8009/inquire
+
+{
+    "question": "Generate an image of Arnaud"
+}
