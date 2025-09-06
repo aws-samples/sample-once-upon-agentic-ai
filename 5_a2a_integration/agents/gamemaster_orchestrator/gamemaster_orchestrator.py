@@ -131,9 +131,8 @@ async def ask_agent(request: QuestionRequest):
             return JSONResponse(content={"response": content})
             
     except Exception as e:
-        error_msg = f"Error: {str(e)}"
-        print(f"Error occurred: {error_msg}")
-        return JSONResponse(content={"error": error_msg}, status_code=500)
+        print(f"Error occurred: {str(e)}")
+        return JSONResponse(content={"error": "Internal server error"}, status_code=500)
 
 
     
