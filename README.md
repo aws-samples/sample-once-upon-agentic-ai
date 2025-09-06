@@ -1,4 +1,4 @@
-# 🐉 Once Upon Agentic AI: A Developer's Epic Journey
+# Once Upon Agentic AI: A Developer's Epic Journey
 
 ![Header Image](images/header3.jpeg)
 
@@ -9,6 +9,9 @@ Welcome, brave adventurer, to the ultimate Strands framework quest! This compreh
 ## � ️ The Complete Adventure Map
 
 Your journey through the realms of AI agents is carefully structured as a progressive quest. **Each chapter builds upon the previous one** - complete them in order to unlock the full power of Strands!
+
+### 🐉 [Chapter 0: An Unexpected Adventure](0_pre_requisites/)
+**Complete the prerequisites before going on an adventure!**
 
 ### 🧙‍♂️ [Chapter 1: The Art of Agent Summoning](1_strands_basics/)
 **Master the fundamental ritual of agent creation**
@@ -99,7 +102,7 @@ Ensure you have proper credentials configured for your chosen provider. Check th
 
 **⚠️ IMPORTANT**: Complete the chapters in order! Each builds upon the previous one's knowledge and skills.
 
-1. **Start with Chapter 1** - Learn the fundamentals of agent creation
+1. **[Start with Chapter 0](0_pre_requisites/)** - Enable the required models to get started
 2. **Progress through each chapter** - Don't skip ahead, each chapter introduces essential concepts
 3. **Complete all TODOs** - Each chapter has guided exercises to master the concepts
 4. **Test your creations** - Run your agents and see them come to life
