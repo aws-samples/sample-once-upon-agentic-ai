@@ -154,7 +154,7 @@ By completing this workshop, you'll master:
 
 ## 🚀 Ready to Begin?
 
-Your adventure awaits! Start with [Chapter 1: The Art of Agent Summoning](1_strands_basics/) and begin your transformation from coding apprentice to Agent Master.
+Your adventure awaits! Start with [Chapter 0: An Unexpected Adventure](0_pre_requisites/) and begin your transformation from coding apprentice to Agent Master.
 
 ---
 
