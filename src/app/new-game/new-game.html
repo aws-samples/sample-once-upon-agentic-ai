@@ -1,0 +1,56 @@
+<div class="container">
+    <!-- <img src="./new-game.png" /> -->
+    <img src="./new-game2.png" />
+
+    <form [formGroup]="newGameForm" (ngSubmit)="start()">
+        <mat-form-field>
+            <mat-label>Your character name</mat-label>
+            <input type="text" matInput formControlName="name">
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Character gender</mat-label>
+            <mat-select formControlName="gender" name="gender">
+                @for (gender of genders; track gender) {
+                <mat-option [value]="gender">{{gender}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <!-- <mat-form-field>
+            <mat-label>Your character race</mat-label>
+            <input type="text" matInput formControlName="class">
+        </mat-form-field> -->
+        <mat-form-field>
+            <mat-label>Character race</mat-label>
+            <mat-select formControlName="race" name="race">
+                @for (race of races; track race) {
+                <mat-option [value]="race">{{race}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+        <!-- <mat-form-field>
+            <mat-label>Your character class</mat-label>
+            <input type="text" matInput formControlName="race">
+        </mat-form-field> -->
+        <mat-form-field>
+            <mat-label>Character class</mat-label>
+            <mat-select formControlName="class" name="class">
+                @for (class of classes; track class) {
+                <mat-option [value]="class">{{class}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Server URL</mat-label>
+            <input type="text" matInput formControlName="serverUrl">
+            @if (newGameForm.controls.serverUrl.invalid) {
+            <mat-error>The server url is not valid</mat-error>
+            }
+            @if (newGameForm.controls.serverUrl.pending) {
+                <mat-hint>Checking server health...</mat-hint>
+            }
+        </mat-form-field>
+
+        <button matButton cdkFocusInitial [disabled]="!newGameForm.valid">Generate</button>
+    </form>
+</div>

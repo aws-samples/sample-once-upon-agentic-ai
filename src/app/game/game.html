@@ -1,0 +1,170 @@
+<div class="container">
+    <div class="sidenav">
+      <div class="avatar mage">
+        <img class="image" src="./avatar-test.jpeg" alt="Brawler's%20Plate">
+        <div class="description">
+          <div>
+            Arnaud
+          </div>
+        </div>
+      </div>
+      <div class="pages rotate">
+        <div class="page"></div>
+        <div class="page"></div>
+        <div class="page"></div>
+        <div class="page background"></div>
+        <div class="content">
+          <div class="writings">
+  
+            <div class='section skills-list lined thin'>
+              <div class="value">12</div>
+              <div class="label">STRENGTH</div>
+              <div class="value">9</div>
+              <div class="label">DEXTERITY</div>
+              <div class="value">8</div>
+              <div class="label">CONSTITUTION</div>
+              <div class="value">17</div>
+              <div class="label">INTELLIGENCE</div>
+              <div class="value">11</div>
+              <div class="label">WISDOM</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="paper">
+        <div class="ol-card">
+          <div class="ol-card-container">
+            <div class="ol-card-body">
+              <div class="ol-player-name">
+                <div>
+                  <h2>Arnaud</h2>
+                </div>
+              </div>
+              <div class="ol-player-avatar">
+                <div>
+                  <img src="/avatar-test.jpeg" alt="Brawler's%20Plate">
+                </div>
+              </div>
+              <div class="ol-player-class">
+                <div>
+                  <h2>Legendary warrior</h2>
+                </div>
+              </div>
+              <div class="ol-player-details">
+                <div>
+                  "To the infinite and beyond"
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="writings">
+  
+          <div class='section skills-list lined thin'>
+            <div class="value">12</div>
+            <div class="label">STRENGTH</div>
+            <div class="value">9</div>
+            <div class="label">DEXTERITY</div>
+            <div class="value">8</div>
+            <div class="label">CONSTITUTION</div>
+            <div class="value">17</div>
+            <div class="label">INTELLIGENCE</div>
+            <div class="value">11</div>
+            <div class="label">WISDOM</div>
+          </div>
+  
+          <div class='section lined thin backpack'>
+            <div class="title">Backpack</div>
+            <ul>
+              <li>Hot chocolate</li>
+              <li>12 gold coins</li>
+              <li>Socks</li>
+            </ul>
+          </div>
+        </div>
+      </div> -->
+    </div>
+    <div class="chat-container">
+      <!-- <div class="chat-header">
+      <h1>Strands Agent Chat</h1>
+    </div> -->
+  
+      <!-- <div>
+      <img src="/dices/d4.svg" alt="d4" class="dice"/>
+      <img src="/dices/d6.svg" alt="d6" class="dice"/>
+      <img src="/dices/d8.svg" alt="d8" class="dice"/>
+      <img src="/dices/d9.svg" alt="d9" class="dice"/>
+      <img src="/dices/d12.svg" alt="d12" class="dice"/>
+      <img src="/dices/d20.svg" alt="d20" class="dice"/>
+      <img src="/dices/d90.svg" alt="d90" class="dice"/>
+    </div> -->
+      <!-- <div class="actions">
+        <button mat-fab color="primary" (click)="openSettingsDialog()" aria-label="Open settings dialog">
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div> -->
+      <div class="pages">
+        <div class="page"></div>
+        <div class="page"></div>
+        <div class="page"></div>
+        <div class="chat-messages" #messagesContainer>
+          @for (message of messages(); track message.id) {
+          <div class="message" [class.user]="message.type === 'user'" [class.agent]="message.type === 'agent'">
+            <div class="message-content">
+              <div class="content">
+                <div class="author">
+                  @if(message.type === "agent") {
+                  <div class="author">Game Master</div>
+                  } @else {
+                  <div class="author">You</div>
+                  }
+                </div>
+                <div>{{ message.content }}</div>
+              </div>
+              @if(message.dices && message.dices.length > 0) {
+              <div class="dices">
+                @for(dice of message.dices; track dice.dice_type) {
+                <!-- <div class="dice">{{dice.result}}</div> -->
+                <div class="dice-container" [matTooltip]="dice.reason">
+                  <img class="dice" src="./dices/{{dice.dice_type}}c.svg" [title]="dice.reason" />
+                  <div class="value">{{dice.result}}</div>
+                </div>
+                }
+              </div>
+              }
+            </div>
+  
+            @if (message.type === 'agent' && message.suggestions && message.suggestions.length > 0) {
+            <div class="suggestions">
+              @for (suggestion of message.suggestions; track suggestion) {
+              <button class="suggestion-button" (click)="onSuggestionClick(suggestion)" [disabled]="isStreaming()">
+                {{ suggestion }}
+              </button>
+              }
+            </div>
+            }
+  
+            <!-- <div class="message-time">{{ message.timestamp | date:'short' }}</div> -->
+          </div>
+          }
+  
+          @if (isStreaming()) {
+          <div class="message agent">
+            <div class="message-content typing">
+              <span class="typing-indicator">●●●</span>
+            </div>
+          </div>
+          }
+        </div>
+  
+        <div class="chat-input">
+          <input type="text" class="input-field" placeholder="Type your message..." [(ngModel)]="inputText"
+            (keyup.enter)="sendMessage()" [disabled]="isStreaming()" />
+          <button class="send-button" (click)="sendMessage()" [disabled]="isStreaming() || !inputText().trim()">
+            {{ isStreaming() ? '...' : 'Send' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  
+  </div>

@@ -1,0 +1,24 @@
+* {
+    max-width: 100%;
+}
+
+.container {
+    width: 1200px;
+    min-height: 100dvh;
+    margin: auto auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    img {
+        width: 400px;
+        margin: 2rem 0;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+    }
+}

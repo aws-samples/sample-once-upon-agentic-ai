@@ -1,0 +1,20 @@
+<form (ngSubmit)="save()">
+    <h2 mat-dialog-title>Settings</h2>
+    <mat-dialog-content class="mat-typography">
+
+        <mat-form-field>
+            <mat-label>Server url</mat-label>
+            <input type="text" matInput [formControl]="serverUrlFormControl">
+            @if (serverUrlFormControl.hasError('email') && !serverUrlFormControl.hasError('required')) {
+            <mat-error>Please enter a valid server url</mat-error>
+            }
+            @if (serverUrlFormControl.hasError('required')) {
+            <mat-error>Server url is <strong>required</strong></mat-error>
+            }
+        </mat-form-field>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+        <button matButton mat-dialog-close>Cancel</button>
+        <button matButton cdkFocusInitial>Save</button>
+    </mat-dialog-actions>
+</form>

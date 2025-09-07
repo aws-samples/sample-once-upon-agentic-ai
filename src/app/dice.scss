@@ -1,0 +1,27 @@
+
+.dice-container {
+  position: relative;
+
+  .dice {
+    --size: 50px;
+    width: var(--size);
+    height: var(--size);
+    position: relative;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: calc(var(--size) / 3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .value {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+}
+
