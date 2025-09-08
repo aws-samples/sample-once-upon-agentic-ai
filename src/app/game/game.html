@@ -4,7 +4,7 @@
         <img class="image" src="./avatar-test.jpeg" alt="Brawler's%20Plate">
         <div class="description">
           <div>
-            Arnaud
+            {{user.name}}
           </div>
         </div>
       </div>
@@ -16,17 +16,36 @@
         <div class="content">
           <div class="writings">
   
+            <div class='section lined thin'>
+              <div class="label">GENDER: {{user.gender}}</div>
+              <div class="label">RACE: {{user.race}}</div>
+              <div class="label">LEVEL: {{user.level}}</div>
+              <div class="label">XP: {{user.experience}}</div>
+            </div>
+          </div>
+
+          <div class="writings">
+  
             <div class='section skills-list lined thin'>
-              <div class="value">12</div>
+              <div class="value">{{user.stats?.strength}}</div>
               <div class="label">STRENGTH</div>
-              <div class="value">9</div>
+              <div class="value">{{user.stats?.dexterity}}</div>
               <div class="label">DEXTERITY</div>
-              <div class="value">8</div>
+              <div class="value">{{user.stats?.constitution}}</div>
               <div class="label">CONSTITUTION</div>
-              <div class="value">17</div>
+              <div class="value">{{user.stats?.intelligence}}</div>
               <div class="label">INTELLIGENCE</div>
-              <div class="value">11</div>
+              <div class="value">{{user.stats?.wisdom}}</div>
               <div class="label">WISDOM</div>
+            </div>
+          </div>
+
+          <div class="writings">
+  
+            <div class='section lined thin'>
+              @for (item of user.inventory; track $index) {
+                <div>{{item.item_name}} - QTY: {{item.quantity}}</div>
+              }
             </div>
           </div>
         </div>

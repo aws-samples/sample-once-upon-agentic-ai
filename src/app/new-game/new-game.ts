@@ -86,8 +86,9 @@ export class NewGame {
       return;
     }
 
-    const prompt = `The player's name is ${this.newGameForm.value.name} and you can welcome them to the game. 
-The player is a ${this.newGameForm.value.gender} ${this.newGameForm.value.race} ${this.newGameForm.value.class}.
+    const prompt = `
+    Create a new player named ${this.newGameForm.value.name} who is a ${this.newGameForm.value.gender} ${this.newGameForm.value.race} ${this.newGameForm.value.class}.
+    You can then welcome them to the game. 
 Describe the surroundings of the player and create an atmosphere that the player can bounce off of. 
 Don't make more than 100 words.`;
 
@@ -103,7 +104,7 @@ Don't make more than 100 words.`;
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       } else {
-        this.router.navigate(['/game', 'pouet']);
+        this.router.navigate(['/game', this.newGameForm.value.name]);
       }
     } catch (error) {
       console.error('Request error:', error);

@@ -13,6 +13,7 @@ import { SettingsDialog } from '../settings-dialog/settings-dialog';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { ActivatedRoute } from '@angular/router';
 
 interface ChatMessage {
   id: number;
@@ -46,11 +47,16 @@ export class Game implements AfterViewChecked {
   private shouldScrollToBottom = false;
   private serverUrl: string = "";
   readonly dialog = inject(MatDialog);
+  public user: any = {};
+  private route = inject(ActivatedRoute);
 
   constructor() {
+    this.user.name = this.route.snapshot.paramMap.get('id') || "";
+
     const url = localStorage.getItem("url");
     if (url) {
       this.serverUrl = url;
+      this.getUserInfos();
       this.retrieveMessagesHistory();
     }
 
@@ -133,6 +139,21 @@ export class Game implements AfterViewChecked {
     // ]);
   }
 
+  async getUserInfos() {
+    try {
+      const data = await fetch(`${this.serverUrl}/user/${this.user.name}`);
+      const user = await data.json();
+      this.user.gender = user.gender;
+      this.user.experience = user.experience;
+      this.user.level = user.level;
+      this.user.race = user.race;
+      this.user.inventory = user.inventory;
+      this.user.stats = user.stats;
+
+    } catch (error) {
+      console.log(error);
+    }
+  }
   ngAfterViewChecked() {
     if (this.shouldScrollToBottom) {
       this.scrollToBottom();
