@@ -9,7 +9,8 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from strands_tools import generate_image
+
+from tinydb import TinyDB, Query
 
 # Load environment variables
 load_dotenv()
@@ -35,11 +36,26 @@ class QuestionRequest(BaseModel):
 def health_check():
     return {"status": "healthy"}
 
+@app.get("/messages")
+def get_messages():
+    return agent.messages
+
+@app.get("/user/{user_name}")
+def get_user(user_name):
+    characters_db = TinyDB('./../character_agent/characters.json')
+    Character_Query = Query()
+    result = characters_db.search(Character_Query.name == user_name)
+    if not result:
+        return f":x: Character with name '{user_name}' not found"
+    
+    character = result[0]
+    print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
+    return character
 
 # TODO: Create A2A Client for agent communication
 # Initialize A2AClientToolProvider with known_agent_urls containing:
-# - "http://127.0.0.1:8000" (Rules Agent)
-# - "http://127.0.0.1:8001" (Character Agent)
+# - "http://0.0.0.0:8000" (Rules Agent)
+# - "http://0.0.0.0:8001" (Character Agent)
 a2a_provider = None
 
 # Initialize A2A tools
@@ -48,8 +64,14 @@ print(f"A2A tools available: {[tool.tool_name for tool in a2a_tools]}")
 
 agent = Agent(
     model=os.getenv("MODEL_ID"),
-    tools=a2a_tools + [generate_image], 
+    tools=a2a_tools, 
     system_prompt="""You are a D&D Game Master orchestrator. You MUST always consult your specialized agents before responding.
+
+CHARACTER CREATION REQUIREMENT:
+BEFORE starting any game session, you MUST ensure the player has a character created and stored in the database:
+1. Use a2a_send_message to ask the Character Agent (port 8001) to check if a character exists for this player
+2. If no character exists, guide the player through character creation using the Character Agent
+3. Only proceed with the game session AFTER confirming the character is created and stored in TinyDB
 
 MANDATORY WORKFLOW:
 1. FIRST: Use a2a_list_discovered_agents to see available agents

@@ -138,7 +138,6 @@ def create_character(
     
     characters_db.insert(asdict(character))
     print("Inserted")
-    print(character)
     return character
 
 

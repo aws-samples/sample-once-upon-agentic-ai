@@ -182,8 +182,8 @@ In `agents/gamemaster_orchestrator/gamemaster_orchestrator.py`, establish mystic
 ```python
 # TODO: Initialize A2AClientToolProvider with known_agent_urls containing:
 a2a_provider = A2AClientToolProvider(known_agent_urls=[
-# - "http://127.0.0.1:8000" (The Sage of Rules' tower)
-# - "http://127.0.0.1:8001" (The Hall of Heroes)
+# - "http://0.0.0.0:8000" (The Sage of Rules' tower)
+# - "http://0.0.0.0:8001" (The Hall of Heroes)
 ])
 ```
 
