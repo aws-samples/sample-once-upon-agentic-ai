@@ -45,12 +45,36 @@ Make sure you have completed the previous chapters and understand:
 
 ## 🧙‍♂️ Part 1: Awakening the Sage of Rules
 
-Deep in the mystical archives, we've prepared a legendary **Knowledge Vault** for you! The ancient D&D Basic Rules have been transformed into magical text fragments, stored within the sacred `utils/dnd_knowledge_base/` ChromaDB. This enchanted repository contains all the wisdom needed to answer any rules question that adventurers might pose.
+Before the Sage can awaken, you must first forge the legendary **Knowledge Vault**! The ancient D&D Basic Rules must be transformed into magical text fragments and stored within the sacred `utils/dnd_knowledge_base/` ChromaDB. This enchanted repository will contain all the wisdom needed to answer any rules question that adventurers might pose.
 
-**The Sage's Sacred Duties:**
-- Interpreting ancient D&D laws and mechanics
-- Providing instant access to combat rules, spells, and abilities
-- Guiding adventurers through complex rule interactions
+### 🏛️ The Sacred Ritual of Knowledge Vault Creation
+
+**⚠️ CRITICAL QUEST**: You must complete this ritual before proceeding, or the Sage will remain powerless!
+
+#### 🔍 Step 1: Seek the Ancient Tome
+Quest for the **D&D Basic Rules 2018 PDF** from the official Wizards of the Coast archives:
+- Visit the official D&D website or search for "D&D Basic Rules 2018 PDF"
+- Download the sacred tome (it's freely available)
+- **Important**: The file must be named exactly `DnD_BasicRules_2018.pdf`
+
+#### 📚 Step 2: Place the Tome in the Sacred Chamber
+Move the PDF to its destined location:
+- Place `DnD_BasicRules_2018.pdf` in the `5_a2a_integration/utils/` folder
+- The tome must rest alongside the `create_knowledge_base.py` script
+
+#### 🔮 Step 3: Perform the Transformation Ritual
+Cast the ancient spell to transform the PDF into searchable knowledge:
+```bash
+cd 5_a2a_integration/utils
+python create_knowledge_base.py
+```
+**⚠️ CRITICAL**: You must cast this spell from within the `utils` chamber, or the ritual will fail!
+
+#### ✅ Step 4: Verify the Vault's Creation
+Confirm that the Knowledge Vault has been successfully forged:
+- Check that `5_a2a_integration/utils/dnd_knowledge_base/` folder exists
+- Look for `chroma.sqlite3` and other mystical files within
+- The console should show: "Knowledge base creation complete!"
 
 ### Your Ritual Tasks:
 
@@ -60,7 +84,7 @@ Complete the mystical binding ritual:
 ```python
 agent = Agent(
     # TODO: Configure the agent with:
-    # - model: Use os.getenv("MODEL_ID") to get the model from environment
+    # - model: Optional
     # - tools: List containing the query_dnd_rules tool
     # - name: "Rules Agent"
     # - description: "Fast D&D rules lookup"
