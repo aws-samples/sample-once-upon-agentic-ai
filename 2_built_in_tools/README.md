@@ -32,23 +32,10 @@ Your quest involves two essential enchantments:
 
 The `http_request` tool is your gateway to the vast information networks of the digital realm. It can fetch web pages, call APIs, and retrieve data from distant servers.
 
-```python
-# Import the mystical web-weaver
-from strands_tools import http_request
-```
-
 ### Step 2: Arm Your Agent 🗡️
 **TODO**: Add the `http_request` tool to your agent's arsenal
 
 Equip your agent with the web-weaver so it can venture beyond its initial knowledge and fetch fresh information from the internet.
-
-```python
-agent = Agent(
-    tools=[
-        http_request  # Grant your agent the power of web access
-    ]
-)
-```
 
 ## 🎲 The Challenge: The Creators of D&D
 
@@ -91,29 +78,10 @@ Ready for a more advanced adventure? Try this legendary challenge (code provided
 
 **⚠️ Important: Enable Debug Logs for Interactive Tools!**
 
-Before attempting this bonus quest, you **must** enable debug logging to see the tool consent prompts. The `python_repl` and `file_write` tools will ask for your permission before executing, and you need to see these prompts in your terminal to accept them.
+Before attempting this bonus quest, it is recommended to enable debug logging to see the tool consent prompts. The `python_repl` and `file_write` tools will ask for your permission before executing, and you need to see these prompts in your terminal to accept them.
 
 Add this magical incantation at the beginning of your script:
 
-```python
-import logging
-from strands import Agent
-from strands_tools import python_repl, file_write
-
-# Enable debug logs to see tool consent prompts
-logging.getLogger("strands").setLevel(logging.DEBUG)
-logging.basicConfig(
-    format="%(levelname)s | %(name)s | %(message)s",
-    handlers=[logging.StreamHandler()]
-)
-
-arcane_scribe = Agent(
-    tools=[python_repl, file_write],
-    system_prompt="You are Kiro the Grey Hat, a wizard who specializes in the ancient art of code magic."
-)
-
-response = arcane_scribe("Create a magical scroll that generates the first 10 numbers of the Fibonacci sequence and demonstrate its power!")
-```
 
 **What you'll see**: When the agent tries to create files or run code, you'll see prompts like:
 ```
@@ -131,31 +99,15 @@ Simply type `y` and press Enter to allow the tool to proceed with its magical wo
 export BYPASS_TOOL_CONSENT=true
 ```
 
-## 🚨 Troubleshooting Common Arsenal Issues
-
-**"Tool not found" Error**:
-- Verify the import: `from strands_tools import http_request`
-- Check Strands installation: `pip install strands-agents-tools`
-
-**"Network Error" when fetching web content**:
-- Check your internet connection
-- Some websites may block automated requests
-- Try a different URL to test the tool
-
-**Agent doesn't use the tool**:
-- Ensure the tool is in the `tools=[]` list
-- Make your request specific enough to trigger tool usage
-- Check that your system prompt doesn't discourage tool use
-
 ## 🎉 Quest Complete!
 
 Congratulations, Tool Master! You've successfully armed your agent with the power of web access. Your digital companion can now venture beyond its training data to fetch real-time information from the vast digital realm.
 
-**What you've mastered:**
-- ✅ Importing and configuring built-in tools
-- ✅ Understanding how agents autonomously choose when to use tools
-- ✅ Web content fetching and information extraction
-- ✅ The balance between agent autonomy and user control
+**What you've learned:**
+- ✅ How to import and use Strands built-in tools
+- ✅ How agents autonomously choose and execute tools
+- ✅ Web content fetching with the http_request tool
+- ✅ Tool consent mechanisms and safety features
 
 **Loot Acquired:**
 - 🌐 Web-scraping capabilities
