@@ -21,116 +21,55 @@ The Model Context Protocol allows separation of tools from agents:
 
 ## 📜 Part 1: Forging the MCP Server (`dice_roll_mcp_server.py`)
 
-### Step 1: Invoke the Necessary Modules 📚
-**TODOs**: Import FastMCP, random and logging
+### Step 1: Import FastMCP 📚
+**TODO**: Import FastMCP from mcp.server
 
-MCP servers need specific modules to function:
+You need to import the FastMCP class to create your MCP server. The `random` and `logging` modules are already imported for you.
 
-```python
-# TODO: Import FastMCP from mcp.server
-from mcp.server import FastMCP
-
-# TODO: Import random and logging modules  
-import random
-import logging
-```
-
-**Why these imports?**
-- `FastMCP`: The MCP server that exposes your tools
-- `random`: To generate random dice results
-- `logging`: To trace dice rolls in the logs
+**Why this import?**
+- `FastMCP`: The MCP server that exposes your tools to other applications
 
 ### Step 2: Create the MCP Server 🏰
-**TODO**: Create an MCP server with the name "D&D Dice Roll Service" on port 8080
+**TODO**: Create an MCP server with name "D&D Dice Roll Service" on port 8080
 
-```python
-# TODO: Create an MCP server with name "D&D Dice Roll Service" on port 8080
+Create a FastMCP instance with the specified name, host "0.0.0.0", and port 8080.
 
-mcp = FastMCP(
-    name="D&D Dice Roll Service",
-    host="0.0.0.0", 
-    port=8080
-)
-```
+### Step 3: Run the MCP Server 🚀
+**TODO**: run the MCP server
 
-### Step 3: Transform the Function into an MCP Tool 🔧
-**TODO**: Add the @mcp.tool() decorator
+Add the line to start the MCP server using the appropriate transport method.
 
-```python
-# TODO: Add the @mcp.tool() decorator to transform the function into an MCP tool
-@mcp.tool()
-def roll_dice(faces: int = 6) -> dict:
-    # The function is already implemented
-```
-
-### Step 4: Start the Server 🚀
-**TODO**: Launch the MCP server
-
-```python
-if __name__ == "__main__":
-    print("Starting D&D Dice Roll MCP Server on port 8080...")
-    # TODO: Add the line to run the MCP server
-    mcp.run(transport="streamable-http")
-```
+The `@mcp.tool()` decorator is already implemented for you!
 
 ## 📜 Part 2: Create the MCP Client (`gamemaster_mcp_client.py`)
 
 ### Step 1: Import Connection Tools 🔗
-**TODOs**: Import Agent, MCPClient and streamablehttp_client
+**TODO**: Import Agent, MCPClient and streamablehttp_client from the strands library
 
-```python
-# TODO: Import Agent from strands
-from strands import Agent
+You need to import three components:
+- `Agent` from strands
+- `MCPClient` from strands.tools.mcp  
+- `streamablehttp_client` from mcp.client.streamable_http
 
-# TODO: Import MCPClient from strands.tools.mcp  
-from strands.tools.mcp import MCPClient
+### Step 2: Create MCPClient Connection 🌉
+**TODO**: Create MCPClient connecting to "http://localhost:8080/mcp"
 
-# TODO: Import streamablehttp_client from mcp.client.streamable_http
-from mcp.client.streamable_http import streamablehttp_client
-```
-
-### Step 2: Establish the Planar Connection 🌉
-**TODO**: Create the MCP client
-
-```python
-# TODO: Create MCPClient connecting to "http://localhost:8080/mcp"
-mcp_dice_server = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
-```
+Create an MCPClient instance that connects to the dice server. Use a lambda function that returns `streamablehttp_client("http://localhost:8080/mcp")`.
 
 ### Step 3: Use the Context Manager 🔒
-**TODO**: Use the MCP client in a context manager
+**TODO**: Use the MCP client in a context manager (with statement)
 
-```python
-# TODO: Use the MCP client in a context manager (with statement)
-with mcp_dice_server:
-    # The rest of the code here
-```
+Wrap your agent code in a `with` statement using the MCP client to ensure proper connection management.
 
-### Step 4: Create the Agent 🧙‍♂️
-**TODO**: Create the gamemaster agent with Lady Luck system prompt
-```python
-# TODO: Create the gamemaster agent with Lady Luck system prompt
-gamemaster = Agent(
-    system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
-    You speak with theatrical flair and always announce dice rolls with appropriate drama.
-    
-    You know all about D&D mechanics, always use the appropriate tools when applicable - never make up results!"""
-)
-```
+### Step 4: Get Available Tools �️
+**TODO**: Get available tools from MCP server using list_tools_sync()
 
-### Step 5: Retrieve and Integrate Tools 🛠️
-**TODOs**: List available tools and add them to the agent
+Call the `list_tools_sync()` method on your MCP client to retrieve available tools from the server.
 
-```python
-# TODO: Get available tools from MCP server using list_tools_sync()
-mcp_tools = mcp_dice_server.list_tools_sync()
+### Step 5: Add Tools to Agent 🤖
+**TODO**: Add MCP tools to the gamemaster agent using tool_registry.process_tools()
 
-# TODO: Print the available tool names
-print(f"Available tools: {[tool.tool_name for tool in mcp_tools]}")
-
-# TODO: Add MCP tools to the agent using tool_registry.process_tools()
-gamemaster.tool_registry.process_tools(mcp_tools)
-```
+Use the agent's `tool_registry.process_tools()` method to add the MCP tools to your gamemaster agent.
 
 ## 🎲 Testing Your MCP System
 
@@ -158,20 +97,6 @@ Try these commands:
 **📈 Scalability**: Easy to add new tools to the server
 **🛡️ Isolation**: Services are separated and independent
 **🔧 Maintenance**: Update one service without affecting others
-
-## 🚨 Troubleshooting MCP Portals
-
-**"Connection failed" Error**:
-- Check that the MCP server is running on port 8080
-- Ensure the URL is correct: `http://localhost:8080/mcp`
-
-**"Tool not found" Error**:
-- Verify that the `@mcp.tool()` decorator is present
-- Confirm that `list_tools_sync()` and `process_tools()` are called
-
-**Import Errors**:
-- Check installation: `pip install strands-agents`
-- Ensure all imports are correct
 
 ## 🎉 Quest Complete!
 
