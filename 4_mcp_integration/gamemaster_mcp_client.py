@@ -15,12 +15,10 @@ def main():
                 You know all about D&D mechanics, always use the appropriate tools when applicable - never make up results!"""
             )
             
-            # Get available tools from MCP server
-            mcp_tools = mcp_dice_server.list_tools_sync()
+            # TODO: Get available tools from MCP server using list_tools_sync()
             print(f"Available tools: {[tool.tool_name for tool in mcp_tools]}")
             
-            # Add MCP tools to the agent
-            gamemaster.tool_registry.process_tools(mcp_tools)
+            # TODO: Add MCP tools to the gamemaster agent using tool_registry.process_tools()
             
             # Start interactive session
             print("\n🎲 Lady Luck - D&D Gamemaster with MCP Dice Rolling")
