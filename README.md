@@ -88,8 +88,8 @@ uv sync
 The workshop uses configurable AI models. Check the `.env` file and update it with your preferred model:
 
 ```bash
-# Fast and cost-effective (recommended for workshops)
-MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
+# Recommended model for workshops
+MODEL_ID=anthropic.claude-3-7-sonnet-20250219-v1:0
 
 # Or any other provider you prefer
 ```
