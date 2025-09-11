@@ -3,21 +3,17 @@ import sys
 import uvicorn
 from dotenv import load_dotenv
 from strands import Agent
-from strands.tools.mcp import MCPClient
+from strands.tools.mcp.mcp_client import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-
 from tinydb import TinyDB, Query
+from strands_tools.a2a_client import A2AClientToolProvider
 
 # Load environment variables
 load_dotenv()
-
-# Import workshop A2A tools that work correctly
-sys.path.append(os.path.join(os.path.dirname(os.path.dirname(__file__)), '..', 'utils'))
-from workshop_utils import A2AClientToolProvider
 
 app = FastAPI(title="D&D Game Master API")
 origins = ["*"]
@@ -36,10 +32,6 @@ class QuestionRequest(BaseModel):
 def health_check():
     return {"status": "healthy"}
 
-@app.get("/messages")
-def get_messages():
-    return agent.messages
-
 @app.get("/user/{user_name}")
 def get_user(user_name):
     characters_db = TinyDB('./../character_agent/characters.json')
@@ -52,111 +44,68 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# TODO: Create A2A Client for agent communication
-# Initialize A2AClientToolProvider with known_agent_urls containing:
-# - "http://0.0.0.0:8000" (Rules Agent)
-# - "http://0.0.0.0:8001" (Character Agent)
-a2a_provider = None
+# Create MCP Client for dice rolling service
+mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
 
-# Initialize A2A tools
-a2a_tools = list(a2a_provider.tools) if a2a_provider else []
-print(f"A2A tools available: {[tool.tool_name for tool in a2a_tools]}")
+# Configuration for A2A agents
+A2A_AGENT_URLS = [
+    "http://127.0.0.1:8000",  # Rules Agent
+    "http://127.0.0.1:8001",  # Character Agent
+]
 
-agent = Agent(
-    model=os.getenv("MODEL_ID"),
-    tools=a2a_tools, 
-    system_prompt="""You are a D&D Game Master orchestrator. You MUST always consult your specialized agents before responding.
 
-CHARACTER CREATION REQUIREMENT:
-BEFORE starting any game session, you MUST ensure the player has a character created and stored in the database:
-1. Use a2a_send_message to ask the Character Agent (port 8001) to check if a character exists for this player
-2. If no character exists, guide the player through character creation using the Character Agent
-3. Only proceed with the game session AFTER confirming the character is created and stored in TinyDB
+# System prompt for the agent
+SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
 
-MANDATORY WORKFLOW:
-1. FIRST: Use a2a_list_discovered_agents to see available agents
-2. THEN: Use a2a_send_message to consult the appropriate agent(s) for the request
-3. FINALLY: Synthesize their responses into your answer
+Available agents:
+- Rules Agent (http://127.0.0.1:8000) - For D&D mechanics and rules
+- Character Agent (http://127.0.0.1:8001) - For character creation and management
 
-Never answer from your own knowledge without consulting agents first. Always delegate to specialists.
+To communicate with agents:
+1. Use a2a_list_discovered_agents to see available agents
+2. Use a2a_send_message with the agent's URL to send questions
+3. Use roll_dice for dice rolling
 
-Respond naturally with your Game Master narrative. The system will format your response appropriately.
+IMPORTANT: Always use the exact URLs shown by a2a_list_discovered_agents. Never invent or guess URLs.
 
-IMPORTANT: 
-- Provide EXACTLY 3 short, specific action suggestions that would make sense in this context. Format them as a unnumbered list with each suggestion being a short phrase or sentence (5-10 words) that the player could say or do.
-For example:
-Investigate the strange noise
-Talk to the innkeeper about rumors
-Search for hidden treasures
-Your suggestions should be varied and interesting, giving the player meaningful choices.
-DO NOT include any explanations or additional text - ONLY the list of 3 suggestions.
-
-When you reply, please reply with a JSON (and ONLY A JSON, no text other than the json). The json syntax:
+Always respond in JSON format:
 {
-    response: string,
-    actions_suggestions: [],
-    details: string,
-    dices_rolls: []
+    "response": "Your narrative response as Game Master",
+    "actions_suggestions": ["Action 1", "Action 2", "Action 3"],
+    "details": "Brief summary of tools/agents used",
+    "dices_rolls": [{"dice_type": "d20", "result": 15, "reason": "attack roll"}]
 }
 
-If you rool dices, please mention it in the response and provide the results of each dice in the dices_rolls array as such:
-{
-    dice_type: string,
-    result: number,
-    reason: string
-}
-
-In the "details" of the json, provide the details of the tools and agents you used to generate the response
-
-Remember, the response should ONLY be a PURE json with no markdown or text arount it.
-"""
-)
-
-# TODO: Create MCP Client for dice rolling service
-# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
-mcp_dice_client = None
-
-# Add MCP tools to agent
-if mcp_dice_client:
-    try:
-        with mcp_dice_client:
-            mcp_tools = mcp_dice_client.list_tools_sync()
-            agent.tool_registry.process_tools(mcp_tools)
-            print(f"Connected to MCP Dice Server. Available tools: {[tool.tool_name for tool in mcp_tools]}")
-    except Exception as e:
-        print(f"Warning: Could not connect to MCP Dice Server: {e}")
-else:
-    print("Warning: MCP Dice Client not initialized")
-
-# Debug: Print all available tools
-try:
-    print(f"All agent tools: {list(agent.tool_registry._tools.keys())}")
-except Exception as e:
-    print(f"Could not list tools: {e}")
+Be creative, engaging, and use your available tools to enhance the D&D experience."""
 
 @app.post("/inquire")
 async def ask_agent(request: QuestionRequest):
     print("Processing request...")
     try:
-        if mcp_dice_client:
-            with mcp_dice_client:
-                response = agent(request.question)
-                content = str(response)
-                print(f"Agent response: {content}")
-                return JSONResponse(content={"response": content})
-        else:
+        # Create fresh A2A client for each request (avoids connection issues)
+        a2a_client = A2AClientToolProvider(known_agent_urls=A2A_AGENT_URLS)
+        
+        # Create agent with fresh connections within MCP context
+        with mcp_client:
+            # Get MCP tools
+            mcp_tools = mcp_client.list_tools_sync()
+
+            # Create agent with both A2A and MCP tools
+            all_tools = list(a2a_client.tools) + mcp_tools
+            agent = Agent(
+                model=os.getenv("MODEL_ID"),
+                tools=all_tools,
+                system_prompt=SYSTEM_PROMPT
+            )
+            
+            # Process the request
             response = agent(request.question)
             content = str(response)
-            print(f"Agent response: {content}")
             return JSONResponse(content={"response": content})
             
     except Exception as e:
         print(f"Error occurred: {str(e)}")
         return JSONResponse(content={"error": "Internal server error"}, status_code=500)
 
-
-    
 if __name__ == "__main__":
-    # TODO: Start the FastAPI server
-    # Use uvicorn.run() with app, host="0.0.0.0", and port=8009
-    pass
+    uvicorn.run(app, host="0.0.0.0", port=8009)
