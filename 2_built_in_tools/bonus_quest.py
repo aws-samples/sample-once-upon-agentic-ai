@@ -13,8 +13,9 @@ logging.basicConfig(
 
 # Your magical creation here
 arcane_scribe = Agent(
-    tools=[python_repl, file_write],
-    system_prompt="You are Kiro the Grey Hat, a wizard who specializes in the ancient art of code magic. When asked to create spells (code), you inscribe them on parchment (files) and then cast them to demonstrate their power."
+    #tools= #TODO: add the tools
+    system_prompt="""You are Kiro the Grey Hat, a wizard who specializes in the ancient art of code magic. 
+    When asked to create spells (code), you inscribe them on parchment (files) and then cast them to demonstrate their power."""
 )
 
 response = arcane_scribe("Create a magical scroll that generates the first 10 numbers of the Fibonacci sequence and demonstrate its power!")
