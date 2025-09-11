@@ -66,17 +66,19 @@ def query_dnd_rules(query: str) -> str:
     return rules_kb.quick_query(query)
 
 agent = Agent(
-    model=os.getenv("MODEL_ID"),
-    tools=[query_dnd_rules],
-    name="Rules Agent", 
-    description="Fast D&D rules lookup",
-    system_prompt="You have ONE tool: query_dnd_rules. Use it ONCE and answer immediately. Never call tools multiple times."
+    # TODO: Configure the agent with:
+    # - model: Use os.getenv("MODEL_ID") to get the model from environment
+    # - tools: List containing the query_dnd_rules tool
+    # - name: "Rules Agent"
+    # - description: "Fast D&D rules lookup"
+    # - system_prompt: Instructions for the agent to use the tool once and answer immediately
 )
 
-a2a_server = A2AServer(
-    agent=agent,
-    port=8000
-)
+# TODO: Create an A2AServer instance with:
+# - agent: The agent instance created above
+# - port: 8000 (Rules Agent port)
+a2a_server = None
 
 if __name__ == "__main__":
-    a2a_server.serve(host="0.0.0.0", port=8000)
+    # TODO: Start the A2A server
+    pass

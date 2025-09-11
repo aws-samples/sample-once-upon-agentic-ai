@@ -140,21 +140,20 @@ def create_character(
     print("Inserted")
     return character
 
-
 agent = Agent(
-    model=os.getenv("MODEL_ID"),
-    tools=[create_character, find_character_by_name, list_all_characters],
-    name="Character Creator Agent",
-    description="""
-    Create and manage D&D characters with names, races, classes, stats, and backgrounds
-    Roll the dices to generate stats_dic (ability scores). When rolling ability scores, remember the traditional method: roll 4d6, drop the lowest die.
-    """,
+    # TODO: Configure the Character Agent with:
+    # - model: optional
+    # - tools: List the tools
+    # - name: "Character Creator Agent"
+    # - description: Describe the agent's role in creating and managing D&D characters
 )
 
-a2a_server = A2AServer(
-    agent=agent,
-    port=8001
-)
+
+# TODO: Create an A2AServer instance with:
+# - agent: The agent instance created above
+# - port: 8001 (Character Agent port)
+a2a_server = None
 
 if __name__ == "__main__":
-    a2a_server.serve(host="0.0.0.0", port=8001)
+    # TODO: Start the A2A server
+    pass

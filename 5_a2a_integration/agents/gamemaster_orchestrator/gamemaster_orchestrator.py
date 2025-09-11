@@ -44,15 +44,9 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# Create MCP Client for dice rolling service
-mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
-
-# Configuration for A2A agents
-A2A_AGENT_URLS = [
-    "http://127.0.0.1:8000",  # Rules Agent
-    "http://127.0.0.1:8001",  # Character Agent
-]
-
+# TODO: Create MCP Client for dice rolling service
+# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
+mcp_dice_client = None
 
 # System prompt for the agent
 SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
@@ -82,20 +76,16 @@ Be creative, engaging, and use your available tools to enhance the D&D experienc
 async def ask_agent(request: QuestionRequest):
     print("Processing request...")
     try:
-        # Create fresh A2A client for each request (avoids connection issues)
-        a2a_client = A2AClientToolProvider(known_agent_urls=A2A_AGENT_URLS)
+        # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
         
-        # Create agent with fresh connections within MCP context
         with mcp_client:
-            # Get MCP tools
-            mcp_tools = mcp_client.list_tools_sync()
+            #TODO: Get MCP tools
 
-            # Create agent with both A2A and MCP tools
-            all_tools = list(a2a_client.tools) + mcp_tools
+            #TODO: Create the gamemaster agent with both A2A and MCP tools
             agent = Agent(
-                model=os.getenv("MODEL_ID"),
-                tools=all_tools,
-                system_prompt=SYSTEM_PROMPT
+                # model=optional,
+                # tools= List of the A2A and MCP tools,
+                # system_prompt=SYSTEM_PROMPT
             )
             
             # Process the request

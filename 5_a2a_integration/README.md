@@ -42,18 +42,6 @@ Make sure you have completed the previous chapters and understand:
 - Tool creation with `@tool` decorator
 - MCP integration
 
-## 🚀 Getting Started
-
-### Step 1: Configure Your Environment
-
-The system uses configurable models via environment variables:
-
-```bash
-# In your .env file
-MODEL_ID=us.anthropic.claude-3-5-haiku-20241022-v1:0
-```
-
-You can change this to any supported model of your choice
 
 ## 🧙‍♂️ Part 1: Awakening the Sage of Rules
 
@@ -66,53 +54,36 @@ Deep in the mystical archives, we've prepared a legendary **Knowledge Vault** fo
 
 ### Your Ritual Tasks:
 
-#### 📚 TODO 1: Forge the Wisdom Conduit
-In `agents/rules_agent/rules_agent.py`, complete the sacred `query_dnd_rules` function:
-
-```python
-@tool
-def query_dnd_rules(query: str) -> str:
-    """Fast D&D rule lookup. Returns brief rule with page reference."""
-    # TODO: Use the rules_kb to query for D&D rules
-    # Call rules_kb.quick_query(query) and return the result
-    pass
-```
-
-**🔮 Ancient Secret**: The mystical `rules_kb` oracle is already awakened and connected to the Knowledge Vault. Simply channel its power!
-
-#### 🧙‍♂️ TODO 2: Summon the Sage of Rules
+#### 🧙‍♂️ TODO 1: Summon the Sage of Rules
 Complete the mystical binding ritual:
 
 ```python
 agent = Agent(
-    # TODO: Configure the Sage with:
-    # - model: Channel power from os.getenv("MODEL_ID")
-    # - tools: Equip with the query_dnd_rules wisdom conduit
-    # - name: "Rules Agent" 
+    # TODO: Configure the agent with:
+    # - model: Use os.getenv("MODEL_ID") to get the model from environment
+    # - tools: List containing the query_dnd_rules tool
+    # - name: "Rules Agent"
     # - description: "Fast D&D rules lookup"
-    # - system_prompt: Instruct the Sage to consult the archives when needed
-    pass
+    # - system_prompt: Instructions for the agent to use the tool once and answer immediately
 )
 ```
 
-#### 🏰 TODO 3: Establish the Sage's Tower
+#### 🏰 TODO 2: Establish the Sage's Tower
 Construct the mystical communication spire:
 
 ```python
-# TODO: Create an A2AServer fortress with:
-a2a_server = A2AServer(
-# - agent: The Sage you've just summoned
-# - port: 8000 (The Sage's sacred tower number)
-)
+# TODO: Create an A2AServer instance with:
+# - agent: The agent instance created above
+# - port: 8000 (Rules Agent port)
+a2a_server = None
 ```
 
-#### 🌟 TODO 4: Open the Tower Gates
+#### 🌟 TODO 3: Open the Tower Gates
 Complete the awakening ceremony:
 
 ```python
 if __name__ == "__main__":
-    # TODO: Open the Sage's tower to the realm
-    # Call a2a_server.serve() with host="0.0.0.0" and port=8000
+    # TODO: Start the A2A server
     pass
 ```
 
@@ -135,30 +106,26 @@ In `agents/character_agent/character_agent.py`, bind the Chronicler to their des
 
 ```python
 agent = Agent(
-    # TODO: Configure the Character Chronicler with:
-    # - model: Draw power from os.getenv("MODEL_ID")
-    # - tools: Equip with [create_character, find_character_by_name, list_all_characters]
+    # TODO: Configure the Character Agent with:
+    # - model: optional
+    # - tools: List of the tools
     # - name: "Character Creator Agent"
-    # - description: Define their role as keeper of heroic tales and character destinies
-    # - callback_handler: None (the Chronicler works alone)
-    pass
+    # - description: Describe the agent's role in creating and managing D&D characters
 )
 ```
 
 #### 🏰 TODO 2: Establish the Hall of Heroes
 ```python
-# TODO: Create an A2AServer stronghold with:
-a2a_server = A2AServer(
-# - agent: The Character Chronicler you've summoned
-# - port: 8001 (The Hall of Heroes' sacred number)
-)
+# TODO: Create an A2AServer instance with:
+# - agent: The agent instance created above
+# - port: 8001 (Character Agent port)
+a2a_server = None
 ```
 
 #### 🌟 TODO 3: Open the Hall's Doors
 ```python
 if __name__ == "__main__":
-    # TODO: Welcome visitors to the Hall of Heroes
-    # Call a2a_server.serve() with host="0.0.0.0" and port=8001
+    # TODO: Start the A2A server
     pass
 ```
 
@@ -176,32 +143,36 @@ Behold the **Grand Orchestrator** - the supreme Game Master who commands the ent
 
 ### Your Supreme Ritual Tasks:
 
-#### 🌐 TODO 1: Forge the Fellowship Bonds
-In `agents/gamemaster_orchestrator/gamemaster_orchestrator.py`, establish mystical connections:
-
+#### 🎲 TODO 1: Channel the Dice Oracle
 ```python
-# TODO: Initialize A2AClientToolProvider with known_agent_urls containing:
-a2a_provider = A2AClientToolProvider(known_agent_urls=[
-# - "http://0.0.0.0:8000" (The Sage of Rules' tower)
-# - "http://0.0.0.0:8001" (The Hall of Heroes)
-])
-```
-
-#### 🎲 TODO 2: Channel the Dice Oracle
-```python
-# TODO: Open a portal to the MCP Dice Oracle
+# TODO: Create MCP Client for dice rolling service
 # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
 mcp_dice_client = None
 ```
 Hint: Look back in Chapter 4 😉
 
-#### 👑 TODO 3: Ascend to the Master's Throne
+#### 🤖 TODO 2: Create the A2A Client
+In the `ask_agent` function:
 ```python
-if __name__ == "__main__":
-    # TODO: Open the gates to your realm
-    # Use uvicorn.run() with app, host="0.0.0.0", and port=8009
-    pass
+# TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
 ```
+
+#### 🛠️ TODO 3: Get MCP Tools
+```python
+# TODO: Get MCP tools
+```
+
+#### �`‍♂️ TODO 4: Create the Gamemaster Agent
+```python
+# TODO: Create the gamemaster agent with both A2A and MCP tools
+agent = Agent(
+    # model=optional,
+    # tools= List of the A2A and MCP tools,
+    # system_prompt=SYSTEM_PROMPT
+)
+```
+
+The Grand Orchestrator will take their throne automatically when you run the script - no additional TODO needed for the uvicorn.run() call!
 
 The Grand Orchestrator will take their throne, ready to command epic adventures!
 
@@ -287,22 +258,6 @@ By completing this chapter, you'll understand:
 3. **Add Persistence**: Store game sessions and character progression
 4. **Create Adventures**: Build multi-step quest workflows
 5. **Add Authentication**: Secure your API endpoints
-
-## 🔧 Troubleshooting
-
-### Common Issues:
-
-1. **Port Already in Use**: Kill existing processes with `lsof -ti:8000 | xargs kill -9`
-2. **Model Not Found**: Check your `.env` file and model availability
-3. **A2A Connection Failed**: Ensure all agents are running on correct ports
-4. **Knowledge Base Error**: The ChromaDB is pre-built in `utils/dnd_knowledge_base/`
-
-### Debug Tips:
-
-- Check agent logs for connection status
-- Verify ports with `lsof -i :8000-8009`
-- Test individual agents before running the orchestrator
-- Use the health endpoints: `curl http://localhost:8009/health`
 
 ## 🎉 Congratulations!
 
