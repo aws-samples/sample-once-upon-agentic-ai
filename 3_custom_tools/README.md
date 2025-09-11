@@ -20,29 +20,24 @@ In Strands, a custom tool is nothing more than a Python function blessed with sp
 
 ## 📜 The Sacred Steps
 
-Your quest involves two essential enchantments:
+Your quest involves three essential enchantments:
 
-### Step 1: Invoke the Transformation Rune 🪄
+### Step 1: Import the Sacred Tool Magic 📚
+**TODO**: Import 'tool' from strands to use the [@tool decorator](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/tools/tools_overview/)
+
+Before you can forge any magical tools, you must first import the sacred `tool` decorator from the Strands library:
+
+### Step 2: Invoke the Transformation Rune 🪄
 **TODO**: Add the decorator to transform your function into a tool
 
 The `@tool` decorator is the incantation that transforms an ordinary Python function into a tool that your agent can automatically discover and use.
-
-**Important**: You must first import `tool` from `strands`:
-
-```python
-from strands import Agent, tool  # Add 'tool' to the existing import
-
-@tool  # This magical rune transforms the function into an agent tool
-def roll_dice(faces: int = 6) -> int:
-    # Your magical logic here
-```
 
 **Why does this magic work?**
 - The agent can automatically discover all available tools
 - It understands parameters and return types
 - It intelligently decides when to use each tool
 
-### Step 2: Write the Documentation Grimoire 📚
+### Step 3: Write the Documentation Grimoire 📚
 **TODO**: Modify the docstring with information about arguments and return value
 
 The docstring isn't just simple documentation - it's the instruction manual that your agent uses to understand the tool. A good docstring guides the agent on:
@@ -51,19 +46,6 @@ The docstring isn't just simple documentation - it's the instruction manual that
 - **When** to use it
 - **How** to use it correctly
 
-```python
-@tool
-def roll_dice(faces: int = 6) -> int:
-    """
-    🎲 Roll a dice with a specified number of faces.
-    
-    Args:
-        faces: Number of faces on the dice (default: 6)
-        
-    Returns:
-        Random integer between 1 and faces (inclusive)
-    """
-```
 
 **Essential Elements of a Tool Docstring:**
 - **Clear description**: What exactly does the tool do?
@@ -85,11 +67,6 @@ Your agent **Lady Luck** will be challenged with a complex D&D character creatio
 3. **Calculate** final scores for each ability
 4. **Present** results with theatrical flair
 
-**Why is this challenge perfect?**
-- It tests repeated tool usage
-- It requires complex logic (4d6, keep the best 3)
-- It combines domain knowledge (D&D) with tool usage
-- It showcases the agent's personality (Lady Luck's theatrical flair)
 
 ## 🔧 Testing Your Creation
 
@@ -105,54 +82,6 @@ Watch Lady Luck in action:
 3. **Execute** dice rolls with your custom tool
 4. **Calculate** final scores (keep the best 3 dice)
 5. **Present** results with theatrical drama
-
-## 🌟 Advanced Tool Forging Concepts
-
-### Supported Parameter Types
-```python
-@tool
-def advanced_spell(
-    text: str,           # Strings
-    count: int,          # Integers
-    ratio: float,        # Decimal numbers
-    active: bool,        # Booleans
-    items: list[str],    # Lists
-    config: dict         # Dictionaries
-) -> dict:
-    """Advanced tool with different parameter types."""
-```
-
-### Elegant Error Handling
-```python
-@tool
-def safe_dice_roll(faces: int) -> dict:
-    """Tool with robust error handling."""
-    try:
-        if faces < 1:
-            return {"error": "Dice must have at least 1 face"}
-        
-        result = random.randint(1, faces)
-        return {"success": True, "result": result}
-    
-    except Exception as e:
-        return {"error": f"Unexpected error: {str(e)}"}
-```
-
-## 🚨 Troubleshooting Forging Failures
-
-**"NameError: name 'tool' is not defined"**:
-- Check the import: `from strands import tool`
-- Make sure the decorator is `@tool`
-
-**Agent doesn't use the tool**:
-- Verify the tool is in the `tools=[]` list
-- Improve the docstring to be more descriptive
-- Test with a more explicit request
-
-**Errors during tool execution**:
-- Add robust error handling
-- Check parameter types
-- Test the function independently of the agent
 
 ## 🎉 Quest Complete!
 

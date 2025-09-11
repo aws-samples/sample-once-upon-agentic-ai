@@ -1,16 +1,12 @@
-from strands import Agent, tool
+from strands import Agent
+# TODO: Import 'tool' from strands to use the @tool decorator
 
-# Add the decorator to transform your function into a tool
-@tool
+# TODO: Add the decorator to transform your function into a tool
 def roll_dice(faces: int = 6) -> int:
+
+    # TODO: Modify the docstring with the args and return informations
     """
     🎲 Roll a dice with a specified number of faces.
-    
-    Args:
-        faces: Number of faces on the dice (default: 6)
-        
-    Returns:
-        Random integer between 1 and faces (inclusive)
     """
 
     import random
@@ -19,6 +15,8 @@ def roll_dice(faces: int = 6) -> int:
         raise ValueError("Dice must have at least 1 face")
 
     return random.randint(1, faces)
+
+
 
 dice_master = Agent(
     tools=[roll_dice],
@@ -30,3 +28,4 @@ dice_master = Agent(
 
 # Test your dice master's abilities
 dice_master("Help me create a new D&D character! Roll the strength, wisdom, charisma and intelligence abilities scores using 4d6 drop lowest method.")
+

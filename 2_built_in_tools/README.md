@@ -1,6 +1,6 @@
 # ⚔️ Chapter 2: The Adventurer's Arsenal - Wielding Built-in Tools
 
-![Header Image](../images/header4.jpeg)
+![Header Image](../images/header1.png)
 
 _"A wise adventurer never ventures forth without proper equipment..."_
 
