@@ -54,7 +54,7 @@ Your journey through the realms of AI agents is carefully structured as a progre
 
 Before embarking on this legendary adventure, ensure you have:
 
-- **Python 3.8+** (your trusty spellcasting focus)
+- **Python 3.10+** (your trusty spellcasting focus)
 - **Basic Python knowledge** (at least Apprentice level)
 - **Text editor or IDE** (your magical grimoire)
 - **Terminal/Command line** familiarity
@@ -66,22 +66,22 @@ Before embarking on this legendary adventure, ensure you have:
 ```bash
 # Clone the workshop repository
 git clone https://github.com/aws-samples/sample-once-upon-agentic-ai.git
-cd once-upon-agentic-ai
+cd sample-once-upon-agentic-ai
 
 # Create and activate a virtual environment (highly recommended!)
-python -m venv venv
+uv venv
 
 # Activate your environment
 # On macOS/Linux:
-source venv/bin/activate
+source .venv/bin/activate
 # On Windows:
-venv\Scripts\activate
+.venv\Scripts\activate
 ```
 
 **Step 2: Install the Required Enchantments**
 ```bash
-# Install all workshop dependencies
-pip install -r requirements.txt
+# Install all workshop dependencies and sync the environment
+uv sync
 ```
 
 **Step 3: Configure Your Model Provider**
