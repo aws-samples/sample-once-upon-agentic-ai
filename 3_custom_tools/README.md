@@ -55,6 +55,23 @@ The docstring isn't just simple documentation - it's the instruction manual that
 
 **Tips:** LLMs are generally really good at creating docstrings for agents. Try different iterations to see what fits best for your use case.
 
+### Step 4: Equip Your Agent with the Tool ⚔️
+**TODO**: Add the tool to the agent
+
+Once your tool is forged, you must equip your agent with it:
+
+```python
+dice_master = Agent(
+    tools=[roll_dice],  # Add your tool to the tools list
+    system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune..."""
+)
+```
+
+**Why this matters:**
+- The agent can only use tools that are explicitly provided in the `tools=[]` list
+- Without this step, your perfectly crafted tool remains unused
+- The agent automatically discovers and learns how to use all provided tools
+
 ## 🎲 The Challenge: Lady Luck and Ability Scores
 
 Your agent **Lady Luck** will be challenged with a complex D&D character creation quest:
