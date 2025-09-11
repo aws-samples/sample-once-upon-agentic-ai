@@ -58,14 +58,7 @@ The docstring isn't just simple documentation - it's the instruction manual that
 ### Step 4: Equip Your Agent with the Tool ⚔️
 **TODO**: Add the tool to the agent
 
-Once your tool is forged, you must equip your agent with it:
-
-```python
-dice_master = Agent(
-    tools=[roll_dice],  # Add your tool to the tools list
-    system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune..."""
-)
-```
+Once your tool is forged, you must equip your agent with it
 
 **Why this matters:**
 - The agent can only use tools that are explicitly provided in the `tools=[]` list
