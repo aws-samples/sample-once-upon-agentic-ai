@@ -203,3 +203,7 @@ olutions (uncomment to hide from participants)
 DnD_BasicRules_2018.pdf
 A2A_BUG_REPORT.md
 output/
+
+# ChromaDB knowledge base (generated files)
+dnd_knowledge_base/
+**/dnd_knowledge_base/
