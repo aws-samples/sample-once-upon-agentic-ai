@@ -84,17 +84,13 @@ source .venv/bin/activate
 uv sync
 ```
 
-**Step 3: Configure Your Model Provider**
-The workshop uses configurable AI models. Check the `.env` file and update it with your preferred model:
+**Step 3: Configure Your Model Provider (optional)** 
+
+By default, Strands will use Claude 3.7 sonnet. If you want to change the [model](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/model-providers/amazon-bedrock/), create a `.env` file at the root of your project and set a MODEL_ID variable to your prefered model.
 
 ```bash
-# Recommended model for workshops
 MODEL_ID=anthropic.claude-3-7-sonnet-20250219-v1:0
-
-# Or any other provider you prefer
 ```
-
-Ensure you have proper credentials configured for your chosen provider. Check the [Strands documentation](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/model-providers/amazon-bedrock/) for setup instructions.
 
 ## 🎯 How to Embark on Your Quest
 
