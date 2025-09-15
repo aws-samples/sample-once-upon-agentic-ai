@@ -62,6 +62,7 @@ To communicate with agents:
 
 IMPORTANT: Always use the exact URLs shown by a2a_list_discovered_agents. Never invent or guess URLs.
 
+When you reply, please reply with a JSON (and ONLY A JSON, no text other than the json).
 Always respond in JSON format:
 {
     "response": "Your narrative response as Game Master",
@@ -70,23 +71,34 @@ Always respond in JSON format:
     "dices_rolls": [{"dice_type": "d20", "result": 15, "reason": "attack roll"}]
 }
 
-Be creative, engaging, and use your available tools to enhance the D&D experience."""
+Be creative, engaging, and use your available tools to enhance the D&D experience.
+
+Remember, the response should ONLY be a PURE json with no markdown or text arount it.
+"""
+
+try:
+    # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
+    A2A_AGENT_URLS = []
+    
+except Exception as e:
+    print(f"Error occurred: {str(e)}")
+
+    with mcp_client:
+        #TODO: Get MCP tools
+
+        #TODO: Create the gamemaster agent with both A2A and MCP tools
+        agent = Agent(
+            # model=optional,
+            # tools= List of the A2A and MCP tools,
+            # system_prompt=SYSTEM_PROMPT
+        )
+
 
 @app.post("/inquire")
 async def ask_agent(request: QuestionRequest):
     print("Processing request...")
     try:
-        # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
-        
         with mcp_client:
-            #TODO: Get MCP tools
-
-            #TODO: Create the gamemaster agent with both A2A and MCP tools
-            agent = Agent(
-                # model=optional,
-                # tools= List of the A2A and MCP tools,
-                # system_prompt=SYSTEM_PROMPT
-            )
             
             # Process the request
             response = agent(request.question)
