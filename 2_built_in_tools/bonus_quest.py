@@ -1,15 +1,8 @@
 import logging
 from strands import Agent
-from strands_tools import python_repl, file_write
+#TODO: import python_repl, file_write
 
-# Enable Strands debug log level
-logging.getLogger("strands").setLevel(logging.DEBUG)
-
-# Set the logging format and stream logs to stderr
-logging.basicConfig(
-    format="%(levelname)s | %(name)s | %(message)s",
-    handlers=[logging.StreamHandler()]
-)
+#TODO: Enable Strands debug log level
 
 # Your magical creation here
 arcane_scribe = Agent(
