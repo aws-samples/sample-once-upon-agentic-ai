@@ -1,10 +1,13 @@
-# Once Upon Agentic AI: A Developer's Epic Journey
+# Once Upon Agentic AI: A Developer's Epic Journey into the Strands SDK
+
 
 ![Header Image](images/header3.jpeg)
 
 _"Roll for Initiative... in Python!"_
 
-Welcome, brave adventurer, to the ultimate Strands framework quest! This comprehensive workshop will transform you from a coding apprentice into a master of AI agent orchestration. Through five epic chapters, you'll learn to create, equip, and command digital companions that can think, act, and collaborate like a legendary adventuring party.
+# ------> [LINK TO THE AWS WORKSHOP](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites)
+
+Welcome, brave adventurer, to the ultimate Strands framework quest! This comprehensive workshop will transform you from a coding apprentice into a master of AI agent orchestration. Through five epic chapters, you'll learn to create, equip, and command digital companions that can think, act, and collaborate like a legendary adventuring party. Follow the instructions in the following [workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites).
 
 ## � ️ The Complete Adventure Map
 
@@ -47,148 +50,6 @@ Your journey through the realms of AI agents is carefully structured as a progre
 - Master Agent-to-Agent (A2A) communication
 - Orchestrate specialized agents working together
 - Create complex distributed AI applications
-
-## 🎒 Preparing for Your Quest
-
-### Essential Gear (Prerequisites)
-
-Before embarking on this legendary adventure, ensure you have:
-
-- **Python 3.10+** (your trusty spellcasting focus)
-- **Basic Python knowledge** (at least Apprentice level)
-- **Text editor or IDE** (your magical grimoire)
-- **Terminal/Command line** familiarity
-- **A sense of adventure** and willingness to experiment! 🎲
-
-### Setting Up Your Sanctum (Installation)
-
-**Step 1: Create Your Magical Environment**
-```bash
-# Clone the workshop repository
-git clone https://github.com/aws-samples/sample-once-upon-agentic-ai.git
-cd sample-once-upon-agentic-ai
-
-# Create and activate a virtual environment (highly recommended!)
-uv venv
-
-# Activate your environment
-# On macOS/Linux:
-source .venv/bin/activate
-# On Windows:
-.venv\Scripts\activate
-```
-
-**Step 2: Install the Required Enchantments**
-```bash
-# Install all workshop dependencies and sync the environment
-uv sync
-```
-
-**Step 3: Configure Your Model Provider (optional)** 
-
-By default, Strands will use Claude 3.7 sonnet. If you want to change the [model](https://strandsagents.com/latest/documentation/docs/user-guide/concepts/model-providers/amazon-bedrock/), create a `.env` file at the root of your project and set a MODEL_ID variable to your prefered model.
-
-```bash
-MODEL_ID=anthropic.claude-3-7-sonnet-20250219-v1:0
-```
-
-## 🎯 How to Embark on Your Quest
-
-### The Sacred Order of Learning
-
-**⚠️ IMPORTANT**: Complete the chapters in order! Each builds upon the previous one's knowledge and skills.
-
-1. **[Start with Chapter 0](0_pre_requisites/)** - Enable the required models to get started
-2. **Progress through each chapter** - Don't skip ahead, each chapter introduces essential concepts
-3. **Complete all TODOs** - Each chapter has guided exercises to master the concepts
-4. **Test your creations** - Run your agents and see them come to life
-5. **Experiment and explore** - Try variations and push the boundaries
-
-### Workshop Structure
-
-Each chapter follows the same magical pattern:
-
-- **📜 README Guide**: Complete instructions and background lore
-- **🎯 TODO Exercises**: Hands-on coding challenges to complete
-- **🧪 Testing Instructions**: How to verify your magical creations work
-- **🏆 Solution Reference**: Complete working examples in the `solutions/` folder
-
-### Getting Help
-
-- **📚 Strands Documentation**: [Official Strands Docs](https://strandsagents.com/latest/documentation/docs/)
-- **🔍 Solutions Folder**: Reference implementations for each chapter
-- **🎲 Experiment Freely**: The best way to learn is by trying things!
-
-## 🧙‍♂️ What is Strands?
-
-Strands is a powerful framework for creating AI agents - think of it as your spellbook for summoning digital companions that can interact with tools and services. Like a well-equipped adventuring party, Strands provides:
-
-- **🎭 Agent Creation**: Easy summoning and configuration of AI companions
-- **⚔️ Tool Integration**: Built-in magical implements and custom enchantments
-- **🔄 Model Flexibility**: Support for multiple AI providers (different schools of magic)
-- **� eExternal Connections**: Integration with services through MCP
-- **🏰 Multi-Agent Systems**: Coordinate multiple agents working together
-
-### The Sacred Terminology
-
-- **🤖 Agent**: A digital companion that can reason, decide, and use tools
-- **🔧 Tools**: Functions that agents can invoke to perform specific tasks
-- **📋 System Prompt**: The character sheet defining your agent's personality and behavior
-- **🧠 Model Provider**: The source of intelligence (GPT-4, Claude, etc.)
-- **🌐 MCP**: Model Context Protocol for connecting to external services
-- **🏰 A2A**: Agent-to-Agent communication for multi-agent systems
-
-## 🎓 Learning Objectives
-
-By completing this workshop, you'll master:
-
-- ✅ **Agent Fundamentals**: Create, configure, and deploy AI agents
-- ✅ **Tool Mastery**: Use built-in tools and create custom ones
-- ✅ **External Integration**: Connect agents to external services via MCP
-- ✅ **Multi-Agent Systems**: Build complex applications with multiple cooperating agents
-- ✅ **Real-World Applications**: Create practical, production-ready agent systems
-
-## 🚀 Ready to Begin?
-
-Your adventure awaits! Start with [Chapter 0: An Unexpected Adventure](0_pre_requisites/) and begin your transformation from coding apprentice to Agent Master.
-
----
-
-## 📚 Additional Resources
-
-### Official Documentation & Tools
-
-- **[Strands Framework Documentation](https://strandsagents.com/latest/documentation/docs/)** - Complete reference and guides
-- **[Kiro Agentic IDE](https://kiro.dev/)** - Professional IDE for agent development
-
-### Community & Examples
-
-- **[Strands GitHub Repository](https://github.com/strands-agents/sdk-python)** - Source code and community
-- **[Example Projects](https://strandsagents.com/latest/documentation/docs/examples/)** - Real-world implementations
-
----
-
-## 🎉 Quest Complete: You've Leveled Up!
-
-Congratulations, brave adventurer! By completing this workshop, you've mastered the arcane arts of AI agent development. Your character sheet now includes:
-
-✅ **🧙‍♂️ Agent Summoning** - Create and customize digital companions  
-✅ **⚔️ Tool Mastery** - Wield built-in tools and forge custom enchantments  
-✅ **🌐 Planar Magic** - Connect to external realms through MCP  
-✅ **🏰 Multi-Agent Orchestration** - Command entire fellowships of AI agents  
-✅ **🎲 D&D System Mastery** - Build complete game management systems
-
-You've earned the legendary title of **"Agent Artificer"** and are now ready to create your own AI-powered adventures!
-
-### 🚀 Your Next Epic Adventure
-
-The realms of possibility are endless! Consider these legendary quests:
-
-- **🏢 Enterprise Applications**: Build AI assistants for business workflows
-- **🎮 Game Development**: Create intelligent NPCs and game masters
-- **🔬 Research Tools**: Develop specialized agents for data analysis
-- **🤖 Personal Assistants**: Craft AI companions for daily tasks
-- **🌐 Distributed Systems**: Architect complex multi-agent networks
 
 ### 🎲 The Adventure Never Ends...
 
