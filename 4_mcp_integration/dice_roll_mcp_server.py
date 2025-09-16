@@ -13,30 +13,35 @@ mcp = FastMCP(
 )
 
 @mcp.tool()
-def roll_dice(faces: int = 6) -> dict:
+def roll_dice(faces: int = 6, count: int = 1) -> dict:
     """
-    🎲 Roll a dice with a specified number of faces.
+    🎲 Roll multiple dice with a specified number of faces.
     
     Args:
         faces: Number of faces on the dice (default: 6)
+        count: Number of dice to roll (default: 1)
         
     Returns:
-        Dictionary with roll result and details
+        Dictionary with list of results and faces
     """
     if faces < 1:
         error_msg = "Dice must have at least 1 face"
         logging.warning(f"🎲 Invalid dice roll request: {error_msg}")
         return {"error": error_msg}
     
-    result = random.randint(1, faces)
+    if count < 1:
+        error_msg = "Must roll at least 1 dice"
+        logging.warning(f"🎲 Invalid dice roll request: {error_msg}")
+        return {"error": error_msg}
     
-    # Log the dice roll result
-    logging.info(f"🎲 DICE ROLL: d{faces} = {result}")
+    results = [random.randint(1, faces) for _ in range(count)]
+    
+    # Log the dice roll results
+    logging.info(f"🎲 DICE ROLL: {count}d{faces} = {results}")
     
     return {
-        "result": result,
-        "faces": faces,
-        "message": f"🎲 Rolled a d{faces}: {result}!"
+        "results": results,
+        "faces": faces
     }
 
 # Start the MCP server
