@@ -32,6 +32,10 @@ class QuestionRequest(BaseModel):
 def health_check():
     return {"status": "healthy"}
 
+@app.get("/messages")
+def get_messages():
+    return agent.messages
+
 @app.get("/user/{user_name}")
 def get_user(user_name):
     characters_db = TinyDB('./../character_agent/characters.json')
