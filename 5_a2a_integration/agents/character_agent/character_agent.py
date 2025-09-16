@@ -145,7 +145,7 @@ agent = Agent(
     # - model: optional
     # - tools: List the tools
     # - name: "Character Creator Agent"
-    # - description: Describe the agent's role in creating and managing D&D characters
+    # - system_prompt: Describe the agent's role in creating and managing D&D characters
 )
 
 
