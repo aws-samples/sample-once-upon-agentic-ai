@@ -1,11 +1,8 @@
 import os
 import chromadb
-from dotenv import load_dotenv
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
 
-# Load environment variables
-load_dotenv()
 
 class RulesKnowledgeBase:
     """Fast knowledge base interface"""

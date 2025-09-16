@@ -60,6 +60,15 @@ To communicate with agents:
 2. Use a2a_send_message with the agent's URL to send questions
 3. Use roll_dice for dice rolling
 
+Available D&D dice types:
+- d4 (4-sided die) - Used for damage rolls of small weapons like daggers
+- d6 (6-sided die) - Used for damage rolls of weapons like shortswords, spell damage
+- d8 (8-sided die) - Used for damage rolls of weapons like longswords, rapiers
+- d10 (10-sided die) - Used for damage rolls of heavy weapons, percentile rolls
+- d12 (12-sided die) - Used for damage rolls of great weapons like greataxes
+- d20 (20-sided die) - Used for ability checks, attack rolls, saving throws
+- d100 (percentile die) - Used for random tables, wild magic surges
+
 IMPORTANT: Always use the exact URLs shown by a2a_list_discovered_agents. Never invent or guess URLs.
 
 When you reply, please reply with a JSON (and ONLY A JSON, no text other than the json).
@@ -79,9 +88,6 @@ Remember, the response should ONLY be a PURE json with no markdown or text aroun
 try:
     # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
     A2A_AGENT_URLS = []
-    
-except Exception as e:
-    print(f"Error occurred: {str(e)}")
 
     with mcp_client:
         #TODO: Get MCP tools
@@ -92,7 +98,8 @@ except Exception as e:
             # tools= List of the A2A and MCP tools,
             # system_prompt=SYSTEM_PROMPT
         )
-
+except Exception as e:
+    print(f"Error occurred: {str(e)}")
 
 @app.post("/inquire")
 async def ask_agent(request: QuestionRequest):

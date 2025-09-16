@@ -3,13 +3,9 @@ import uuid
 from datetime import datetime
 from dataclasses import dataclass, asdict
 from typing import List, Dict
-from dotenv import load_dotenv
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
 from tinydb import TinyDB, Query
-
-# Load environment variables
-load_dotenv()
 
 @dataclass
 class Stats:
