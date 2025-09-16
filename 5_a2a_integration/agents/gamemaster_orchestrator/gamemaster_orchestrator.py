@@ -1,7 +1,6 @@
 import os
 import sys
 import uvicorn
-from dotenv import load_dotenv
 from strands import Agent
 from strands.tools.mcp.mcp_client import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
@@ -11,9 +10,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from tinydb import TinyDB, Query
 from strands_tools.a2a_client import A2AClientToolProvider
-
-# Load environment variables
-load_dotenv()
 
 app = FastAPI(title="D&D Game Master API")
 origins = ["*"]
@@ -114,4 +110,4 @@ async def ask_agent(request: QuestionRequest):
         return JSONResponse(content={"error": "Internal server error"}, status_code=500)
 
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8009)
+    uvicorn.run(app, port=8009)
