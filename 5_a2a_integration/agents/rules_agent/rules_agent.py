@@ -67,7 +67,7 @@ def query_dnd_rules(query: str) -> str:
 
 agent = Agent(
     # TODO: Configure the agent with:
-    # - model: Use os.getenv("MODEL_ID") to get the model from environment
+    # - model: Optional
     # - tools: List containing the query_dnd_rules tool
     # - name: "Rules Agent"
     # - description: "Fast D&D rules lookup"
