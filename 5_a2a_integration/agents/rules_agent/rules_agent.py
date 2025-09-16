@@ -62,13 +62,24 @@ def query_dnd_rules(query: str) -> str:
     """Fast D&D rule lookup. Returns brief rule with page reference."""
     return rules_kb.quick_query(query)
 
+DESCRIPTION="""
+Specialized D&D 5e rules lookup agent that provides fast, authoritative rule clarifications from the Basic Rules. 
+Queries the ChromaDB knowledge base containing indexed D&D content and returns brief, page-referenced rule explanations. 
+Designed for quick consultation by other agents or players during gameplay.
+"""
+
+SYSTEM_PROMPT="""
+You are a D&D rules expert. When asked about rules, use the query_dnd_rules tool once to find the relevant rule, 
+then provide a clear, concise answer with the page reference. Keep responses brief and focused on the specific rule requested.
+"""
+
 agent = Agent(
     # TODO: Configure the agent with:
     # - model: Optional
     # - tools: List containing the query_dnd_rules tool
     # - name: "Rules Agent"
-    # - description: "Fast D&D rules lookup"
-    # - system_prompt: Instructions for the agent to use the tool once and answer immediately
+    description= DESCRIPTION,
+    system_prompt= SYSTEM_PROMPT
 )
 
 # TODO: Create an A2AServer instance with:

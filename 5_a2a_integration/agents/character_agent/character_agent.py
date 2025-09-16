@@ -136,14 +136,28 @@ def create_character(
     print("Inserted")
     return character
 
+
+DESCRIPTION="""
+Specialized D&D character management agent that handles character creation, storage, and retrieval. 
+Creates new characters with proper ability score generation (4d6 drop lowest), manages character data in persistent storage, 
+and provides character lookup services. Maintains complete character profiles including stats, inventory, and progression data for D&D campaigns.
+"""
+
+SYSTEM_PROMPT="""
+You are a D&D character management specialist. When creating characters, always roll ability scores using the traditional 
+method: roll 4d6 and drop the lowest die for each of the six abilities (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma). 
+Use the appropriate tools to create, find, or list characters as requested. Provide clear confirmations when characters are created and 
+helpful summaries when characters are found. Keep responses focused and include relevant character details like class, race, and key stats."
+"""
+
 agent = Agent(
     # TODO: Configure the Character Agent with:
     # - model: optional
     # - tools: List the tools
     # - name: "Character Creator Agent"
-    # - system_prompt: Describe the agent's role in creating and managing D&D characters
+    description= DESCRIPTION,
+    system_prompt= SYSTEM_PROMPT
 )
-
 
 # TODO: Create an A2AServer instance with:
 # - agent: The agent instance created above

@@ -96,7 +96,7 @@ try:
         agent = Agent(
             # model=optional,
             # tools= List of the A2A and MCP tools,
-            # system_prompt=SYSTEM_PROMPT
+            system_prompt=SYSTEM_PROMPT
         )
 except Exception as e:
     print(f"Error occurred: {str(e)}")
