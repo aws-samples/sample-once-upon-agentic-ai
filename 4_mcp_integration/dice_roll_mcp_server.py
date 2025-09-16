@@ -9,7 +9,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # TODO: Create an MCP server with name "D&D Dice Roll Service" on port 8080
 mcp = FastMCP(
     # name=
-    # host=
     # port=
 )
 
@@ -42,5 +41,5 @@ def roll_dice(faces: int = 6) -> dict:
 
 # Start the MCP server
 if __name__ == "__main__":
-    print("Starting D&D Dice Roll MCP Server on port 8080...")
+    print("Starting D&D Dice Roll MCP Server...")
     # TODO: run the MCP server
