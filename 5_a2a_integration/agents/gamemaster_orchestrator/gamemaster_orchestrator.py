@@ -91,6 +91,7 @@ try:
         "http://127.0.0.1:8000",  # Rules Agent
         "http://127.0.0.1:8001",  # Character Agent
         ]
+    a2a_client = A2AClientToolProvider(known_agent_urls=A2A_AGENT_URLS)
 
     with mcp_client:
         #TODO: Get MCP tools
@@ -102,6 +103,7 @@ try:
             tools=list(a2a_client.tools) + mcp_tools,
             system_prompt=SYSTEM_PROMPT
         )
+
 except Exception as e:
     print(f"Error occurred: {str(e)}")
 
@@ -110,7 +112,6 @@ async def ask_agent(request: QuestionRequest):
     print("Processing request...")
     try:
         with mcp_client:
-            
             # Process the request
             response = agent(request.question)
             content = str(response)

@@ -84,7 +84,7 @@ agent = Agent(
 # TODO: Create an A2AServer instance with:
 # - agent: The agent instance created above
 # - port: 8000 (Rules Agent port)
-a2a_server = A2AServer(agent=agent, port=800))
+a2a_server = A2AServer(agent=agent, port=8000)
 
 if __name__ == "__main__":
     # TODO: Start the A2A server
