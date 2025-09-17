@@ -152,9 +152,8 @@ helpful summaries when characters are found. Keep responses focused and include 
 
 agent = Agent(
     # TODO: Configure the Character Agent with:
-    # - model: optional
-    # - tools: List the tools
-    # - name: "Character Creator Agent"
+    tools=[create_character, find_character_by_name, list_all_characters],
+    name="Character Creator Agent",
     description= DESCRIPTION,
     system_prompt= SYSTEM_PROMPT
 )
@@ -162,8 +161,8 @@ agent = Agent(
 # TODO: Create an A2AServer instance with:
 # - agent: The agent instance created above
 # - port: 8001 (Character Agent port)
-a2a_server = None
+a2a_server = A2AServer(agent=agent, port=8001)
 
 if __name__ == "__main__":
     # TODO: Start the A2A server
-    pass
+    a2a_server.serve()

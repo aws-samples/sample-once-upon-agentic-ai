@@ -1,10 +1,10 @@
 from strands import Agent
 # TODO: Import the http_request built-in tool
+from strands_tools import http_request
 
+# TODO: Add the http_request built-in-tool
 agent = Agent(
-    tools=[
-        # TODO: Add the http_request built-in-tool
-    ]
+    tools=[http_request]
     )
 
 agent("""
@@ -12,4 +12,3 @@ agent("""
    Dungeons and Dragons.
     """
     )
-

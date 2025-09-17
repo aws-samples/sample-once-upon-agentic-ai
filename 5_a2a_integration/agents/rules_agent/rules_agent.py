@@ -75,9 +75,8 @@ then provide a clear, concise answer with the page reference. Keep responses bri
 
 agent = Agent(
     # TODO: Configure the agent with:
-    # - model: Optional
-    # - tools: List containing the query_dnd_rules tool
-    # - name: "Rules Agent"
+    tools=[query_dnd_rules],
+    name="Rules Agent", 
     description= DESCRIPTION,
     system_prompt= SYSTEM_PROMPT
 )
@@ -85,8 +84,8 @@ agent = Agent(
 # TODO: Create an A2AServer instance with:
 # - agent: The agent instance created above
 # - port: 8000 (Rules Agent port)
-a2a_server = None
+a2a_server = A2AServer(agent=agent, port=800))
 
 if __name__ == "__main__":
     # TODO: Start the A2A server
-    pass
+    a2a_server.serve()
