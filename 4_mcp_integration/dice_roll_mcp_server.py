@@ -1,4 +1,3 @@
-# Strands already includes MCP, no additional install required
 # TODO: Import FastMCP from mcp.server
 import random
 import logging
