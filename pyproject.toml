@@ -2,7 +2,7 @@
 name = "once-upon-agentic-ai"
 version = "1.0.0"
 description = "A comprehensive workshop for mastering AI agent development with Strands framework"
-requires-python = ">=3.10"
+requires-python = ">=3.10,<=3.13.5"
 dependencies = [
     # Strands AI Framework
     "strands-agents>=1.0.0",
