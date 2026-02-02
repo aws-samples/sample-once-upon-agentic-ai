@@ -207,3 +207,9 @@ output/
 # ChromaDB knowledge base (generated files)
 dnd_knowledge_base/
 **/dnd_knowledge_base/
+
+# Bedrock AgentCore configuration and sensitive data
+.bedrock_agentcore.yaml
+.bedrock_agentcore/
+**/.bedrock_agentcore.yaml
+**/.bedrock_agentcore/
