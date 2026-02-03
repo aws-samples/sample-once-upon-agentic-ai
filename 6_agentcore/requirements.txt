@@ -1,3 +1,5 @@
 bedrock-agentcore
-strands-agents
+strands-agents[a2a]
 mcp-proxy-for-aws
+httpx
+requests-aws4auth

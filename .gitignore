@@ -213,3 +213,9 @@ dnd_knowledge_base/
 .bedrock_agentcore/
 **/.bedrock_agentcore.yaml
 **/.bedrock_agentcore/
+
+# AgentCore Identity configuration (Cognito credentials)
+.agentcore_identity_*.json
+.agentcore_identity_*.env
+**/.agentcore_identity_*.json
+**/.agentcore_identity_*.env
