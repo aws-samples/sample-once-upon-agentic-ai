@@ -21,3 +21,5 @@ tinydb
 # LangChain Integration
 langchain_aws
 langchain_chroma
+
+bedrock-agentcore

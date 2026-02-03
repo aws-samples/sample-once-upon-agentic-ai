@@ -25,4 +25,5 @@ dependencies = [
     # Bedrock AgentCore
     "bedrock-agentcore",
     "bedrock-agentcore-starter-toolkit>=0.2.8",
+    "mcp-proxy-for-aws>=1.1.6",
 ]
