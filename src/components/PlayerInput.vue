@@ -7,14 +7,14 @@
       placeholder="Type your action..."
       :disabled="disabled"
     />
-    <button type="submit" class="player-input-btn" :disabled="disabled">
+    <button type="submit" class="player-input-btn" :disabled="disabled || !hasContent">
       Send
     </button>
   </form>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 
 defineProps<{
   disabled: boolean
@@ -25,6 +25,7 @@ const emit = defineEmits<{
 }>()
 
 const message = ref('')
+const hasContent = computed(() => message.value.trim().length > 0)
 
 function handleSubmit() {
   const trimmed = message.value.trim()

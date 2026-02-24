@@ -1,7 +1,8 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 const __VLS_props = defineProps();
 const emit = defineEmits();
 const message = ref('');
+const hasContent = computed(() => message.value.trim().length > 0);
 function handleSubmit() {
     const trimmed = message.value.trim();
     if (!trimmed)
@@ -35,7 +36,7 @@ __VLS_asFunctionalElement(__VLS_intrinsicElements.input)({
 __VLS_asFunctionalElement(__VLS_intrinsicElements.button, __VLS_intrinsicElements.button)({
     type: "submit",
     ...{ class: "player-input-btn" },
-    disabled: (__VLS_ctx.disabled),
+    disabled: (__VLS_ctx.disabled || !__VLS_ctx.hasContent),
 });
 /** @type {__VLS_StyleScopedClasses['player-input']} */ ;
 /** @type {__VLS_StyleScopedClasses['player-input-field']} */ ;
@@ -45,6 +46,7 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             message: message,
+            hasContent: hasContent,
             handleSubmit: handleSubmit,
         };
     },
