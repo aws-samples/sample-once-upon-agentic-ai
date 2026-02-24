@@ -1,6 +1,13 @@
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+const baseUrl = import.meta.env.BASE_URL;
 const props = defineProps();
 const svgFailed = ref(false);
+const animate = ref(false);
+onMounted(() => {
+    requestAnimationFrame(() => {
+        animate.value = true;
+    });
+});
 const diceColorMap = {
     d4: '#e74c3c',
     d6: '#27ae60',
@@ -21,7 +28,6 @@ let __VLS_directives;
 // CSS variable injection end 
 __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
     ...{ class: "dice-display" },
-    title: (__VLS_ctx.reason),
 });
 if (!__VLS_ctx.svgFailed) {
     __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
@@ -29,6 +35,7 @@ if (!__VLS_ctx.svgFailed) {
     });
     __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
         ...{ class: "dice-image-wrapper" },
+        ...{ class: ({ 'dice-roll-in': __VLS_ctx.animate }) },
     });
     __VLS_asFunctionalElement(__VLS_intrinsicElements.img)({
         ...{ onError: (...[$event]) => {
@@ -36,12 +43,14 @@ if (!__VLS_ctx.svgFailed) {
                     return;
                 __VLS_ctx.svgFailed = true;
             } },
-        src: (`/dice/${__VLS_ctx.diceType}.svg`),
+        src: (`${baseUrl}dice/${__VLS_ctx.diceType}.svg`),
         alt: (`${__VLS_ctx.diceType} dice`),
         ...{ class: "dice-svg" },
+        ...{ class: ({ 'dice-tumble': __VLS_ctx.animate }) },
     });
     __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
         ...{ class: "dice-result-overlay" },
+        ...{ class: ({ 'dice-result-reveal': __VLS_ctx.animate, 'dice-result-hidden': !__VLS_ctx.animate }) },
     });
     (__VLS_ctx.result);
 }
@@ -51,10 +60,12 @@ else {
     });
     __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
         ...{ class: "dice-fallback-shape" },
+        ...{ class: ({ 'dice-roll-in': __VLS_ctx.animate }) },
         ...{ style: ({ backgroundColor: __VLS_ctx.diceColor }) },
     });
     __VLS_asFunctionalElement(__VLS_intrinsicElements.span, __VLS_intrinsicElements.span)({
         ...{ class: "dice-fallback-result" },
+        ...{ class: ({ 'dice-result-reveal': __VLS_ctx.animate, 'dice-result-hidden': !__VLS_ctx.animate }) },
     });
     (__VLS_ctx.result);
 }
@@ -78,6 +89,7 @@ const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
             svgFailed: svgFailed,
+            animate: animate,
             diceColor: diceColor,
         };
     },
