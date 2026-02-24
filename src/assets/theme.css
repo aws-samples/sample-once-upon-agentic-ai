@@ -1,0 +1,107 @@
+/* D&D Tabletop Theme - CSS Custom Properties */
+
+:root {
+  /* Color Palette */
+  --color-parchment: #f4e4c1;
+  --color-parchment-dark: #d4c4a1;
+  --color-wood-dark: #3e2723;
+  --color-wood-medium: #5d4037;
+  --color-wood-light: #795548;
+  --color-gold: #c9a84c;
+  --color-gold-light: #e6c76e;
+  --color-red-deep: #8b1a1a;
+  --color-red-accent: #b71c1c;
+  --color-ink: #2c1810;
+  --color-ink-light: #4a3728;
+  --color-candlelight: #f5deb3;
+  --color-shadow: rgba(0, 0, 0, 0.4);
+
+  /* New theme variables */
+  --color-bg-page: #ebdeca;
+  --color-bg-card: #ffffff;
+  --color-bg-user-msg: #d4e6f1;
+
+  /* Fonts */
+  --font-heading: 'MedievalSharp', 'Cinzel', serif;
+  --font-body: 'Crimson Text', 'Georgia', serif;
+  --font-ui: 'Lora', serif;
+  --font-handwriting: 'Caveat', cursive;
+
+  /* Borders & Decorations */
+  --border-wood: 3px solid var(--color-wood-dark);
+  --border-gold: 2px solid var(--color-gold);
+  --border-radius-panel: 8px;
+  --shadow-panel: 2px 4px 12px var(--color-shadow);
+  --shadow-glow: 0 0 8px var(--color-gold-light);
+
+  /* Textures */
+  --texture-parchment: url('/textures/parchment-bg.png');
+  --texture-leather: url('/textures/leather-bg.png');
+  --texture-wood: url('/textures/wood-bg.png');
+}
+
+/* ===========================
+   Base Layout Styles
+   =========================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-ink);
+  background-color: var(--color-bg-page);
+  padding: 0 1.5rem;
+}
+
+#app {
+  min-height: 100vh;
+}
+
+/* ===========================
+   Reusable Theme Classes
+   =========================== */
+
+/* Parchment-styled panel */
+.panel-parchment {
+  /* background-color: var(--color-parchment); */
+  background-image: var(--texture-parchment);
+  background-repeat: repeat;
+  background-size: auto;
+  border-radius: var(--border-radius-panel);
+  color: var(--color-ink);
+}
+
+/* Dark wood border */
+.border-wood {
+  border: var(--border-wood);
+}
+
+/* Gold accent border */
+.border-gold {
+  border: var(--border-gold);
+}
+
+/* Gold text/accent color */
+.accent-gold {
+  color: var(--color-gold);
+}
+
+/* Standard panel drop shadow */
+.shadow-panel {
+  box-shadow: var(--shadow-panel);
+}
+
+/* Gold glow effect */
+.shadow-glow {
+  box-shadow: var(--shadow-glow);
+}

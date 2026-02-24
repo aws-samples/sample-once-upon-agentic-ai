@@ -1,0 +1,32 @@
+function isTextContent(block) {
+    return 'text' in block;
+}
+function isToolUseContent(block) {
+    return 'toolUse' in block;
+}
+export function parseMessages(rawMessages) {
+    const result = [];
+    for (const msg of rawMessages) {
+        if (msg.role === 'user') {
+            const text = msg.content
+                .filter(isTextContent)
+                .map((block) => block.text)
+                .join('');
+            if (text) {
+                result.push({ role: 'user', text });
+            }
+        }
+        else if (msg.role === 'assistant') {
+            const storyBlock = msg.content
+                .filter(isToolUseContent)
+                .find((block) => block.toolUse.name === 'StoryOutput');
+            if (storyBlock) {
+                result.push({
+                    role: 'assistant',
+                    storyOutput: storyBlock.toolUse.input,
+                });
+            }
+        }
+    }
+    return result;
+}
