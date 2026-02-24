@@ -3,7 +3,7 @@ import NewGameView from '../views/NewGameView.vue';
 import GameView from '../views/GameView.vue';
 import { useGameStore } from '../stores/gameStore';
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         {
             path: '/',
