@@ -124,6 +124,8 @@ function renderMarkdown(text: string): string {
 .message-entry {
   border-radius: 8px;
   padding: 0;
+  max-width: 85%;
+  width: 85%;
 }
 
 .message-entry.has-dice {
@@ -131,16 +133,16 @@ function renderMarkdown(text: string): string {
 }
 
 .message-user {
+  align-self: flex-end;
   background-color: #dfc8a0;
   border: solid 1px #b8a178;
 }
 
 .message-assistant {
+  align-self: flex-start;
   position: relative;
-  /* background-color: #f5f1eb; */
   background-color: rgb(245 241 235 / 50%);
   box-shadow: inset 0em 0em 0.5em 0 rgba(0, 0, 0, 0.2);
-  /* border: 1px solid #e0d8ce; */
   border: solid 1px #b8a178;
   overflow: visible;
 }

@@ -1,5 +1,5 @@
 <template>
-  <span class="dice-display" :title="reason">
+  <span class="dice-display">
     <!-- SVG loaded successfully -->
     <span v-if="!svgFailed" class="dice-svg-container">
       <span class="dice-image-wrapper">
@@ -136,8 +136,9 @@ const diceColor = computed(() => diceColorMap[props.diceType] || '#7f8c8d')
   line-height: 1.4;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
-  white-space: normal;
-  max-width: 220px;
+  white-space: nowrap;
+  width: max-content;
+  max-width: 360px;
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
