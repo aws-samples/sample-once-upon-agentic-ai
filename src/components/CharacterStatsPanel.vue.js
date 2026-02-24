@@ -1,4 +1,16 @@
-const __VLS_props = defineProps();
+import { ref, watch, nextTick } from 'vue';
+const baseUrl = import.meta.env.BASE_URL;
+const revealed = ref(false);
+const props = defineProps();
+watch(() => props.stats, (newStats) => {
+    if (newStats && !revealed.value) {
+        nextTick(() => {
+            setTimeout(() => {
+                revealed.value = true;
+            }, 300);
+        });
+    }
+}, { immediate: true });
 debugger; /* PartiallyEnd: #3632/scriptSetup.vue */
 const __VLS_ctx = {};
 let __VLS_components;
@@ -231,7 +243,10 @@ else {
 var __VLS_dollars;
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
-        return {};
+        return {
+            revealed: revealed,
+            baseUrl: baseUrl,
+        };
     },
     __typeProps: {},
 });

@@ -13,9 +13,18 @@
     </div>
 
     <div v-else class="stats-content">
-      <!-- Portrait placeholder -->
-      <div class="portrait-placeholder">
-        <img :src="`${baseUrl}avatar-placeholder.jpeg`" alt="Character portrait" class="portrait-image" />
+      <!-- Portrait with scroll unroll reveal -->
+      <div class="portrait-scroll" :class="{ 'scroll-revealed': revealed }">
+        <!-- Top scroll rod -->
+        <div class="scroll-rod scroll-rod--top"></div>
+        <!-- Bottom scroll rod -->
+        <div class="scroll-rod scroll-rod--bottom"></div>
+        <!-- The portrait itself, clipped by the scroll -->
+        <div class="portrait-placeholder">
+          <img :src="`${baseUrl}avatar-placeholder.jpeg`" alt="Character portrait" class="portrait-image" />
+          <!-- Parchment overlay that fades out -->
+          <div class="scroll-overlay"></div>
+        </div>
       </div>
 
       <div class="character-name"><span class="stat-label">NAME: </span><span class="stat-value">{{ stats.name }}</span></div>
@@ -82,15 +91,29 @@
 </template>
 
 <script setup lang="ts">
+import { ref, watch, nextTick } from 'vue'
 import type { CharacterStats } from '@/types'
 
 const baseUrl = import.meta.env.BASE_URL
+const revealed = ref(false)
 
-defineProps<{
+const props = defineProps<{
   stats: CharacterStats | null
   loading: boolean
   error: string | null
 }>()
+
+// Trigger the scroll animation when stats arrive and the portrait renders
+watch(() => props.stats, (newStats) => {
+  if (newStats && !revealed.value) {
+    // Wait for Vue to render, then give the browser time to paint the closed state
+    nextTick(() => {
+      setTimeout(() => {
+        revealed.value = true
+      }, 300)
+    })
+  }
+}, { immediate: true })
 </script>
 
 <style scoped>
@@ -174,6 +197,7 @@ defineProps<{
   border: 2px solid #c4b5a3;
   background: linear-gradient(135deg, #c4b5a3, #a89682);
   overflow: hidden;
+  position: relative;
 }
 
 .portrait-image {
@@ -181,6 +205,90 @@ defineProps<{
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* --- Scroll unroll reveal --- */
+.portrait-scroll {
+  position: relative;
+  width: 150px;
+  margin: 0 auto;
+}
+
+/* The portrait clips from a thin center bar to full height */
+.portrait-scroll .portrait-placeholder {
+  clip-path: inset(48% 0 48% 0);
+  transition: clip-path 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.portrait-scroll.scroll-revealed .portrait-placeholder {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Parchment overlay fades out as scroll opens */
+.scroll-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg,
+    #e8dcc8 0%,
+    #d4c4a8 20%,
+    transparent 50%,
+    #d4c4a8 80%,
+    #e8dcc8 100%
+  );
+  opacity: 1;
+  transition: opacity 0.8s ease 0.4s;
+  pointer-events: none;
+  border-radius: 8px;
+}
+
+.scroll-revealed .scroll-overlay {
+  opacity: 0;
+}
+
+/* Wooden scroll rods */
+.scroll-rod {
+  position: absolute;
+  left: -6px;
+  right: -6px;
+  height: 10px;
+  background: linear-gradient(180deg, #a0845c 0%, #7a6340 40%, #5c4a2e 100%);
+  border-radius: 5px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-rod::before,
+.scroll-rod::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 14px;
+  height: 16px;
+  background: linear-gradient(180deg, #b8975a, #7a6340);
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.scroll-rod::before { left: -4px; }
+.scroll-rod::after { right: -4px; }
+
+.scroll-rod--top {
+  top: 85px; /* starts at center */
+  transition: top 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-rod--bottom {
+  top: 85px; /* starts at center */
+  transition: top 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.scroll-revealed .scroll-rod--top {
+  top: -5px;
+}
+
+.scroll-revealed .scroll-rod--bottom {
+  top: 175px;
 }
 
 .character-name {
