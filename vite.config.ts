@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
 export default defineConfig({
-  base: '/',
+  base: '/sample-once-upon-agentic-ai/',
   plugins: [vue()],
   resolve: {
     alias: {
