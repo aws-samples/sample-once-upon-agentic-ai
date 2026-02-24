@@ -15,7 +15,7 @@ POST http://0.0.0.0:8009/inquire
 POST http://0.0.0.0:8009/inquire
 
 {
-    "question": "What are the rules for a dexterity check roll?"
+    "question": "Can you list all the agents you have access to?"
 }
 
 ###

@@ -101,41 +101,44 @@ def create_character(
         gender: Character's gender
         stats_dict: Dictionary with strength, dexterity, constitution, intelligence, wisdom, charisma
     """
-    # Generate unique character ID
-    character_id = str(uuid.uuid4())
-    print(character_id)
-    # Create stats object
-    stats = Stats(
-        strength=stats_dict.get('strength', 10),
-        dexterity=stats_dict.get('dexterity', 10),
-        constitution=stats_dict.get('constitution', 10),
-        intelligence=stats_dict.get('intelligence', 10),
-        wisdom=stats_dict.get('wisdom', 10),
-        charisma=stats_dict.get('charisma', 10)
-    )
+    try:
+        # Generate unique character ID
+        character_id = str(uuid.uuid4())
+        print(character_id)
+        # Create stats object
+        stats = Stats(
+            strength=stats_dict.get('strength', 10),
+            dexterity=stats_dict.get('dexterity', 10),
+            constitution=stats_dict.get('constitution', 10),
+            intelligence=stats_dict.get('intelligence', 10),
+            wisdom=stats_dict.get('wisdom', 10),
+            charisma=stats_dict.get('charisma', 10)
+        )
 
-    print(stats)
-    # Create character with updated CurrentStatus
-    character = Character(
-        character_id=character_id,
-        name=name,
-        character_class=character_class,
-        race=race,
-        gender=gender,
-        level=1,
-        experience=0,
-        stats=stats,
-        inventory=[
-            InventoryItem("Starting Equipment Pack", 1),
-            InventoryItem("Gold Pieces", 100)
-        ]
-    )
-    print(character)
-    
-    characters_db.insert(asdict(character))
-    print("Inserted")
-    return character
-
+        print(stats)
+        # Create character with updated CurrentStatus
+        character = Character(
+            character_id=character_id,
+            name=name,
+            character_class=character_class,
+            race=race,
+            gender=gender,
+            level=1,
+            experience=0,
+            stats=stats,
+            inventory=[
+                InventoryItem("Starting Equipment Pack", 1),
+                InventoryItem("Gold Pieces", 100)
+            ]
+        )
+        print(character)
+        
+        characters_db.insert(asdict(character))
+        print("Inserted")
+        return character
+    except Exception as e:
+        print(f"Error occurred: {str(e)}")
+        return ""
 
 DESCRIPTION="""
 Specialized D&D character management agent that handles character creation, storage, and retrieval. 
