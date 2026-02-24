@@ -38,7 +38,7 @@ class Character:
         if self.created_at is None:
             self.created_at = datetime.now().isoformat()
 
-characters_db = TinyDB('characters.json')
+characters_db = TinyDB('characters.json', indent=4, separators=(',', ': '))
 Character_Query = Query()
 
 
