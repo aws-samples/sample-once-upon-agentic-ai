@@ -125,7 +125,7 @@ async def ask_agent(request: QuestionRequest):
     try:
         # with mcp_client:
             # Process the request
-        response = agent.invoke_async(request.question)
+        response = await agent.invoke_async(request.question)
         # content = str(response.structured_output)
         print(response.structured_output)
         return JSONResponse(content={ "response": response.structured_output.model_dump()})
