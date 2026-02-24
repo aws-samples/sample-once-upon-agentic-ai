@@ -31,6 +31,14 @@ POST http://0.0.0.0:8009/inquire
 POST http://0.0.0.0:8009/inquire
 
 {
+    "question": "What is the rule for a perception check?"
+}
+
+###
+
+POST http://0.0.0.0:8009/inquire
+
+{
     "question": "Create a character for player 'Alice' named 'Thorin Ironbeard', a male Dwarf Fighter with these stats: strength 16, dexterity 12, constitution 15, intelligence 10, wisdom 13, charisma 8"
 }
 

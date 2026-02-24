@@ -2,7 +2,7 @@
     "_default": {
         "1": {
             "character_id": "db354fcb-4289-40eb-adef-483e18c193be",
-            "name": "aofiazfae",
+            "name": "Gypsy",
             "character_class": "Bard",
             "race": "Elf",
             "gender": "Female",
@@ -27,6 +27,62 @@
                 }
             ],
             "created_at": "2026-02-25T00:08:49.717567"
+        },
+        "2": {
+            "character_id": "abf60ae8-f2cc-459b-8dd0-c6f0a49a9321",
+            "name": "Arnaud",
+            "character_class": "Bard",
+            "race": "Tiefling",
+            "gender": "Male",
+            "level": 1,
+            "experience": 0,
+            "stats": {
+                "strength": 12,
+                "dexterity": 14,
+                "constitution": 15,
+                "intelligence": 13,
+                "wisdom": 11,
+                "charisma": 16
+            },
+            "inventory": [
+                {
+                    "item_name": "Starting Equipment Pack",
+                    "quantity": 1
+                },
+                {
+                    "item_name": "Gold Pieces",
+                    "quantity": 100
+                }
+            ],
+            "created_at": "2026-02-25T01:53:47.452415"
+        },
+        "3": {
+            "character_id": "7ec6672b-fd07-42ee-a844-97fb82bae76b",
+            "name": "Amagash",
+            "character_class": "Fighter",
+            "race": "Halfling",
+            "gender": "Female",
+            "level": 1,
+            "experience": 0,
+            "stats": {
+                "strength": 15,
+                "dexterity": 16,
+                "constitution": 14,
+                "intelligence": 12,
+                "wisdom": 13,
+                "charisma": 11
+            },
+            "inventory": [
+                {
+                    "item_name": "Starting Equipment Pack",
+                    "quantity": 1
+                },
+                {
+                    "item_name": "Gold Pieces",
+                    "quantity": 100
+                }
+            ],
+            "created_at": "2026-02-25T01:55:20.937652"
         }
     }
 }
