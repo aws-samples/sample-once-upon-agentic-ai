@@ -28,5 +28,10 @@ export function parseMessages(rawMessages) {
             }
         }
     }
+    // Drop the first user message (character creation init prompt)
+    const firstUserIndex = result.findIndex((m) => m.role === 'user');
+    if (firstUserIndex !== -1) {
+        result.splice(firstUserIndex, 1);
+    }
     return result;
 }
