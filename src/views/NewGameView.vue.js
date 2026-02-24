@@ -1,4 +1,4 @@
-import { reactive, ref } from 'vue';
+import { reactive, ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { validateForm } from '@/utils/validation';
 import { formatInitPrompt } from '@/utils/promptFormatter';
@@ -6,6 +6,12 @@ import { useGameApi } from '@/composables/useGameApi';
 import { useGameStore } from '@/stores/gameStore';
 const router = useRouter();
 const store = useGameStore();
+const revealed = ref(false);
+onMounted(() => {
+    setTimeout(() => {
+        revealed.value = true;
+    }, 1000);
+});
 const genderOptions = ['Male', 'Female', 'Non-binary'];
 const raceOptions = [
     'Human',
@@ -272,6 +278,7 @@ var __VLS_dollars;
 const __VLS_self = (await import('vue')).defineComponent({
     setup() {
         return {
+            revealed: revealed,
             genderOptions: genderOptions,
             raceOptions: raceOptions,
             classOptions: classOptions,
