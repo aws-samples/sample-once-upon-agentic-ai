@@ -1,6 +1,6 @@
 <template>
   <div class="new-game-view">
-    <div class="form-card panel-parchment border-wood shadow-panel">
+    <div class="form-card paper-sheet">
       <h1 class="form-title">Create Your Character</h1>
 
       <form class="character-form" @submit.prevent="handleSubmit">
@@ -155,9 +155,44 @@ async function handleSubmit() {
 }
 
 .form-card {
+  position: relative;
   width: 100%;
   max-width: 480px;
   padding: 2.5rem;
+  background-color: #f8f5f0;
+  background-image: url('/textures/paper.png');
+  background-size: cover;
+  border: 1px solid #d5cec4;
+  box-shadow: 1px 2px 6px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  z-index: 1;
+}
+
+.form-card::before,
+.form-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #faf7f2;
+  background-image: url('/textures/paper.png');
+  background-size: cover;
+  border: 1px solid #d5cec4;
+  border-radius: 4px;
+  z-index: -1;
+}
+
+.form-card::before {
+  transform: rotate(-1.5deg);
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.form-card::after {
+  transform: rotate(1deg);
+  background-color: #f5f1eb;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.04);
 }
 
 .form-title {

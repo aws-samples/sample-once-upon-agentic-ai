@@ -28,7 +28,7 @@ describe('Property 12: Dice roll visual display', () => {
 
         const img = wrapper.find('img.dice-svg')
         expect(img.exists()).toBe(true)
-        expect(img.attributes('src')).toBe(`/dice/${diceType}.svg`)
+        expect(img.attributes('src')).toBe(`/sample-once-upon-agentic-ai/dice/${diceType}.svg`)
       }),
       { numRuns: 100 },
     )

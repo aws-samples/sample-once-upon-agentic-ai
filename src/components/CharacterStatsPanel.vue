@@ -14,7 +14,9 @@
 
     <div v-else class="stats-content">
       <!-- Portrait placeholder -->
-      <div class="portrait-placeholder"></div>
+      <div class="portrait-placeholder">
+        <img :src="`${baseUrl}avatar-placeholder.jpeg`" alt="Character portrait" class="portrait-image" />
+      </div>
 
       <div class="character-name"><span class="stat-label">NAME: </span><span class="stat-value">{{ stats.name }}</span></div>
 
@@ -81,6 +83,8 @@
 
 <script setup lang="ts">
 import type { CharacterStats } from '@/types'
+
+const baseUrl = import.meta.env.BASE_URL
 
 defineProps<{
   stats: CharacterStats | null
@@ -169,6 +173,14 @@ defineProps<{
   border-radius: 8px;
   border: 2px solid #c4b5a3;
   background: linear-gradient(135deg, #c4b5a3, #a89682);
+  overflow: hidden;
+}
+
+.portrait-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .character-name {

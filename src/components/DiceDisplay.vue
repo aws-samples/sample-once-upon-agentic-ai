@@ -4,7 +4,7 @@
     <span v-if="!svgFailed" class="dice-svg-container">
       <span class="dice-image-wrapper">
         <img
-          :src="`/dice/${diceType}.svg`"
+          :src="`${baseUrl}dice/${diceType}.svg`"
           :alt="`${diceType} dice`"
           class="dice-svg"
           @error="svgFailed = true"
@@ -27,6 +27,8 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+
+const baseUrl = import.meta.env.BASE_URL
 
 const props = defineProps<{
   diceType: string
