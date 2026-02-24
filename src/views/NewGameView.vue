@@ -150,6 +150,10 @@ async function handleSubmit() {
     const { sendInquiry } = useGameApi(form.serverUrl)
     await sendInquiry(prompt)
     store.setConnection(form.serverUrl, form.name)
+
+    // Roll the scroll closed, then navigate
+    revealed.value = false
+    await new Promise(resolve => setTimeout(resolve, 1500))
     router.push({ name: 'game', params: { characterName: form.name } })
   } catch (e) {
     submitError.value = e instanceof Error ? e.message : 'Failed to connect to server'

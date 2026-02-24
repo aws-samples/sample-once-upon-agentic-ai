@@ -62,6 +62,8 @@ async function handleSubmit() {
         const { sendInquiry } = useGameApi(form.serverUrl);
         await sendInquiry(prompt);
         store.setConnection(form.serverUrl, form.name);
+        revealed.value = false;
+        await new Promise(resolve => setTimeout(resolve, 1500));
         router.push({ name: 'game', params: { characterName: form.name } });
     }
     catch (e) {
