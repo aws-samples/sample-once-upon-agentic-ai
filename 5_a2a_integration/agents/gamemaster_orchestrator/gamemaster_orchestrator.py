@@ -1,15 +1,15 @@
 import os
 import sys
 import uvicorn
-from strands import Agent
-from strands.tools.mcp.mcp_client import MCPClient
-from mcp.client.streamable_http import streamablehttp_client
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List
 from tinydb import TinyDB, Query
+from strands import Agent
+from strands.tools.mcp.mcp_client import MCPClient
+from mcp.client.streamable_http import streamablehttp_client
 from strands_tools.a2a_client import A2AClientToolProvider
 
 app = FastAPI(title="D&D Game Master API")
@@ -103,18 +103,6 @@ try:
         structured_output_model=StoryOutput
     )
     print(agent)
-    # with mcp_client:
-    #     #TODO: Get MCP tools
-    #     mcp_tools = mcp_client.list_tools_sync()
-
-    #     #TODO: Create the gamemaster agent with both A2A and MCP tools
-    #     agent = Agent(
-    #         # model=optional,    # Try model="amazon.nova-lite-v1:0" for 
-    #         tools=list(a2a_client.tools) + mcp_tools,
-    #         system_prompt=SYSTEM_PROMPT,
-    #         structured_output_model=StoryOutput
-    #     )
-    #     print(agent)
 
 except Exception as e:
     print(f"Error occurred: {str(e)}")
@@ -123,10 +111,7 @@ except Exception as e:
 async def ask_agent(request: QuestionRequest):
     print("Processing request...")
     try:
-        # with mcp_client:
-            # Process the request
         response = await agent.invoke_async(request.question)
-        # content = str(response.structured_output)
         print(response.structured_output)
         return JSONResponse(content={ "response": response.structured_output.model_dump()})
         
