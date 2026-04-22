@@ -52,8 +52,8 @@ mcp_client = None
 SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
 
 Available agents:
-- Rules Agent (http://127.0.0.1:8000) - For D&D mechanics and rules
-- Character Agent (http://127.0.0.1:8001) - For character creation and management
+- Rules Agent, for D&D mechanics and rules
+- Character Agent, for character creation and management
 
 To communicate with agents:
 1. Use a2a_list_discovered_agents to see available agents
@@ -71,33 +71,32 @@ Available D&D dice types:
 
 IMPORTANT: Always use the exact URLs shown by a2a_list_discovered_agents. Never invent or guess URLs.
 
-When you reply, please reply with a JSON (and ONLY A JSON, no text other than the json).
-Always respond in JSON format:
-{
-    "response": "Your narrative response as Game Master",
-    "actions_suggestions": ["Action 1", "Action 2", "Action 3"],
-    "details": "Brief summary of tools/agents used",
-    "dices_rolls": [{"dice_type": "d20", "result": 15, "reason": "attack roll"}]
-}
-
 Be creative, engaging, and use your available tools to enhance the D&D experience.
-
-Remember, the response should ONLY be a PURE json with no markdown or text arount it.
 """
+
+class DiceOutput(BaseModel):
+    dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")
+    result: str = Field(description="The dice result value")
+    reason: str = Field(description="The reason the dice was rolled. Ex: attack roll")
+
+class StoryOutput(BaseModel):
+    """Model that contains information about a Person"""
+    response: str = Field(description="Your narative response as Game Master")
+    actions_suggestions: list[str] = Field(description="['Action 1', 'Action 2', 'Action 3']")
+    destails: str = Field(description="Brief summary of tools/agents used")
+    dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
 try:
     # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
     A2A_AGENT_URLS = []
 
-    with mcp_client:
-        #TODO: Get MCP tools
+    a2a_client = A2AClientToolProvider(known_agent_urls=A2A_AGENT_URLS)
 
+    agent = Agent(
+        system_prompt=SYSTEM_PROMPT,
         #TODO: Create the gamemaster agent with both A2A and MCP tools
-        agent = Agent(
-            # model=optional,
-            # tools= List of the A2A and MCP tools,
-            system_prompt=SYSTEM_PROMPT
-        )
+        #TODO: Force the response to use the StoryOutput model
+    )
 except Exception as e:
     print(f"Error occurred: {str(e)}")
 
@@ -105,13 +104,10 @@ except Exception as e:
 async def ask_agent(request: QuestionRequest):
     print("Processing request...")
     try:
-        with mcp_client:
-            
-            # Process the request
-            response = agent(request.question)
-            content = str(response)
-            return JSONResponse(content={"response": content})
-            
+        response = await agent.invoke_async(request.question)
+        print(response.structured_output)
+        return JSONResponse(content={ "response": response.structured_output.model_dump()})
+        
     except Exception as e:
         print(f"Error occurred: {str(e)}")
         return JSONResponse(content={"error": "Internal server error"}, status_code=500)
