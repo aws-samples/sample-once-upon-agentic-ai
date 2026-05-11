@@ -4,7 +4,8 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import List
 from tinydb import TinyDB, Query
 from strands import Agent
 from strands.tools.mcp.mcp_client import MCPClient
