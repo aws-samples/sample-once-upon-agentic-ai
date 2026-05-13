@@ -1,7 +1,7 @@
 # Once Upon Agentic AI: A Developer's Epic Journey into the Strands SDK
 
 
-![Header Image](images/header3.jpeg)
+![Header Image](images/home.png)
 
 _"Roll for Initiative... in Python!"_
 
