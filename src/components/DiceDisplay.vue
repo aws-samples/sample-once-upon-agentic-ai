@@ -145,7 +145,6 @@ const diceColor = computed(() => diceColorMap[props.diceType] || '#7f8c8d')
   line-height: 1.4;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
-  white-space: nowrap;
   width: max-content;
   max-width: 360px;
   pointer-events: none;
