@@ -1,6 +1,6 @@
 # Strands AI Framework
-strands-agents>=1.0.0
-strands-agents-tools>=0.2.0
+strands-agents>=1.44.0
+strands-agents-tools>=0.8.1
 strands-agents[a2a]
 
 # Web Framework for APIs
