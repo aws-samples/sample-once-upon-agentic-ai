@@ -78,8 +78,8 @@ Be creative, engaging, and use your available tools to enhance the D&D experienc
 
 class DiceOutput(BaseModel):
     dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")
-    result: str = Field(description="The dice result value")
-    reason: str = Field(description="The reason the dice was rolled. Ex: attack roll")
+    result: int = Field(description="The dice result value alone")
+    reason: str = Field(description="The reason the dice was rolled. Ex: attack roll. And the modificators if there was any")
 
 class StoryOutput(BaseModel):
     """Model that contains information about a Person"""
