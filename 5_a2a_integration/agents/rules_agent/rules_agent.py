@@ -73,18 +73,19 @@ You are a D&D rules expert. When asked about rules, use the query_dnd_rules tool
 then provide a clear, concise answer with the page reference. Keep responses brief and focused on the specific rule requested.
 """
 
-agent = Agent(
+def create_agent(context_id: str) -> Agent:
     # TODO: Configure the agent with:
-    tools=[query_dnd_rules],
-    name="Rules Agent", 
-    description= DESCRIPTION,
-    system_prompt= SYSTEM_PROMPT
-)
+    return Agent(
+        tools=[query_dnd_rules],
+        name="Rules Agent",
+        description=DESCRIPTION,
+        system_prompt=SYSTEM_PROMPT,
+    )
 
 # TODO: Create an A2AServer instance with:
-# - agent: The agent instance created above
+# - agent_factory: The create_agent function defined above (each A2A context gets its own Agent)
 # - port: 8000 (Rules Agent port)
-a2a_server = A2AServer(agent=agent, port=8000)
+a2a_server = A2AServer(agent_factory=create_agent, port=8000)
 
 if __name__ == "__main__":
     # TODO: Start the A2A server

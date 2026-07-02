@@ -153,18 +153,19 @@ Use the appropriate tools to create, find, or list characters as requested. Prov
 helpful summaries when characters are found. Keep responses focused and include relevant character details like class, race, and key stats."
 """
 
-agent = Agent(
+def create_agent(context_id: str) -> Agent:
     # TODO: Configure the Character Agent with:
-    tools=[create_character, find_character_by_name, list_all_characters],
-    name="Character Creator Agent",
-    description= DESCRIPTION,
-    system_prompt= SYSTEM_PROMPT
-)
+    return Agent(
+        tools=[create_character, find_character_by_name, list_all_characters],
+        name="Character Creator Agent",
+        description=DESCRIPTION,
+        system_prompt=SYSTEM_PROMPT,
+    )
 
 # TODO: Create an A2AServer instance with:
-# - agent: The agent instance created above
+# - agent_factory: The create_agent function defined above (each A2A context gets its own Agent)
 # - port: 8001 (Character Agent port)
-a2a_server = A2AServer(agent=agent, port=8001)
+a2a_server = A2AServer(agent_factory=create_agent, port=8001)
 
 if __name__ == "__main__":
     # TODO: Start the A2A server
