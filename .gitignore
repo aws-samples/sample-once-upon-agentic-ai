@@ -26,6 +26,11 @@ share/python-wheels/
 *.egg
 MANIFEST
 
+
+node_modules
+.angular/
+.vscode/
+
 # PyInstaller
 #  Usually these files are written by a python script from a template
 #  before PyInstaller builds the exe, so as to inject date/other infos into it.
@@ -207,3 +212,7 @@ output/
 # ChromaDB knowledge base (generated files)
 dnd_knowledge_base/
 **/dnd_knowledge_base/
+
+# TinyDB runtime data — generated when the character agent runs
+characters.json
+**/characters.json

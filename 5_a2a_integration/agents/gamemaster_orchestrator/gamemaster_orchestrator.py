@@ -53,8 +53,8 @@ mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"
 SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
 
 Available agents:
-- Rules Agent (http://127.0.0.1:8000) - For D&D mechanics and rules
-- Character Agent (http://127.0.0.1:8001) - For character creation and management
+- Rules Agent, for D&D mechanics and rules
+- Character Agent, for character creation and management
 
 To communicate with agents:
 1. Use a2a_list_discovered_agents to see available agents
@@ -87,7 +87,7 @@ class StoryOutput(BaseModel):
     actions_suggestions: list[str] = Field(description="['Action 1', 'Action 2', 'Action 3']")
     destails: str = Field(description="Brief summary of tools/agents used")
     dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
-    
+
 
 try:
     # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
