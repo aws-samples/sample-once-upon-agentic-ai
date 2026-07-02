@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from typing import List
 from tinydb import TinyDB, Query
 from strands import Agent
-from strands.tools.mcp.mcp_client import MCPClient
+from strands.tools.mcp import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
 from strands_tools.a2a_client import A2AClientToolProvider
 
