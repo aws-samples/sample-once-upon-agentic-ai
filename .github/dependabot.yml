@@ -1,0 +1,16 @@
+# Dependabot configuration for this workshop.
+#
+# Rationale: `uv.lock` is intentionally NOT committed (see .gitignore), so routine
+# version bumps produce PRs that only touch a file participants never install from.
+# We disable dependency-refresh PRs entirely and keep only GitHub security advisories,
+# which surface as separate "security update" PRs that we DO want to see.
+version: 2
+updates:
+  - package-ecosystem: "uv"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Set to 0 to suppress routine version bumps. Security-alert PRs are governed by
+    # a separate GitHub setting (Settings → Code security → Dependabot security updates)
+    # and are unaffected by this cap.
+    open-pull-requests-limit: 0

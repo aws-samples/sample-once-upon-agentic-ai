@@ -100,10 +100,10 @@ ipython_config.py
 #Pipfile.lock
 
 # UV
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#uv.lock
+# This workshop deliberately does NOT track uv.lock: each participant runs `uv sync` once
+# and installs against the latest compatible versions of the SDK. This keeps the workshop
+# aligned with the current Strands API instead of freezing an ever-aging snapshot.
+uv.lock
 
 # poetry
 #   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.

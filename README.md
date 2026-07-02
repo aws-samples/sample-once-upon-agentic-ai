@@ -9,6 +9,28 @@ _"Roll for Initiative... in Python!"_
 
 Welcome, brave adventurer, to the ultimate Strands framework quest! This comprehensive workshop will transform you from a coding apprentice into a master of AI agent orchestration. Through five epic chapters, you'll learn to create, equip, and command digital companions that can think, act, and collaborate like a legendary adventuring party. Follow the instructions in the following [workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites).
 
+## 🛠️ Setup
+
+Dependencies are declared in `pyproject.toml` — that's the single source of truth for both `uv` and plain `pip`.
+
+**Using [uv](https://docs.astral.sh/uv/) (recommended):**
+
+```bash
+uv sync
+```
+
+Prefix workshop commands with `uv run`, e.g. `uv run python 1_strands_basics/simple_agent.py`.
+
+**Using pip:**
+
+```bash
+python -m venv .venv
+source .venv/bin/activate   # Windows: .venv\Scripts\activate
+pip install .
+```
+
+The workshop deliberately does not pin exact versions (no `uv.lock`, no `requirements.txt`), so both commands install against the latest compatible releases of the Strands SDK. If a chapter breaks against a newer release, please open an issue.
+
 ## 🌐 ️ The Complete Adventure Map
 
 Your journey through the realms of AI agents is carefully structured as a progressive quest. **Each chapter builds upon the previous one** - complete them in order to unlock the full power of Strands!
