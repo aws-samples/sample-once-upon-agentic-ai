@@ -80,6 +80,9 @@ def create_agent(context_id: str) -> Agent:
         name="Rules Agent",
         description=DESCRIPTION,
         system_prompt=SYSTEM_PROMPT,
+        # No local printing: this agent runs behind A2AServer and its output
+        # is consumed by the remote caller (the orchestrator).
+        callback_handler=None,
     )
 
 # TODO: Create an A2AServer instance with:
