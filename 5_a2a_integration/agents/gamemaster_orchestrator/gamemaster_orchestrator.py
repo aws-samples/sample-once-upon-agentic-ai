@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 from typing import List
 from tinydb import TinyDB, Query
 from strands import Agent
-from strands.tools.mcp.mcp_client import MCPClient
+from strands.tools.mcp import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
 from strands_tools.a2a_client import A2AClientToolProvider
 
@@ -40,14 +40,10 @@ def get_user(user_name):
     result = characters_db.search(Character_Query.name == user_name)
     if not result:
         return f":x: Character with name '{user_name}' not found"
-    
+
     character = result[0]
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
-
-# TODO: Create MCP Client for dice rolling service
-# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
-mcp_client = None
 
 # System prompt for the agent
 SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
@@ -88,15 +84,17 @@ class StoryOutput(BaseModel):
     dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
 try:
-    # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
-    A2A_AGENT_URLS = []
+    # TODO: Create MCP Client for dice rolling service
+    # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
+    mcp_client = None
 
-    a2a_client = A2AClientToolProvider(known_agent_urls=A2A_AGENT_URLS)
+    # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
+    a2a_client = None
 
     agent = Agent(
         system_prompt=SYSTEM_PROMPT,
-        #TODO: Create the gamemaster agent with both A2A and MCP tools
-        #TODO: Force the response to use the StoryOutput model
+        # TODO: Create the gamemaster agent with both A2A and MCP tools
+        # TODO: Force the response to use the StoryOutput model
     )
 except Exception as e:
     print(f"Error occurred: {str(e)}")

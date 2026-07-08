@@ -2,7 +2,7 @@
 name = "once-upon-agentic-ai"
 version = "1.0.0"
 description = "A comprehensive workshop for mastering AI agent development with Strands framework"
-requires-python = ">=3.10,<=3.13.5"
+requires-python = ">=3.10"
 dependencies = [
     # Strands AI Framework — floor pinned because chapter 5 relies on the
     # A2AServer(agent_factory=...) API introduced in 1.44.

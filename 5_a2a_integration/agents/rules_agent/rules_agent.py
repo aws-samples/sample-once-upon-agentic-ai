@@ -69,21 +69,22 @@ Designed for quick consultation by other agents or players during gameplay.
 """
 
 SYSTEM_PROMPT="""
-You are a D&D rules expert. When asked about rules, use the query_dnd_rules tool once to find the relevant rule, 
+You are a D&D rules expert. When asked about rules, use the query_dnd_rules tool once to find the relevant rule,
 then provide a clear, concise answer with the page reference. Keep responses brief and focused on the specific rule requested.
 """
 
-agent = Agent(
+def create_agent(context_id: str) -> Agent:
     # TODO: Configure the agent with:
     # - model: Optional
     # - tools: List containing the query_dnd_rules tool
     # - name: "Rules Agent"
-    description= DESCRIPTION,
-    system_prompt= SYSTEM_PROMPT
-)
+    # - description: DESCRIPTION
+    # - system_prompt: SYSTEM_PROMPT
+    # - callback_handler: None (silence server-side logs; this agent runs behind A2AServer)
+    pass
 
 # TODO: Create an A2AServer instance with:
-# - agent: The agent instance created above
+# - agent_factory: The create_agent function defined above (not agent= — that's deprecated!)
 # - port: 8000 (Rules Agent port)
 a2a_server = None
 

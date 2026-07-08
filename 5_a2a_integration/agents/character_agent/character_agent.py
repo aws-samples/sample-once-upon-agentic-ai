@@ -147,20 +147,21 @@ SYSTEM_PROMPT="""
 You are a D&D character management specialist. When creating characters, always roll ability scores using the traditional 
 method: roll 4d6 and drop the lowest die for each of the six abilities (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma). 
 Use the appropriate tools to create, find, or list characters as requested. Provide clear confirmations when characters are created and 
-helpful summaries when characters are found. Keep responses focused and include relevant character details like class, race, and key stats."
+helpful summaries when characters are found. Keep responses focused and include relevant character details like class, race, and key stats.
 """
 
-agent = Agent(
+def create_agent(context_id: str) -> Agent:
     # TODO: Configure the Character Agent with:
     # - model: optional
-    # - tools: List the tools
+    # - tools: List the tools [create_character, find_character_by_name, list_all_characters]
     # - name: "Character Creator Agent"
-    description= DESCRIPTION,
-    system_prompt= SYSTEM_PROMPT
-)
+    # - description: DESCRIPTION
+    # - system_prompt: SYSTEM_PROMPT
+    # - callback_handler: None (silence server-side logs; this agent runs behind A2AServer)
+    pass
 
 # TODO: Create an A2AServer instance with:
-# - agent: The agent instance created above
+# - agent_factory: The create_agent function defined above (not agent= — that's deprecated!)
 # - port: 8001 (Character Agent port)
 a2a_server = None
 
