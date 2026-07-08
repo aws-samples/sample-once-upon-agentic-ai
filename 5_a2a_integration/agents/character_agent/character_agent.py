@@ -161,7 +161,7 @@ def create_agent(context_id: str) -> Agent:
     pass
 
 # TODO: Create an A2AServer instance with:
-# - agent_factory: The create_agent function defined above (not agent= — that's deprecated!)
+# - agent_factory: The create_agent function defined above
 # - port: 8001 (Character Agent port)
 a2a_server = None
 
