@@ -1,14 +1,12 @@
 from strands import Agent
-# TODO: Import the http_request built-in tool
-from strands_tools import http_request
+# TODO: Import the current_time built-in tool
+from strands_tools import current_time
 
-# TODO: Add the http_request built-in-tool
+# TODO: Add the current_time built-in tool
 agent = Agent(
-    tools=[http_request]
-    )
+    tools=[current_time]
+)
 
-agent("""
-   Using the website https://en.wikipedia.org/wiki/Dungeons_%26_Dragons tell me the name of the designers of
-   Dungeons and Dragons.
-    """
-    )
+result = agent("What time is it?")
+
+print(result)
