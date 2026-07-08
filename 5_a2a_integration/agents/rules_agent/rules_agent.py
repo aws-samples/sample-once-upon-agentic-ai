@@ -80,7 +80,6 @@ def create_agent(context_id: str) -> Agent:
     # - name: "Rules Agent"
     # - description: DESCRIPTION
     # - system_prompt: SYSTEM_PROMPT
-    # - callback_handler: None (silence server-side logs; this agent runs behind A2AServer)
     pass
 
 # TODO: Create an A2AServer instance with:
