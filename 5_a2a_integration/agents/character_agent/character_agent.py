@@ -156,15 +156,11 @@ helpful summaries when characters are found. Keep responses focused and include 
 """
 
 def create_agent(context_id: str) -> Agent:
-    # TODO: Configure the Character Agent with:
     return Agent(
         tools=[create_character, find_character_by_name, list_all_characters],
         name="Character Creator Agent",
         description=DESCRIPTION,
         system_prompt=SYSTEM_PROMPT,
-        # No local printing: this agent runs behind A2AServer and its output
-        # is consumed by the remote caller (the orchestrator).
-        callback_handler=None,
     )
 
 # TODO: Create an A2AServer instance with:
