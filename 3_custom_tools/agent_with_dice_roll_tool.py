@@ -1,10 +1,10 @@
 from strands import Agent
-# TODO: Import 'tool' from strands to use the @tool decorator
+# TODO: Import tool from strands to use the @tool decorator
 
 # TODO: Add the decorator to transform your function into a tool
 def roll_dice(faces: int = 6) -> int:
 
-    # TODO: Modify the docstring with the args and return informations
+    # TODO: Modify the docstring with information about arguments and return value
     """
     🎲 Roll a dice with a specified number of faces.
     """

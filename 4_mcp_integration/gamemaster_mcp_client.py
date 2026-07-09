@@ -1,4 +1,4 @@
-#TODO: Import Agent, MCPClient and streamablehttp_client from the strands library
+# TODO: Import Agent, MCPClient and streamablehttp_client
 
 def main():
     # Connect to the dice roll MCP server

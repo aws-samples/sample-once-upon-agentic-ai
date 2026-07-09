@@ -3,7 +3,7 @@ from strands import Agent
 
 agent = Agent(
     tools=[
-        # TODO: Add the current_time built-in tool
+        # TODO: Add the current_time tool to your agent
     ]
 )
 
