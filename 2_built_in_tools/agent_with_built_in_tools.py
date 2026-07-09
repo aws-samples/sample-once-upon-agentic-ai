@@ -2,7 +2,7 @@ from strands import Agent
 # TODO: Import the current_time built-in tool
 from strands_tools import current_time
 
-# TODO: Add the current_time built-in tool
+# TODO: Add the current_time tool to your agent
 agent = Agent(
     tools=[current_time]
 )

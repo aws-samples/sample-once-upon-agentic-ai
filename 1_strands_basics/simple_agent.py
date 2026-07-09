@@ -13,5 +13,5 @@ agent = Agent(
     system_prompt="You are a game master for a Dungeon & Dragon game"
 )
 
-# TODO: Summon your agent with a basic incantation such as "Hi, I am an adventurer ready for adventure!"
+# TODO: Invoke your agent with a basic query such as "Hi, I am an adventurer ready for adventure!"
 response = agent("Hi, I am an adventurer ready for adventure!")
