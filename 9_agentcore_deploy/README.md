@@ -1,19 +1,20 @@
 # 🏰 Chapter 9 — Deploy to Production with Bedrock AgentCore
 
 Your Game Master has entertained adventurers on your laptop long enough. Time to
-open the tavern to the whole realm: in this chapter you deploy the agent to
-**Amazon Bedrock AgentCore Runtime** — a serverless, session-isolated runtime
-built for agents — and invoke it in production.
+open the tavern to the whole realm: in this chapter you ship the game to
+production on **Amazon Bedrock AgentCore Runtime** — a serverless,
+session-isolated runtime built for agents.
 
-## What you'll build
+You'll rebuild the workshop's architecture in production, one piece at a time:
 
-A minimal Game Master agent (Strands + a local `roll_dice` tool) wrapped in
-`BedrockAgentCoreApp`, deployed to AWS with the AgentCore CLI. No Docker, no
-servers to manage: the CLI zips your code, ships it, and gives you a runtime URL.
+1. **The Game Master** — a bare Strands agent, deployed and invocable (this part)
+2. **The dice** — the MCP dice server from chapter 4, deployed as its own runtime
+3. **The characters** — the character agent from chapter 5, reachable over A2A
 
 ```
+Part 1 (you are here)
 You ──invoke──▶ AgentCore Runtime (us-west-2)
-                └── 🧙 gamemaster (Strands Agent + 🎲 roll_dice @tool)
+                └── 🧙 gamemaster (Strands Agent)
 ```
 
 ## Prerequisites
@@ -47,19 +48,21 @@ gamemaster/
     └── pyproject.toml      # Python deps for the runtime
 ```
 
-> Already-scaffolded copy: this repo ships the finished project under
-> `9_agentcore_deploy/gamemaster/` as a safety net — compare with it if you
-> get stuck.
+> Stuck? The finished project lives on the solution branch — compare with it
+> anytime.
 
 ## Step 2 — Write the Game Master
 
-Open `app/gamemaster/main.py` and replace the generated example. The pattern is
-the same agent you built in chapter 3, plus two AgentCore touches:
+Open `app/gamemaster/main.py` and replace the generated example. This is the
+same kind of agent you built in chapter 1, plus two AgentCore touches:
 
 1. `app = BedrockAgentCoreApp()` — the runtime wrapper
 2. `@app.entrypoint` — marks the function AgentCore calls on each invocation
 
 Complete the `# TODO` markers in `main.py`.
+
+No tools yet — the Game Master narrates without dice for now (they arrive in
+part 2, served over MCP, just like in chapter 4).
 
 **Why no `agent_factory` here?** In chapter 5 you learned to isolate sessions
 with an agent factory. AgentCore Runtime does that isolation *for you*: every
@@ -81,10 +84,8 @@ Try it in the browser, or from another terminal:
 ```bash
 curl -X POST http://localhost:8082/invocations \
   -H 'Content-Type: application/json' \
-  -d '{"prompt": "A goblin jumps out! I attack it with my sword — roll for me."}'
+  -d '{"prompt": "I push open the tavern door. What do I see?"}'
 ```
-
-You should see Lady Luck's cousin rolling a d20 for you. ⚔️
 
 ## Step 4 — Deploy to production
 
@@ -105,14 +106,14 @@ shows your runtime `READY` with its ARN. Your Game Master is live. 🎉
 ## Step 5 — Invoke in production
 
 ```bash
-agentcore invoke '{"prompt": "A goblin jumps out! I attack it with my sword — roll for me."}'
+agentcore invoke '{"prompt": "I push open the tavern door. What do I see?"}'
 ```
 
 The CLI prints the response **and a session id**. Resume the same adventure —
-the agent remembers the wounded goblin:
+the Game Master remembers where you left off:
 
 ```bash
-agentcore invoke --session-id <the-session-id> '{"prompt": "I finish it off with my dagger!"}'
+agentcore invoke --session-id <the-session-id> '{"prompt": "I approach the hooded figure in the corner."}'
 ```
 
 That's session persistence in production, with zero session code on your side.
@@ -129,7 +130,8 @@ That's session persistence in production, with zero session code on your side.
 
 ## 🧹 Cleanup
 
-There is no `destroy` command. To tear everything down:
+Wait until you've finished parts 2 and 3 — they build on this runtime. When the
+campaign is truly over, note there is no `destroy` command; instead:
 
 ```bash
 agentcore remove all
@@ -139,10 +141,8 @@ agentcore deploy
 (`remove all` empties the project definition; the next `deploy` deletes the
 now-empty CloudFormation stack.)
 
-## Going further (optional quests)
+## Next up
 
-The gamemaster you deployed rolls its own dice. In the full workshop
-architecture (chapters 4–5), dice live in an **MCP server** and characters in an
-**A2A agent** — both of which AgentCore can also host (`--protocol MCP` /
-`--protocol A2A`). Deploying the three-piece architecture to production is left
-as an epic-level quest. 🐉
+Your Game Master is live but unarmed — it narrates around every die roll.
+In **part 2** you deploy the chapter 4 MCP dice server as a second AgentCore
+runtime and hand the Game Master its dice back, this time over the network. 🎲
