@@ -1,0 +1,21 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "characteragent"
+version = "0.1.0"
+description = "AgentCore A2A Agent using Strands SDK"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "a2a-sdk[all] >= 0.2.0, < 1.0.0",
+    "aws-opentelemetry-distro",
+    "bedrock-agentcore[a2a] >= 1.9.1",
+    "botocore[crt] >= 1.35.0",
+    "strands-agents >= 1.13.0",
+    "tinydb>=4.8.2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["."]
