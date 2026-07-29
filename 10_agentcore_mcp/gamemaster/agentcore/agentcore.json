@@ -1,0 +1,57 @@
+{
+  "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
+  "name": "gamemaster",
+  "version": 1,
+  "managedBy": "CDK",
+  "tags": {
+    "agentcore:created-by": "agentcore-cli",
+    "agentcore:project-name": "gamemaster"
+  },
+  "runtimes": [
+    {
+      "name": "gamemaster",
+      "build": "CodeZip",
+      "entrypoint": "main.py",
+      "codeLocation": "app/gamemaster/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "envVars": [
+        {
+          "name": "DICE_MCP_RUNTIME_ARN",
+          "value": "arn:aws:bedrock-agentcore:us-west-2:503606331109:runtime/diceserver_diceserver-o04LmkGY4F"
+        }
+      ],
+      "connections": [
+        {
+          "id": "dice-mcp-server",
+          "to": {
+            "type": "runtime",
+            "arn": "arn:aws:bedrock-agentcore:us-west-2:503606331109:runtime/diceserver_diceserver-o04LmkGY4F"
+          },
+          "description": "MCP dice server deployed in chapter 10"
+        },
+        {
+          "id": "dice-mcp-server-endpoint",
+          "to": {
+            "type": "runtime",
+            "arn": "arn:aws:bedrock-agentcore:us-west-2:503606331109:runtime/diceserver_diceserver-o04LmkGY4F/runtime-endpoint/*"
+          },
+          "description": "Endpoint resource of the dice server (InvokeAgentRuntime checks runtime-endpoint/*)"
+        }
+      ]
+    }
+  ],
+  "memories": [],
+  "knowledgeBases": [],
+  "credentials": [],
+  "evaluators": [],
+  "onlineEvalConfigs": [],
+  "agentCoreGateways": [],
+  "policyEngines": [],
+  "configBundles": [],
+  "abTests": [],
+  "harnesses": [],
+  "datasets": [],
+  "payments": []
+}

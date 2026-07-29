@@ -216,11 +216,11 @@ dnd_knowledge_base/
 # TinyDB runtime data — generated when the character agent runs
 characters.json
 **/characters.json
-# Chapter 9 — AgentCore deploy
+# AgentCore deploy chapters (9+)
 # Per-account config and CLI state stay local (contain AWS account IDs / runtime ARNs)
-9_agentcore_deploy/**/aws-targets.json
-9_agentcore_deploy/**/.cli/
+*_agentcore_*/**/aws-targets.json
+*_agentcore_*/**/.cli/
 # Re-include the CDK stack sources (root "lib/" rule would hide them)
-!9_agentcore_deploy/**/cdk/lib/
+!*_agentcore_*/**/cdk/lib/
 # No-lock policy (see PR #44)
 uv.lock
