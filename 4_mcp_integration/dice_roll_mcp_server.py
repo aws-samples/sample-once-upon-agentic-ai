@@ -6,10 +6,10 @@ import logging
 # Configure logging to show dice roll results
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# TODO: Create an MCP server with the name "D&D Dice Roll Service" on port 8080
+# TODO: Create an MCP server with the name "D&D Dice Roll Service" on port 8002
 mcp = FastMCP(
     name="D&D Dice Roll Service",
-    port=8080
+    port=8002
 )
 
 @mcp.tool()

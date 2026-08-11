@@ -46,8 +46,8 @@ def get_user(user_name):
     return character
 
 # TODO: Create MCP Client for dice rolling service
-# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8080/mcp")
-mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
+# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
+mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8002/mcp"))
 
 # System prompt for the agent
 SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.

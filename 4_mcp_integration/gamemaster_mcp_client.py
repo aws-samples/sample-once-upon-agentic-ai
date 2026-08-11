@@ -6,8 +6,8 @@ from mcp.client.streamable_http import streamablehttp_client
 def main():
     # Connect to the dice roll MCP server
     print("\nConnecting to D&D Dice Roll MCP Server...")
-    # TODO: Create a streamable http MCPClient connecting to "http://localhost:8080/mcp"
-    mcp_dice_client = MCPClient(lambda: streamablehttp_client("http://localhost:8080/mcp"))
+    # TODO: Create a streamable http MCPClient connecting to "http://localhost:8002/mcp"
+    mcp_dice_client = MCPClient(lambda: streamablehttp_client("http://localhost:8002/mcp"))
     
     try:
         # Create the gamemaster agent with access to dice rolling
