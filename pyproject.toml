@@ -9,6 +9,10 @@ dependencies = [
     "strands-agents[a2a]>=1.44",
     "strands-agents-tools",
 
+    # MCP: pin to 1.x. Chapter 4 uses "from mcp.server import FastMCP", which was
+    # renamed to MCPServer in mcp 2.x, so unpinned installs break the chapter.
+    "mcp>=1.0,<2",
+
     # Web Framework for APIs
     "fastapi[standard]",
     "pydantic",
