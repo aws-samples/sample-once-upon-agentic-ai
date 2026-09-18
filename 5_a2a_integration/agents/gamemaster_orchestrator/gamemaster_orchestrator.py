@@ -82,7 +82,7 @@ class DiceOutput(BaseModel):
     reason: str = Field(description="The reason the dice was rolled. Ex: attack roll. And the modificators if there was any")
 
 class StoryOutput(BaseModel):
-    """Model that contains information about a Person"""
+    """A single Game Master turn: the narration, what the player could do next, and any dice rolled."""
     response: str = Field(description="Your narative response as Game Master")
     actions_suggestions: list[str] = Field(description="['Action 1', 'Action 2', 'Action 3']")
     details: str = Field(description="Brief summary of tools/agents used")
