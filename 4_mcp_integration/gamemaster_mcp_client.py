@@ -1,4 +1,4 @@
-# TODO: Import Agent, MCPClient and streamablehttp_client
+# TODO: Import Agent, MCPClient and streamable_http_client
 
 def main():
     # Connect to the dice roll MCP server
