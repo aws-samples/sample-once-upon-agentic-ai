@@ -29,7 +29,11 @@ source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install .
 ```
 
-The workshop deliberately does not pin exact versions (no `uv.lock`, no `requirements.txt`), so both commands install against the latest compatible releases of the Strands SDK. If a chapter breaks against a newer release, please open an issue.
+The workshop ships no lockfile (no `uv.lock`, no `requirements.txt`), so both commands install
+against the latest compatible releases of the Strands SDK. Two deliberate version bounds live in
+`pyproject.toml`, each with a comment explaining why: a floor on `strands-agents` for the Chapter 5
+A2A API, and a `mcp<2` ceiling because mcp 2.0 renamed the server and client symbols Chapters 4 and
+5 teach. If a chapter breaks against a newer release, please open an issue.
 
 ## 🌐 ️ The Complete Adventure Map
 
