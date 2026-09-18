@@ -85,7 +85,7 @@ class StoryOutput(BaseModel):
     """Model that contains information about a Person"""
     response: str = Field(description="Your narative response as Game Master")
     actions_suggestions: list[str] = Field(description="['Action 1', 'Action 2', 'Action 3']")
-    destails: str = Field(description="Brief summary of tools/agents used")
+    details: str = Field(description="Brief summary of tools/agents used")
     dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
 
