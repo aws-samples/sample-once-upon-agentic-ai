@@ -32,10 +32,9 @@ dependencies = [
     "ollama",
 
     # Model Context Protocol — imported directly by chapters 4 and 5, so declared here rather
-    # than inherited from strands-agents. Ceiling pinned because mcp 2.0 renamed both symbols the
-    # chapters teach: mcp.server.FastMCP -> MCPServer, and streamablehttp_client ->
-    # streamable_http_client. Chapter 4 also passes port= to the server constructor, which 2.x
-    # moved to run(transport="streamable-http", port=...). Do not raise this ceiling until those
-    # chapters and the workshop catalog are ported together — see issue #50.
-    "mcp<2",
+    # than inherited from strands-agents. Ceiling matches strands-agents' own mcp<2.2: chapters 4
+    # and 5 are written against the 2.x API (MCPServer, streamable_http_client, port passed to
+    # run()), validated against mcp 2.1.1. Raise the ceiling only after re-running both chapters
+    # against the newer release — see issue #52.
+    "mcp<2.2",
 ]
