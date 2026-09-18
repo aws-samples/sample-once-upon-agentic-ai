@@ -17,7 +17,7 @@ const assistantMsg: ParsedMessage = {
   storyOutput: {
     response: 'The door creaks open revealing a dark chamber.',
     actions_suggestions: ['Enter the chamber', 'Call out'],
-    destails: '',
+    details: '',
     dice_rolls: [],
   },
 }
@@ -27,7 +27,7 @@ const assistantMsgWithDice: ParsedMessage = {
   storyOutput: {
     response: 'You swing your sword at the goblin.',
     actions_suggestions: [],
-    destails: '',
+    details: '',
     dice_rolls: [
       { dice_type: 'd20', result: '17', reason: 'Attack roll' },
       { dice_type: 'd6', result: '4', reason: 'Damage roll' },

@@ -73,7 +73,7 @@ describe('Navigation Integration', () => {
                 response: {
                   response: 'Welcome, brave adventurer!',
                   actions_suggestions: ['Look around', 'Talk to innkeeper'],
-                  destails: '',
+                  details: '',
                   dice_rolls: [],
                 },
               }),

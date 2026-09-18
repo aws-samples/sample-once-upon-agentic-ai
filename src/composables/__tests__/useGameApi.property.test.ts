@@ -17,7 +17,7 @@ const validStoryResponse = {
   response: {
     response: '',
     actions_suggestions: [],
-    destails: '',
+    details: '',
     dice_rolls: [],
   },
 }

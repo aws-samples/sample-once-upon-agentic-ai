@@ -38,7 +38,7 @@ const diceRollArb: fc.Arbitrary<DiceRoll> = fc.record({
 const storyOutputArb: fc.Arbitrary<StoryOutput> = fc.record({
   response: fc.string({ minLength: 1, maxLength: 200 }),
   actions_suggestions: fc.array(fc.string({ minLength: 1, maxLength: 60 }), { minLength: 0, maxLength: 4 }),
-  destails: fc.string({ maxLength: 100 }),
+  details: fc.string({ maxLength: 100 }),
   dice_rolls: fc.array(diceRollArb, { minLength: 0, maxLength: 3 }),
 })
 

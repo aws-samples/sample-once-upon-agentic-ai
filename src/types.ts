@@ -79,7 +79,7 @@ export interface DiceRoll {
 export interface StoryOutput {
   response: string
   actions_suggestions: string[]
-  destails: string
+  details: string
   dice_rolls: DiceRoll[]
 }
 

@@ -27,7 +27,7 @@ describe('parseMessages', () => {
     const storyInput = {
       response: 'The dragon roars!',
       actions_suggestions: ['Run', 'Fight'],
-      destails: 'rolled dice',
+      details: 'rolled dice',
       dice_rolls: [{ dice_type: 'd20', result: '15', reason: 'attack roll' }],
     }
     const raw: RawMessage[] = [
@@ -98,7 +98,7 @@ describe('parseMessages', () => {
     const storyInput = {
       response: 'Welcome!',
       actions_suggestions: [],
-      destails: '',
+      details: '',
       dice_rolls: [],
     }
     const raw: RawMessage[] = [
@@ -122,13 +122,13 @@ describe('parseMessages', () => {
     const story1 = {
       response: 'First story',
       actions_suggestions: [],
-      destails: '',
+      details: '',
       dice_rolls: [],
     }
     const story2 = {
       response: 'Second story',
       actions_suggestions: [],
-      destails: '',
+      details: '',
       dice_rolls: [],
     }
     const raw: RawMessage[] = [
@@ -150,7 +150,7 @@ describe('parseMessages', () => {
     const storyInput = {
       response: 'You enter the cave.',
       actions_suggestions: ['Look around'],
-      destails: 'perception check',
+      details: 'perception check',
       dice_rolls: [],
     }
     const raw: RawMessage[] = [

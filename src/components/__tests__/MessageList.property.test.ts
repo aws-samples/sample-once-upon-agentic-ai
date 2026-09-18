@@ -29,7 +29,7 @@ const storyOutputArb: fc.Arbitrary<StoryOutput> = fc.record({
     minLength: 0,
     maxLength: 4,
   }),
-  destails: fc.stringMatching(/^[a-zA-Z0-9]{0,60}$/),
+  details: fc.stringMatching(/^[a-zA-Z0-9]{0,60}$/),
   dice_rolls: fc.array(diceRollArb, { minLength: 0, maxLength: 3 }),
 })
 

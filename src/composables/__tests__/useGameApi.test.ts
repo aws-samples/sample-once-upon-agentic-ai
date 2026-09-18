@@ -23,7 +23,7 @@ describe('useGameApi', () => {
       const storyOutput = {
         response: 'You enter a dark cave.',
         actions_suggestions: ['Look around', 'Light a torch'],
-        destails: 'none',
+        details: 'none',
         dice_rolls: [],
       }
       globalThis.fetch = mockFetch({ response: storyOutput })
@@ -43,7 +43,7 @@ describe('useGameApi', () => {
       const storyOutput = {
         response: 'ok',
         actions_suggestions: [],
-        destails: '',
+        details: '',
         dice_rolls: [],
       }
       globalThis.fetch = mockFetch({ response: storyOutput })
@@ -122,7 +122,7 @@ describe('useGameApi', () => {
                 input: {
                   response: 'You swing your sword!',
                   actions_suggestions: ['Dodge', 'Attack again'],
-                  destails: 'combat',
+                  details: 'combat',
                   dice_rolls: [{ dice_type: 'd20', result: '18', reason: 'attack roll' }],
                 },
               },
@@ -186,7 +186,7 @@ describe('useGameApi', () => {
       const storyOutput = {
         response: 'ok',
         actions_suggestions: [],
-        destails: '',
+        details: '',
         dice_rolls: [],
       }
       globalThis.fetch = mockFetch({ response: storyOutput })
