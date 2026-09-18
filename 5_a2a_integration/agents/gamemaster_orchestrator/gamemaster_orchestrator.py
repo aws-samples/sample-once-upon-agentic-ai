@@ -9,7 +9,7 @@ from typing import List
 from tinydb import TinyDB, Query
 from strands import Agent
 from strands.tools.mcp import MCPClient
-from mcp.client.streamable_http import streamablehttp_client
+from mcp.client.streamable_http import streamable_http_client
 from strands_tools.a2a_client import A2AClientToolProvider
 
 app = FastAPI(title="D&D Game Master API")
@@ -85,7 +85,7 @@ class StoryOutput(BaseModel):
 
 try:
     # TODO: Create MCP Client for dice rolling service
-    # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
+    # Initialize MCPClient with a lambda that returns streamable_http_client("http://localhost:8002/mcp")
     mcp_client = None
 
     # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
