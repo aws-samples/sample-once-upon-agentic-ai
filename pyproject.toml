@@ -30,4 +30,5 @@ dependencies = [
 
     # Ollama Integration
     "ollama",
+    "mcp<2"
 ]
