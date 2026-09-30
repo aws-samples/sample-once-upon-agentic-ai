@@ -142,20 +142,19 @@ def create_character(
     print(f"✅ Created character {name} ({character_class} {race}) with id {character_id}")
     return record
 
-DESCRIPTION="""
-Specialized D&D character management agent that handles character creation, storage, and retrieval. 
-Creates new characters with proper ability score generation (4d6 drop lowest), manages character data in persistent storage, 
-and provides character lookup services. Maintains complete character profiles including stats, inventory, and progression data for D&D campaigns.
-"""
+DESCRIPTION="""D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them."""
 
-SYSTEM_PROMPT="""
-You are a D&D character management specialist. When creating characters, always roll ability scores using the traditional
-method: roll 4d6 and drop the lowest die for each of the six abilities (Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma).
-Use the appropriate tools to create, find, or list characters as requested. Provide clear confirmations when characters are created and
-helpful summaries when characters are found. Keep responses focused and include relevant character details like class, race, and key stats.
-"""
+SYSTEM_PROMPT="""You are a D&D character manager. Use your tools to create, find or list characters.
+When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
+Confirm creations and summarize found characters briefly: class, race, key stats."""
 
 def create_agent(context_id: str) -> Agent:
+    # TODO: Configure the Character Agent with:
+    # - model: optional
+    # - tools: List the tools [create_character, find_character_by_name, list_all_characters]
+    # - name: "Character Creator Agent"
+    # - description: DESCRIPTION
+    # - system_prompt: SYSTEM_PROMPT
     return Agent(
         tools=[create_character, find_character_by_name, list_all_characters],
         name="Character Creator Agent",
@@ -164,7 +163,7 @@ def create_agent(context_id: str) -> Agent:
     )
 
 # TODO: Create an A2AServer instance with:
-# - agent_factory: The create_agent function defined above (each A2A context gets its own Agent)
+# - agent_factory: The create_agent function defined above
 # - port: 8001 (Character Agent port)
 a2a_server = A2AServer(agent_factory=create_agent, port=8001)
 
