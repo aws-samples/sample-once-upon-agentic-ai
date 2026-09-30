@@ -101,10 +101,8 @@ def create_character(
         gender: Character's gender
         stats_dict: Dictionary with strength, dexterity, constitution, intelligence, wisdom, charisma
     """
-    # Generate unique character ID
     character_id = str(uuid.uuid4())
     print(character_id)
-    # Create stats object
     stats = Stats(
         strength=stats_dict.get('strength', 10),
         dexterity=stats_dict.get('dexterity', 10),
@@ -115,7 +113,6 @@ def create_character(
     )
 
     print(stats)
-    # Create character with updated CurrentStatus
     character = Character(
         character_id=character_id,
         name=name,

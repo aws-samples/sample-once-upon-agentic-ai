@@ -49,7 +49,6 @@ def get_user(user_name):
 # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
 mcp_client = None
 
-# System prompt for the agent
 SYSTEM_PROMPT = """You are a D&D Game Master. Never make up what a tool can tell you.
 
 Your tools:

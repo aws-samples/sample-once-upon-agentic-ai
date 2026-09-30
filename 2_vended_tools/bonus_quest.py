@@ -6,13 +6,11 @@ from strands import Agent
 
 logging.getLogger("strands").setLevel(logging.DEBUG)
 
-# Set the logging format and stream logs to stderr
 logging.basicConfig(
     format="%(levelname)s | %(name)s | %(message)s",
     handlers=[logging.StreamHandler()]
 )
 
-# Your magical creation here
 arcane_scribe = Agent(
     # TODO: Step 1 - Add the shell and file_editor tools to your agent
     # TODO: Step 2 - Ask for your approval before each tool call with HumanInTheLoop

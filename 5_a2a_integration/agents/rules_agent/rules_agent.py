@@ -25,7 +25,6 @@ class RulesKnowledgeBase:
                 self._client = chromadb.PersistentClient(path=self.db_path)
                 print("ChromaDB client created successfully")
                 
-                # List available collections
                 collections = self._client.list_collections()
                 print(f"Available collections: {[c.name for c in collections]}")
                 
@@ -49,7 +48,6 @@ class RulesKnowledgeBase:
             if results['documents'][0]:
                 doc = results['documents'][0][0]
                 page = results['metadatas'][0][0].get('page', '?')
-                # Very short response
                 return f"Page {page}: {doc[:100]}..."
             return "No rules found"
         except:
