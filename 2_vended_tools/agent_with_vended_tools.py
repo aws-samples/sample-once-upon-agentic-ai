@@ -3,7 +3,7 @@ from strands import Agent
 
 agent = Agent(
     tools=[
-        # TODO: Step 2 - Add the http_request tool to your agent
+        # TODO: Step 1 - Add the http_request tool to your agent
     ],
     system_prompt="""You are a game master for a Dungeon & Dragon game.
     When asked about a spell or a monster, look it up on the D&D 5e API and answer from the data:

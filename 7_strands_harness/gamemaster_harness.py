@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
 from typing import List
 from strands.vended_tools import make_a2a_client
-# TODO: Step 1 - Import create_harness from strands_harness
+# TODO: Step 2 - Import create_harness from strands_harness
 
 app = FastAPI(title="D&D Game Master API (Strands harness)")
 app.add_middleware(
@@ -37,10 +37,10 @@ INSTRUCTIONS = """You are a D&D Game Master. Never make up what a tool can tell 
 - a2a_client talks to the Rules Agent (http://127.0.0.1:8000) and the Character Agent (http://127.0.0.1:8001).
 Only use those endpoints. Keep each turn short: a few sentences of narration, then the options."""
 
-# TODO: Step 2 - Create the A2A client tool with make_a2a_client and the allowed agent endpoints (same as Chapter 5)
+# TODO: Step 1 - Create the A2A client tool with make_a2a_client and the allowed agent endpoints (same as Chapter 5)
 a2a_client = None
 
-# TODO: Step 3 - Create the Game Master with create_harness:
+# TODO: Step 2 - Create the Game Master with create_harness:
 # - instructions: INSTRUCTIONS
 # - mcp_servers: the dice server, {"dice": {"url": "http://127.0.0.1:8002/mcp"}}
 # - tools: [a2a_client]

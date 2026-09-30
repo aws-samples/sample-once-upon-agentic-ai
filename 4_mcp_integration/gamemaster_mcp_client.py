@@ -3,7 +3,7 @@
 def main():
     # Connect to the dice roll MCP server
     print("\nConnecting to D&D Dice Roll MCP Server...")
-    # TODO: Step 2 - Create a streamable http MCPClient connecting to "http://localhost:8002/mcp"
+    # TODO: Step 1 - Create a streamable http MCPClient connecting to "http://localhost:8002/mcp"
     
     try:
         # Create the gamemaster agent with access to dice rolling
@@ -11,7 +11,7 @@ def main():
             system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
             You speak with theatrical flair and always announce dice rolls with appropriate drama.
             You know all about D&D mechanics, always use the appropriate tools when applicable - never make up results!"""
-            # TODO: Step 3 - Add the MCP tool to the gamemaster agent
+            # TODO: Step 2 - Add the MCP tool to the gamemaster agent
         )
         
         # Start interactive session
