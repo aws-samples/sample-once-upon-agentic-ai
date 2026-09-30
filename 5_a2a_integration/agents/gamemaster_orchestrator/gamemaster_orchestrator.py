@@ -1,5 +1,3 @@
-import os
-import sys
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
