@@ -28,7 +28,7 @@ The agents run on Amazon Bedrock by default (Claude Sonnet 4.6; chapter 7 uses C
 |---|---|---|
 | 0. An Unexpected Adventure | [instructions](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites) | Set up Python, uv and this repository |
 | 1. The Art of Agent Summoning | [`1_strands_basics/`](1_strands_basics/) | Your first agent, a system prompt, debug logs |
-| 2. The Adventurer's Arsenal | [`2_built_in_tools/`](2_built_in_tools/) | Built-in (vended) tools: `http_request` on the D&D 5e API; bonus: `shell` + `file_editor` gated by `HumanInTheLoop` |
+| 2. The Adventurer's Arsenal - Vended Tools | [`2_vended_tools/`](2_vended_tools/) | Tools that ship with the SDK (vended tools): `http_request` on the D&D 5e API; bonus: `shell` + `file_editor` gated by `HumanInTheLoop` |
 | 3. The Art of Magical Forging | [`3_custom_tools/`](3_custom_tools/) | Your own `@tool`: the dice roller |
 | 4. Planar Portals - MCP | [`4_mcp_integration/`](4_mcp_integration/) | The same dice roller served over MCP, and an agent that consumes it |
 | 5. The Grand Alliance - A2A | [`5_a2a_integration/`](5_a2a_integration/) | Rules Agent + Character Agent over A2A, a Game Master orchestrator with structured output |
