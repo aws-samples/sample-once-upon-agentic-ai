@@ -23,7 +23,6 @@ def roll_dice(faces: int = 6) -> int:
     return random.randint(1, faces)
 
 
-
 dice_master = Agent(
     # TODO: Step 3 - Add the tool to the agent
     tools=[roll_dice],
@@ -33,6 +32,5 @@ dice_master = Agent(
     When rolling ability scores, remember the traditional method: roll 4d6, drop the lowest die."""
 )
 
-# Test your dice master's abilities
 dice_master("Help me create a new D&D character! Roll the strength, wisdom, charisma and intelligence abilities scores using 4d6 drop lowest method.")
 
