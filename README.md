@@ -1,64 +1,66 @@
 # Once Upon Agentic AI: A Developer's Epic Journey into the Strands SDK
 
-
 ![Header Image](images/home.png)
 
 _"Roll for Initiative... in Python!"_
 
-# ------> [LINK TO THE AWS WORKSHOP](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites)
+A hands-on workshop that teaches the [Strands Agents SDK](https://strandsagents.com/) by building a Dungeons & Dragons Game Master: one agent first, then tools, an MCP server, remote agents over A2A, a web interface, and finally the same system rebuilt with Strands harness.
 
-Welcome, brave adventurer, to the ultimate Strands framework quest! This comprehensive workshop will transform you from a coding apprentice into a master of AI agent orchestration. Through five epic chapters, you'll learn to create, equip, and command digital companions that can think, act, and collaborate like a legendary adventuring party. Follow the instructions in the following [workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites).
+**The instructions live in the AWS workshop: [Once Upon Agentic AI](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites).** This repository holds the code you complete along the way: each chapter folder contains files with `# TODO` markers that the workshop walks you through.
 
-## 🌐 ️ The Complete Adventure Map
+## Quick Start
 
-Your journey through the realms of AI agents is carefully structured as a progressive quest. **Each chapter builds upon the previous one** - complete them in order to unlock the full power of Strands!
+```bash
+git clone https://github.com/aws-samples/sample-once-upon-agentic-ai.git
+cd sample-once-upon-agentic-ai
+uv python install          # if you don't have Python yet (3.10+)
+uv sync                    # creates .venv/ with every dependency
+source .venv/bin/activate  # .venv\Scripts\activate on Windows
+```
 
-### 🐉 [Chapter 0: An Unexpected Adventure](0_pre_requisites/)
-**Complete the prerequisites before going on an adventure!**
+No `uv`? Install it from [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/), or use plain pip: `pip install .` from the repository root.
 
-### 🧙‍♂️ [Chapter 1: The Art of Agent Summoning](1_strands_basics/)
-**Master the fundamental ritual of agent creation**
-- Learn what Strands is and how it works
-- Summon your first AI companion
-- Configure models and system prompts
-- Understand the core concepts of agent development
+The agents run on Amazon Bedrock by default (Claude Sonnet 4.6; chapter 7 uses Claude Opus 5). You need AWS credentials with access to those models, see [Chapter 0](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites).
 
-### ⚔️ [Chapter 2: The Adventurer's Arsenal](2_built_in_tools/)
-**Equip your agents with built-in magical tools**
-- Discover Strands' powerful built-in tool library
-- Learn how agents autonomously choose and use tools
-- Master web scraping and information gathering
-- Understand tool consent and safety mechanisms
+## The Adventure Map
 
-### 🔨 [Chapter 3: The Art of Magical Forging](3_custom_tools/)
-**Forge your own custom tools and enchantments**
-- Transform Python functions into agent tools
-- Create the legendary Dice of Destiny
-- Master the `@tool` decorator and documentation
-- Build domain-specific capabilities
+| Chapter | Folder | What you build |
+|---|---|---|
+| 0. An Unexpected Adventure | [instructions](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites) | Set up Python, uv and this repository |
+| 1. The Art of Agent Summoning | [`1_strands_basics/`](1_strands_basics/) | Your first agent, a system prompt, debug logs |
+| 2. The Adventurer's Arsenal | [`2_built_in_tools/`](2_built_in_tools/) | Built-in (vended) tools: `http_request` on the D&D 5e API; bonus: `shell` + `file_editor` gated by `HumanInTheLoop` |
+| 3. The Art of Magical Forging | [`3_custom_tools/`](3_custom_tools/) | Your own `@tool`: the dice roller |
+| 4. Planar Portals - MCP | [`4_mcp_integration/`](4_mcp_integration/) | The same dice roller served over MCP, and an agent that consumes it |
+| 5. The Grand Alliance - A2A | [`5_a2a_integration/`](5_a2a_integration/) | Rules Agent + Character Agent over A2A, a Game Master orchestrator with structured output |
+| 6. Web Interface Testing | [web UI](https://aws-samples.github.io/sample-once-upon-agentic-ai/) | Play with your Game Master through the browser |
+| 7. The Enchanted Armour - Strands harness | [`7_strands_harness/`](7_strands_harness/) | The Game Master API rebuilt with `create_harness()` |
+| 8. Resource Cleanup | [instructions](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/8-cleanup) | Stop everything and tidy up |
 
-### 🌐 [Chapter 4: Planar Portals - MCP Integration](4_mcp_integration/)
-**Connect to external realms through Model Context Protocol**
-- Build and deploy MCP servers
-- Create MCP clients for agent integration
-- Understand distributed tool architectures
-- Master external service connections
+Complete the chapters in order: each one reuses what the previous one built.
 
-### 🏰 [Chapter 5: The Grand Alliance - A2A Mastery](5_a2a_integration/)
-**Command multiple agents in perfect harmony**
-- Build a complete multi-agent D&D system
-- Master Agent-to-Agent (A2A) communication
-- Orchestrate specialized agents working together
-- Create complex distributed AI applications
+## Branches
 
-### 🎲 The Adventure Never Ends...
+- `main`: the skeleton you clone, with `# TODO` markers to fill in.
+- `solution-*`: the same files with the answers written below each TODO. Use the latest one if you get stuck.
 
-Remember, the most epic adventures are the ones you create yourself. Whether you're building the next great AI application or just exploring the boundaries of what's possible, you now have the tools and knowledge to make it happen.
+## Dependencies
 
-_May your agents be wise, your tools be sharp, and your code compile on the first try!_ 🎲✨
+The workshop ships no lockfile (`uv.lock` is gitignored), so `uv sync` installs the latest compatible releases. Three bounds are pinned in `pyproject.toml`, each with a comment explaining why: a floor on `strands-agents` (the release the instructions were written against), `strands-harness` for chapter 7, and a `mcp<2` ceiling because mcp 2.0 renamed the `FastMCP` and `streamablehttp_client` symbols chapters 4 and 5 teach. If a chapter breaks against a newer release, please open an issue.
+
+## Tests
+
+```bash
+uv run pytest tests/
+```
+
+The tests cover the chapter 5 A2A servers: module imports, the per-context `agent_factory` isolation, and the agent card served over HTTP.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ---
 
-**"The best way to predict the future is to build the agents that will create it."** - Modern Developer Wisdom
+_"The best way to predict the future is to build the agents that will create it."_ - Modern Developer Wisdom
 
 _Happy coding, Agent Master! 🐉⚔️🧙‍♂️_
