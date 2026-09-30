@@ -4,9 +4,10 @@ version = "1.0.0"
 description = "A comprehensive workshop for mastering AI agent development with Strands framework"
 requires-python = ">=3.10"
 dependencies = [
-    # Strands AI Framework — floor pinned because chapter 5 relies on the
+    # Strands Harness SDK — floor pinned to the release the workshop instructions were
+    # rewritten against (Sept 2026 docs). Chapter 5 additionally relies on the
     # A2AServer(agent_factory=...) API introduced in 1.44.
-    "strands-agents[a2a]>=1.44",
+    "strands-agents[a2a]>=1.57",
     "strands-agents-tools",
 
     # Web Framework for APIs
