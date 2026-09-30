@@ -34,7 +34,7 @@ The agents run on Amazon Bedrock by default (Claude Sonnet 4.6; chapter 7 uses C
 | 5. The Grand Alliance - A2A | [`5_a2a_integration/`](5_a2a_integration/) | Rules Agent + Character Agent over A2A, a Game Master orchestrator with structured output |
 | 6. Web Interface Testing | [web UI](https://aws-samples.github.io/sample-once-upon-agentic-ai/) | Play with your Game Master through the browser |
 | 7. The Enchanted Armour - Strands harness | [`7_strands_harness/`](7_strands_harness/) | The Game Master API rebuilt with `create_harness()` |
-| 8. Resource Cleanup | [instructions](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/8-cleanup) | Stop everything and tidy up |
+| Final cleanup | [instructions](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/cleanup) | Stop your services and delete the generated files |
 
 Complete the chapters in order: each one reuses what the previous one built.
 
