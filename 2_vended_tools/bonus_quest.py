@@ -6,7 +6,6 @@ from strands.vended_tools import shell, file_editor
 # TODO: Import HumanInTheLoop from strands.vended_interventions.hitl
 from strands.vended_interventions.hitl import HumanInTheLoop
 
-# TODO: Enable Strands debug log level
 logging.getLogger("strands").setLevel(logging.DEBUG)
 
 # Set the logging format and stream logs to stderr
