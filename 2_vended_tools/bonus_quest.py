@@ -2,7 +2,7 @@ import logging
 import os
 from strands import Agent
 # TODO: Import shell and file_editor from strands.vended_tools
-# TODO: Import HumanInTheLoop
+# TODO: Import HumanInTheLoop from strands.vended_interventions.hitl
 
 # TODO: Enable Strands debug log level
 
