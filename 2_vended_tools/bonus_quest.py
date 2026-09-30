@@ -1,12 +1,12 @@
 import logging
 import os
 from strands import Agent
-#TODO: import shell, file_editor
+# TODO: Import shell and file_editor from strands.vended_tools
 from strands.vended_tools import shell, file_editor
-#TODO: import HumanInTheLoop
+# TODO: Import HumanInTheLoop
 from strands.vended_interventions.hitl import HumanInTheLoop
 
-#TODO: Enable Strands debug log level
+# TODO: Enable Strands debug log level
 logging.getLogger("strands").setLevel(logging.DEBUG)
 
 # Set the logging format and stream logs to stderr
@@ -17,9 +17,9 @@ logging.basicConfig(
 
 # Your magical creation here
 arcane_scribe = Agent(
-    #TODO: add the tools
+    # TODO: Add the shell and file_editor tools to your agent
     tools=[shell, file_editor],
-    #TODO: ask for your approval before each tool call
+    # TODO: Ask for your approval before each tool call with HumanInTheLoop
     interventions=[HumanInTheLoop(ask="stdio")],
     system_prompt=f"""You are Kiro the Grey Hat, a wizard who specializes in the ancient art of code magic.
     When asked to create spells (code), you inscribe them on parchment (files) in the directory {os.getcwd()}
