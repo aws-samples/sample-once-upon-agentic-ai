@@ -8,7 +8,6 @@ dependencies = [
     # rewritten against (Sept 2026 docs). Chapter 5 additionally relies on the
     # A2AServer(agent_factory=...) API introduced in 1.44.
     "strands-agents[a2a]>=1.57",
-    "strands-agents-tools",
 
     # Web Framework for APIs
     "fastapi[standard]",

@@ -8,9 +8,9 @@ from pydantic import BaseModel, Field
 from typing import List
 from tinydb import TinyDB, Query
 from strands import Agent
+from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
-from strands_tools.a2a_client import A2AClientToolProvider
 
 app = FastAPI(title="D&D Game Master API")
 origins = ["*"]
@@ -40,36 +40,25 @@ def get_user(user_name):
     result = characters_db.search(Character_Query.name == user_name)
     if not result:
         return f":x: Character with name '{user_name}' not found"
-
+    
     character = result[0]
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
+# TODO: Create MCP Client for dice rolling service
+# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
+mcp_client = None
+
 # System prompt for the agent
-SYSTEM_PROMPT = """You are a D&D Game Master orchestrator with access to specialized agents and tools.
+SYSTEM_PROMPT = """You are a D&D Game Master. Never make up what a tool can tell you.
 
-Available agents:
-- Rules Agent, for D&D mechanics and rules
-- Character Agent, for character creation and management
+Your tools:
+- a2a_client: talks to the specialist agents. operation="discover" reads an agent's card, operation="send_message" asks it something.
+  - Rules Agent at http://127.0.0.1:8000: D&D rules and mechanics
+  - Character Agent at http://127.0.0.1:8001: create, find or list characters
+- roll_dice: every dice roll (d4 to d100) goes through this tool.
 
-To communicate with agents:
-1. Use a2a_list_discovered_agents to see available agents
-2. Use a2a_send_message with the agent's URL to send questions
-3. Use roll_dice for dice rolling
-
-Available D&D dice types:
-- d4 (4-sided die) - Used for damage rolls of small weapons like daggers
-- d6 (6-sided die) - Used for damage rolls of weapons like shortswords, spell damage
-- d8 (8-sided die) - Used for damage rolls of weapons like longswords, rapiers
-- d10 (10-sided die) - Used for damage rolls of heavy weapons, percentile rolls
-- d12 (12-sided die) - Used for damage rolls of great weapons like greataxes
-- d20 (20-sided die) - Used for ability checks, attack rolls, saving throws
-- d100 (percentile die) - Used for random tables, wild magic surges
-
-IMPORTANT: Always use the exact URLs shown by a2a_list_discovered_agents. Never invent or guess URLs.
-
-Be creative, engaging, and use your available tools to enhance the D&D experience.
-"""
+Only use the endpoints listed above. Narrate with flair, like a Game Master."""
 
 class DiceOutput(BaseModel):
     dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")
@@ -83,12 +72,9 @@ class StoryOutput(BaseModel):
     details: str = Field(description="Brief summary of tools/agents used")
     dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
-try:
-    # TODO: Create MCP Client for dice rolling service
-    # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
-    mcp_client = None
 
-    # TODO: Create the A2A client with the A2AClientToolProvider and pass the list of the known agent urls
+try:
+    # TODO: Create the A2A client tool with make_a2a_client and the allowed agent endpoints
     a2a_client = None
 
     agent = Agent(
@@ -96,6 +82,8 @@ try:
         # TODO: Create the gamemaster agent with both A2A and MCP tools
         # TODO: Force the response to use the StoryOutput model
     )
+    print(agent)
+
 except Exception as e:
     print(f"Error occurred: {str(e)}")
 
