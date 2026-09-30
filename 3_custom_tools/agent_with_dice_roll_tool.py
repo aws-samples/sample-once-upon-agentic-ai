@@ -1,10 +1,10 @@
 from strands import Agent
-# TODO: Import tool from strands to use the @tool decorator
+# TODO: Step 1 - Import tool from strands to use the @tool decorator
 
-# TODO: Add the decorator to transform your function into a tool
+# TODO: Step 2 - Add the decorator to transform your function into a tool
 def roll_dice(faces: int = 6) -> int:
 
-    # TODO: Modify the docstring with information about arguments and return value
+    # TODO: Step 3 - Modify the docstring with information about arguments and return value
     """
     🎲 Roll a dice with a specified number of faces.
     """
@@ -19,7 +19,7 @@ def roll_dice(faces: int = 6) -> int:
 
 
 dice_master = Agent(
-    # TODO: Add the tool to the agent
+    # TODO: Step 4 - Add the tool to the agent
     system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
     You speak with theatrical flair and always announce dice rolls with appropriate drama.
     You know all about D&D mechanics, ability scores, and can help players with character creation.
