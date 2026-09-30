@@ -1,5 +1,5 @@
 from strands import Agent
-# TODO: Import the http_request built-in tool
+# TODO: Import the http_request vended tool
 from strands.vended_tools import http_request
 
 # TODO: Add the http_request tool to your agent
