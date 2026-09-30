@@ -67,7 +67,7 @@ DESCRIPTION="""D&D 5e rules lookup: fast, page-referenced answers from the Basic
 SYSTEM_PROMPT="""You are a D&D 5e rules expert. For each rules question, call query_dnd_rules once, then answer briefly with the page reference."""
 
 def create_agent(context_id: str) -> Agent:
-    # TODO: Configure the agent with:
+    # TODO: Step 1 - Configure the agent with:
     # - model: Optional
     # - tools: List containing the query_dnd_rules tool
     # - name: "Rules Agent"
@@ -80,11 +80,11 @@ def create_agent(context_id: str) -> Agent:
         system_prompt=SYSTEM_PROMPT,
     )
 
-# TODO: Create an A2AServer instance with:
+# TODO: Step 2 - Create an A2AServer instance with:
 # - agent_factory: The create_agent function defined above
 # - port: 8000 (Rules Agent port)
 a2a_server = A2AServer(agent_factory=create_agent, port=8000)
 
 if __name__ == "__main__":
-    # TODO: Start the A2A server
+    # TODO: Step 3 - Start the A2A server
     a2a_server.serve()

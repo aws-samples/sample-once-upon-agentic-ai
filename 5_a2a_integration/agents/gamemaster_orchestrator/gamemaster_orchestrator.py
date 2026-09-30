@@ -45,7 +45,7 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# TODO: Create MCP Client for dice rolling service
+# TODO: Step 1 - Create MCP Client for dice rolling service
 # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
 mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8002/mcp"))
 
@@ -74,7 +74,7 @@ class StoryOutput(BaseModel):
 
 
 try:
-    # TODO: Create the A2A client tool with make_a2a_client and the allowed agent endpoints
+    # TODO: Step 2 - Create the A2A client tool with make_a2a_client and the allowed agent endpoints
     a2a_client = make_a2a_client(allowed_endpoints={
         "http://127.0.0.1:8000": None,  # Rules Agent
         "http://127.0.0.1:8001": None,  # Character Agent
@@ -82,9 +82,9 @@ try:
 
     agent = Agent(
         system_prompt=SYSTEM_PROMPT,
-        # TODO: Create the gamemaster agent with both A2A and MCP tools
+        # TODO: Step 3 - Create the gamemaster agent with both A2A and MCP tools
         tools=[mcp_client, a2a_client],
-        # TODO: Force the response to use the StoryOutput model
+        # TODO: Step 3 - Force the response to use the StoryOutput model
         structured_output_model=StoryOutput
     )
     print(agent)

@@ -1,8 +1,8 @@
 from strands import Agent
-# TODO: Import the http_request vended tool
+# TODO: Step 1 - Import the http_request vended tool
 from strands.vended_tools import http_request
 
-# TODO: Add the http_request tool to your agent
+# TODO: Step 2 - Add the http_request tool to your agent
 agent = Agent(
     tools=[http_request],
     system_prompt="""You are a game master for a Dungeon & Dragon game.
