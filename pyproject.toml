@@ -8,6 +8,8 @@ dependencies = [
     # rewritten against (Sept 2026 docs). Chapter 5 additionally relies on the
     # A2AServer(agent_factory=...) API introduced in 1.44.
     "strands-agents[a2a]>=1.57",
+    # Strands harness — the pre-assembled agent used in chapter 7 (create_harness).
+    "strands-harness",
 
     # Web Framework for APIs
     "fastapi[standard]",
