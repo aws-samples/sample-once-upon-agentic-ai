@@ -1,4 +1,4 @@
-# TODO: Step 1 - Import Agent, MCPClient and streamablehttp_client
+# TODO: Step 1 - Import Agent from strands, MCPClient from strands.tools.mcp and streamablehttp_client from mcp.client.streamable_http
 
 def main():
     print("\nConnecting to D&D Dice Roll MCP Server...")

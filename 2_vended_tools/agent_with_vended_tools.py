@@ -1,5 +1,5 @@
 from strands import Agent
-# TODO: Step 1 - Import the http_request vended tool
+# TODO: Step 1 - Import http_request from strands.vended_tools
 
 agent = Agent(
     tools=[

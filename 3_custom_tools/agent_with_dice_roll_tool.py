@@ -1,5 +1,5 @@
 from strands import Agent
-# TODO: Step 1 - Import tool from strands to use the @tool decorator
+# TODO: Step 1 - Import tool from strands
 
 # TODO: Step 1 - Add the decorator to transform your function into a tool
 def roll_dice(faces: int = 6) -> int:
