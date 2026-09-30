@@ -1,17 +1,9 @@
-import logging
 import os
 from strands import Agent
 # TODO: Step 1 - Import shell and file_editor from strands.vended_tools
 from strands.vended_tools import shell, file_editor
 # TODO: Step 2 - Import HumanInTheLoop from strands.vended_interventions.hitl
 from strands.vended_interventions.hitl import HumanInTheLoop
-
-logging.getLogger("strands").setLevel(logging.DEBUG)
-
-logging.basicConfig(
-    format="%(levelname)s | %(name)s | %(message)s",
-    handlers=[logging.StreamHandler()]
-)
 
 arcane_scribe = Agent(
     # TODO: Step 1 - Add the shell and file_editor tools to your agent
