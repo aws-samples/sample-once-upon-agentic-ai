@@ -216,3 +216,6 @@ dnd_knowledge_base/
 # TinyDB runtime data — generated when the character agent runs
 characters.json
 **/characters.json
+
+# Strands harness state (chapter 7): sessions and long-term memory
+.agent/
