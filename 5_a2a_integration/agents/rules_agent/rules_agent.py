@@ -3,57 +3,18 @@ import chromadb
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
 
+# The knowledge base built by utils/create_knowledge_base.py, shared by the whole chapter.
+KB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "utils", "dnd_knowledge_base")
+_collection = None
 
-class RulesKnowledgeBase:
-    """Fast knowledge base interface"""
-    
-    def __init__(self):
-        # Use the shared KB at the chapter root level
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        # Go up to chapter root: rules_agent -> agents -> 5_a2a_integration
-        chapter_root = os.path.dirname(os.path.dirname(current_dir))
-        self.db_path = os.path.join(chapter_root, "utils", "dnd_knowledge_base")
-        self._client = None
-        self._collection = None
-        print(f"KB path: {self.db_path}")
-    
-    def _get_collection(self):
-        if self._collection is None:
-            try:
-                print(f"Attempting to connect to ChromaDB at: {self.db_path}")
-                print(f"Path exists: {os.path.exists(self.db_path)}")
-                self._client = chromadb.PersistentClient(path=self.db_path)
-                print("ChromaDB client created successfully")
-                
-                collections = self._client.list_collections()
-                print(f"Available collections: {[c.name for c in collections]}")
-                
-                self._collection = self._client.get_collection("dnd_basic_rules")
-                print("Collection 'dnd_basic_rules' found successfully")
-            except Exception as e:
-                print(f"Error connecting to KB: {e}")
-                return None
-        return self._collection
-    
-    def quick_query(self, query: str) -> str:
-        """Fast query with minimal processing"""
-        print(f"Querying KB with: {query}")
-        collection = self._get_collection()
-        if not collection:
-            print("Collection is None - KB unavailable")
-            return "KB unavailable"
-        
-        try:
-            results = collection.query(query_texts=[query], n_results=1)
-            if results['documents'][0]:
-                doc = results['documents'][0][0]
-                page = results['metadatas'][0][0].get('page', '?')
-                return f"Page {page}: {doc[:100]}..."
-            return "No rules found"
-        except:
-            return "KB error"
 
-rules_kb = RulesKnowledgeBase()
+def rules_collection():
+    """Open the ChromaDB collection on first use (fails loudly if the knowledge base was not built)."""
+    global _collection
+    if _collection is None:
+        _collection = chromadb.PersistentClient(path=KB_PATH).get_collection("dnd_basic_rules")
+    return _collection
+
 
 @tool
 def query_dnd_rules(query: str) -> str:
@@ -61,25 +22,30 @@ def query_dnd_rules(query: str) -> str:
 
     Use it for any question about game mechanics: ability checks, combat,
     spellcasting, conditions, resting. Ask in plain English, as a player would.
-    The lookup is a semantic search over the D&D Basic Rules PDF and returns the
-    single best-matching passage with its page number.
+    The lookup is a semantic search over the D&D Basic Rules PDF: the three
+    passages closest to the question come back, each with its page number.
 
     Example response:
-        "Page 74: When a hostile creature that you can see moves out of your reach, …"
+        "[Page 74] When a hostile creature that you can see moves out of your reach, ...
+
+        [Page 73] ..."
 
     Notes:
-        - Returns one short passage (about 100 characters), not the full rule text.
-        - Returns "KB unavailable" if the knowledge base has not been built yet
-          (see utils/create_knowledge_base.py), "No rules found" if nothing matches.
+        - Passages are about 1,000 characters long; the answer is usually in the first one.
+        - Fails if the knowledge base has not been built yet (see utils/create_knowledge_base.py).
 
     Args:
         query: The rules question or topic, in plain English, e.g. "opportunity attack"
             or "what are the rules for dexterity checks".
 
     Returns:
-        A string with the page reference followed by the matching passage.
+        The matching passages, each prefixed with its page reference, separated by blank lines.
     """
-    return rules_kb.quick_query(query)
+    results = rules_collection().query(query_texts=[query], n_results=3)
+    return "\n\n".join(
+        f"[Page {meta['page']}] {doc}"
+        for doc, meta in zip(results["documents"][0], results["metadatas"][0])
+    )
 
 DESCRIPTION="""D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base."""
 

@@ -1,113 +1,77 @@
-#!/usr/bin/env python3
-"""
-D&D Basic Rules Knowledge Base Creator
-Creates a ChromaDB knowledge base from the D&D Basic Rules PDF
+"""Build the Rules Agent knowledge base: a local ChromaDB collection of D&D Basic Rules passages.
+
+Run it once from this folder, with DnD_BasicRules_2018.pdf next to it:
+    python create_knowledge_base.py
 """
 
 import os
 import sys
-from pathlib import Path
-import PyPDF2
-import chromadb
-from chromadb.config import Settings
-import uuid
-from typing import List, Dict
 
-def extract_text_from_pdf(pdf_path: str) -> List[Dict[str, str]]:
-    """Extract text from PDF and split into chunks"""
+import chromadb
+from pypdf import PdfReader
+
+PDF_FILE = "DnD_BasicRules_2018.pdf"
+DB_PATH = "./dnd_knowledge_base"
+COLLECTION = "dnd_basic_rules"
+# Printed at the top of almost every page; useless for search, so it is stripped.
+FOOTER = "D&D Basic Rules (Version 1.0). Not for resale. Permission granted to print and photocopy this document for personal use only."
+CHUNK_SIZE = 1000    # characters per passage
+CHUNK_OVERLAP = 200  # characters shared by two consecutive passages, so a rule cut in two stays findable
+
+
+def extract_chunks(pdf_path: str) -> list[dict]:
+    """Read the PDF page by page and cut each page into overlapping passages."""
     chunks = []
-    
-    try:
-        with open(pdf_path, 'rb') as file:
-            pdf_reader = PyPDF2.PdfReader(file)
-            
-            for page_num, page in enumerate(pdf_reader.pages):
-                text = page.extract_text()
-                
-                if text.strip():  # Only process pages with text
-                    # Split into smaller chunks for better retrieval
-                    paragraphs = text.split('\n\n')
-                    
-                    for para_idx, paragraph in enumerate(paragraphs):
-                        if len(paragraph.strip()) > 50:  # Filter out very short chunks
-                            chunks.append({
-                                'id': f"page_{page_num + 1}_para_{para_idx}",
-                                'text': paragraph.strip(),
-                                'metadata': {
-                                    'page': page_num + 1,
-                                    'paragraph': para_idx,
-                                    'source': 'DnD_BasicRules_2018.pdf'
-                                }
-                            })
-    
-    except Exception as e:
-        print(f"Error reading PDF: {e}")
-        return []
-    
+    for page_number, page in enumerate(PdfReader(pdf_path).pages, start=1):
+        # pypdf separates many words with newlines: normalise all whitespace to single spaces
+        text = " ".join((page.extract_text() or "").replace(FOOTER, " ").split())
+        start = 0
+        while start < len(text):
+            end = min(start + CHUNK_SIZE, len(text))
+            if end < len(text):  # cut on a space, not in the middle of a word
+                cut = text.rfind(" ", start + CHUNK_SIZE // 2, end)
+                if cut != -1:
+                    end = cut
+            passage = text[start:end].strip()
+            if len(passage) > 50:
+                chunks.append({
+                    "id": f"page_{page_number}_offset_{start}",
+                    "text": passage,
+                    "metadata": {"page": page_number, "source": PDF_FILE},
+                })
+            if end == len(text):
+                break
+            start = end - CHUNK_OVERLAP
     return chunks
 
-def create_knowledge_base(pdf_path: str, db_path: str = "./dnd_knowledge_base"):
-    """Create ChromaDB knowledge base from PDF"""
-    
-    print("Extracting text from PDF...")
-    chunks = extract_text_from_pdf(pdf_path)
-    
-    if not chunks:
-        print("No text chunks extracted from PDF")
-        return
-    
-    print(f"Extracted {len(chunks)} text chunks")
-    
-    # Initialize ChromaDB
-    print("Initializing ChromaDB...")
-    client = chromadb.PersistentClient(path=db_path)
-    
-    # Create or get collection
-    collection_name = "dnd_basic_rules"
-    try:
-        collection = client.get_collection(collection_name)
-        print(f"Collection '{collection_name}' already exists. Deleting and recreating...")
-        client.delete_collection(collection_name)
-    except:
-        pass
-    
-    collection = client.create_collection(
-        name=collection_name,
-        metadata={"description": "D&D Basic Rules 2018 Knowledge Base"}
-    )
-    
-    # Prepare data for ChromaDB
-    documents = [chunk['text'] for chunk in chunks]
-    metadatas = [chunk['metadata'] for chunk in chunks]
-    ids = [chunk['id'] for chunk in chunks]
-    
-    # Add documents to collection in batches
-    batch_size = 100
-    print("Adding documents to ChromaDB...")
-    
-    for i in range(0, len(documents), batch_size):
-        batch_docs = documents[i:i + batch_size]
-        batch_metas = metadatas[i:i + batch_size]
-        batch_ids = ids[i:i + batch_size]
-        
+
+def create_knowledge_base() -> None:
+    print("Extracting text from the PDF...")
+    chunks = extract_chunks(PDF_FILE)
+    print(f"{len(chunks)} passages extracted")
+
+    client = chromadb.PersistentClient(path=DB_PATH)
+    if COLLECTION in [c.name for c in client.list_collections()]:
+        print(f"Collection '{COLLECTION}' already exists, rebuilding it")
+        client.delete_collection(COLLECTION)
+    collection = client.create_collection(COLLECTION)
+
+    print("Embedding passages into ChromaDB (the embedding model is downloaded on first run)...")
+    batch = 100
+    for i in range(0, len(chunks), batch):
+        part = chunks[i:i + batch]
         collection.add(
-            documents=batch_docs,
-            metadatas=batch_metas,
-            ids=batch_ids
+            ids=[c["id"] for c in part],
+            documents=[c["text"] for c in part],
+            metadatas=[c["metadata"] for c in part],
         )
-        
-        print(f"Added batch {i//batch_size + 1}/{(len(documents) + batch_size - 1)//batch_size}")
-    
-    print(f"Knowledge base created successfully at: {db_path}")
-    print(f"Collection: {collection_name}")
-    print(f"Total documents: {len(documents)}")
+        print(f"  {min(i + batch, len(chunks))}/{len(chunks)}")
+
+    print(f"Knowledge base created at {DB_PATH} ({collection.count()} passages in '{COLLECTION}')")
+
 
 if __name__ == "__main__":
-    pdf_file = "DnD_BasicRules_2018.pdf"
-    
-    if not os.path.exists(pdf_file):
-        print(f"PDF file '{pdf_file}' not found!")
-        sys.exit(1)
-    
-    create_knowledge_base(pdf_file)
+    if not os.path.exists(PDF_FILE):
+        sys.exit(f"'{PDF_FILE}' not found. Download it next to this script first (see the workshop instructions).")
+    create_knowledge_base()
     print("Knowledge base creation complete!")
