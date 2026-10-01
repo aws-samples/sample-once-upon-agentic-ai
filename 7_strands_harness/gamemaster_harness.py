@@ -44,7 +44,7 @@ a2a_client = make_a2a_client(allowed_endpoints={
     "http://127.0.0.1:8001": None,  # Character Agent
 })
 
-# TODO: Step 2 - Create the Game Master with create_harness:
+# TODO: Step 2 - Create the Game Master as agent with create_harness:
 # - instructions: INSTRUCTIONS
 # - mcp_servers: the dice server, {"dice": {"url": "http://127.0.0.1:8002/mcp"}}
 # - tools: [a2a_client]
