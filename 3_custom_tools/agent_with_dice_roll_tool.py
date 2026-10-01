@@ -3,11 +3,7 @@ from strands import Agent
 
 # TODO: Step 1 - Add the decorator to transform your function into a tool
 def roll_dice(faces: int = 6) -> int:
-
-    # TODO: Step 2 - Modify the docstring with information about arguments and return value
-    """
-    🎲 Roll a dice with a specified number of faces.
-    """
+    # TODO: Step 2 - Write a docstring with the description, an Args section and the return value
 
     import random
 
