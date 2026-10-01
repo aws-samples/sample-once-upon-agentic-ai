@@ -41,4 +41,4 @@ def roll_dice(faces: int = 6) -> int:
 
 if __name__ == "__main__":
     print("Starting D&D Dice Roll MCP Server...")
-    # TODO: Step 3 - Run the MCP server
+    # TODO: Step 3 - Run the MCP server with the streamable-http transport
