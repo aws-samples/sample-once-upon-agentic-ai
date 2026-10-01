@@ -13,6 +13,8 @@ def roll_dice(faces: int = 6) -> int:
     return random.randint(1, faces)
 
 
+print(roll_dice.tool_spec)  # what Strands tells the model about your tool
+
 dice_master = Agent(
     # TODO: Step 3 - Add the tool to the agent
     system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
