@@ -68,9 +68,9 @@ try:
 
     agent = Agent(
         system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
-        # TODO: Step 3 - Create the gamemaster agent with both A2A and MCP tools
+        # TODO: Step 3 - Add the mcp_client and a2a_client tools to the agent
         tools=[mcp_client, a2a_client],
-        # TODO: Step 3 - Force the response to use the StoryOutput model
+        # TODO: Step 4 - Force the response to use the StoryOutput model
         structured_output_model=StoryOutput
     )
     print(agent)
