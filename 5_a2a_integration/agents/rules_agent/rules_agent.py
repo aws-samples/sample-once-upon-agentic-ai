@@ -46,22 +46,13 @@ def query_dnd_rules(query: str) -> str:
         for doc, meta in zip(results["documents"][0], results["metadatas"][0])
     )
 
-DESCRIPTION="""D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base."""
-
-SYSTEM_PROMPT="""You are a D&D 5e rules expert. For each rules question, call query_dnd_rules once, then answer briefly with the page reference."""
-
 def create_agent(context_id: str) -> Agent:
-    # TODO: Step 1 - Configure the agent with:
-    # - model: Optional
-    # - tools: List containing the query_dnd_rules tool
-    # - name: "Rules Agent"
-    # - description: DESCRIPTION
-    # - system_prompt: SYSTEM_PROMPT
     return Agent(
+        # TODO: Step 1 - Add the query_dnd_rules tool and the name "Rules Agent" to the agent
         tools=[query_dnd_rules],
         name="Rules Agent",
-        description=DESCRIPTION,
-        system_prompt=SYSTEM_PROMPT,
+        description="D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base.",
+        system_prompt="""You are a D&D 5e rules expert. For each rules question, call query_dnd_rules once, then answer briefly with the page reference.""",
     )
 
 # TODO: Step 2 - Create an A2AServer instance with:
