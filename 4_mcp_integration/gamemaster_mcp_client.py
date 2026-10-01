@@ -10,10 +10,12 @@ gamemaster = Agent(
     # TODO: Step 2 - Add the MCP tool to the gamemaster agent
 )
 
-print("\n🎲 Lady Luck - D&D Gamemaster with MCP Dice Rolling")
-print("=" * 60)
-print("\n🎯 Try: 'Roll a d20' or 'Roll a d6' or 'Roll a d100'")
-print("💡 Make sure the dice server is running: python dice_roll_mcp_server.py")
+print("""
+🎲 Lady Luck - D&D Gamemaster with MCP Dice Rolling
+============================================================
+🎯 Try: 'Roll a d20' or 'Roll a d6' or 'Roll a d100'
+💡 Make sure the dice server is running: python dice_roll_mcp_server.py
+""")
 
 while True:
     user_input = input("\n🎲 Your request: ")
