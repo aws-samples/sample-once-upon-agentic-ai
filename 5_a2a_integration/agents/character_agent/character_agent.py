@@ -1,3 +1,4 @@
+import os
 import uuid
 from datetime import datetime
 from dataclasses import dataclass, asdict
@@ -37,7 +38,8 @@ class Character:
         if self.created_at is None:
             self.created_at = datetime.now().isoformat()
 
-characters_db = TinyDB('characters.json', indent=4, separators=(',', ': '))
+CHARACTERS_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "characters.json")
+characters_db = TinyDB(CHARACTERS_DB, indent=4, separators=(',', ': '))
 Character_Query = Query()
 
 
