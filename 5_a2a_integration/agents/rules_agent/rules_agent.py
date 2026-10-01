@@ -48,14 +48,15 @@ def query_dnd_rules(query: str) -> str:
 
 def create_agent(context_id: str) -> Agent:
     return Agent(
-        # TODO: Step 1 - Add the query_dnd_rules tool and the name "Rules Agent" to the agent
-        description="D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base.",
+        # TODO: Step 1 - Add the query_dnd_rules tool to the agent
+        # TODO: Step 2 - Add the name "Rules Agent" to the agent
+        # TODO: Step 3 - Add the description "D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base." to the agent
         system_prompt="""You are a D&D 5e rules expert. For each rules question, call query_dnd_rules once, then answer briefly with the page reference.""",
     )
 
-# TODO: Step 2 - Create an A2AServer with the create_agent factory on port 8000
+# TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8000
 a2a_server = None
 
 if __name__ == "__main__":
-    # TODO: Step 3 - Start the A2A server
+    # TODO: Step 5 - Start the A2A server
     pass
