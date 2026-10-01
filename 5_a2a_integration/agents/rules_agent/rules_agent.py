@@ -3,7 +3,6 @@ import chromadb
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
 
-# The knowledge base built by utils/create_knowledge_base.py, shared by the whole chapter.
 KB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "utils", "dnd_knowledge_base")
 _collection = None
 
