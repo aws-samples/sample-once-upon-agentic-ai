@@ -4,7 +4,6 @@ from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from typing import List
 from tinydb import TinyDB, Query
 from strands import Agent
 from strands.vended_tools import make_a2a_client
@@ -58,7 +57,7 @@ class StoryOutput(BaseModel):
     response: str = Field(description="Your narative response as Game Master")
     actions_suggestions: list[str] = Field(description="['Action 1', 'Action 2', 'Action 3']")
     details: str = Field(description="Brief summary of tools/agents used")
-    dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
+    dice_rolls: list[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
 
 try:

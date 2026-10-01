@@ -2,7 +2,6 @@ import os
 import uuid
 from datetime import datetime
 from dataclasses import dataclass, asdict
-from typing import List, Dict
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
 from tinydb import TinyDB, Query
@@ -31,9 +30,9 @@ class Character:
     level: int
     experience: int
     stats: Stats
-    inventory: List[InventoryItem]
-    created_at: str = None
-    
+    inventory: list[InventoryItem]
+    created_at: str | None = None
+
     def __post_init__(self):
         if self.created_at is None:
             self.created_at = datetime.now().isoformat()
@@ -118,7 +117,7 @@ def create_character(
     character_class: str,
     race: str,
     gender: str,
-    stats_dict: Dict[str, int]
+    stats_dict: dict[str, int]
     ) -> dict:
     """Create a new D&D character and save it to the database.
 
