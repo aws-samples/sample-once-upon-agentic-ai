@@ -8,6 +8,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 # TODO: Step 1 - Create an MCP server on port 8002
 mcp = FastMCP(port=8002)
 
+# TODO: Step 2 - Add the decorator to expose roll_dice as an MCP tool
 @mcp.tool()
 def roll_dice(faces: int = 6) -> int:
     """Roll one die with a given number of faces and return the result.
@@ -40,5 +41,5 @@ def roll_dice(faces: int = 6) -> int:
 
 if __name__ == "__main__":
     print("Starting D&D Dice Roll MCP Server...")
-    # TODO: Step 2 - Run the MCP server
+    # TODO: Step 3 - Run the MCP server
     mcp.run(transport="streamable-http")
