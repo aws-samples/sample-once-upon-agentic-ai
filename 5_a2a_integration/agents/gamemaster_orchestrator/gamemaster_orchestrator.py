@@ -43,8 +43,7 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# TODO: Step 1 - Create MCP Client for dice rolling service
-# Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
+# TODO: Step 1 - Create a streamable http MCPClient connecting to "http://localhost:8002/mcp"
 mcp_client = None
 
 class DiceOutput(BaseModel):
