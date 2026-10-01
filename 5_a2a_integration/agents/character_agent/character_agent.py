@@ -43,14 +43,22 @@ Character_Query = Query()
 
 @tool
 def find_character_by_name(name: str) -> dict:
-    """
-    Find a character by name.
+    """Find a stored D&D character by its exact name.
+
+    Use it when a player refers to an existing character and you need its sheet:
+    class, race, level, ability scores, inventory. Names are matched exactly and
+    are case-sensitive; use list_all_characters if you are unsure of the spelling.
+
+    Example response:
+        {"character_id": "6ca1…", "name": "Thorin", "character_class": "Fighter",
+         "race": "Dwarf", "gender": "Male", "level": 1, "experience": 0,
+         "stats": {"strength": 16, "dexterity": 12, …}, "inventory": […]}
 
     Args:
-        name: The character's name to search for.
+        name: The character's name exactly as it was created, e.g. "Thorin".
 
     Returns:
-        The stored character record as a dict.
+        The stored character record as a dict (see the example above).
 
     Raises:
         ValueError: if no character with that name exists.
@@ -71,11 +79,15 @@ def find_character_by_name(name: str) -> dict:
 
 @tool
 def list_all_characters() -> list[dict]:
-    """
-    List all characters in the database.
+    """List every character stored in the database.
+
+    Use it to see which characters exist before creating or looking one up, or
+    when a player asks for the whole party. It returns full records, so prefer
+    find_character_by_name when you already know the name.
 
     Returns:
-        Every stored character as a list of dicts. Empty list if none exist.
+        A list of character records, same shape as find_character_by_name.
+        An empty list if no character has been created yet.
     """
     print("📋 Listing all characters in database")
     all_chars = characters_db.all()
@@ -99,19 +111,29 @@ def create_character(
     gender: str,
     stats_dict: Dict[str, int]
     ) -> dict:
-    """
-    Create a new D&D character and persist it to the database.
+    """Create a new D&D character and save it to the database.
+
+    Use it once per new character, after the ability scores have been decided
+    (roll them with the 4d6-drop-lowest method first). Every new character starts
+    at level 1 with 0 experience, a Starting Equipment Pack and 100 gold pieces.
+
+    Notes:
+        - Names are not checked for uniqueness: creating "Thorin" twice stores two
+          characters. Check with find_character_by_name if in doubt.
+        - Any ability score missing from stats_dict defaults to 10.
 
     Args:
-        name: Character's name.
-        character_class: D&D class (Fighter, Wizard, etc.).
-        race: D&D race (Human, Elf, etc.).
-        gender: Character's gender.
-        stats_dict: Dictionary with strength, dexterity, constitution,
-            intelligence, wisdom, charisma — each an integer ability score.
+        name: The character's name, e.g. "Thorin".
+        character_class: A D&D class such as "Fighter", "Wizard" or "Rogue".
+        race: A D&D race such as "Dwarf", "Elf" or "Human".
+        gender: The character's gender, as given by the player.
+        stats_dict: Ability scores as a dict with the keys strength, dexterity,
+            constitution, intelligence, wisdom and charisma, each an integer
+            (typically 3 to 18), e.g. {"strength": 16, "dexterity": 12}.
 
     Returns:
-        The newly created character as a dict.
+        The newly created character record as a dict, including its generated
+        character_id.
     """
     character_id = str(uuid.uuid4())
     stats = Stats(

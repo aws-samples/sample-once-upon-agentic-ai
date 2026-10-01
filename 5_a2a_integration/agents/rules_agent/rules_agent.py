@@ -57,7 +57,28 @@ rules_kb = RulesKnowledgeBase()
 
 @tool
 def query_dnd_rules(query: str) -> str:
-    """Fast D&D rule lookup. Returns brief rule with page reference."""
+    """Look up a D&D 5e rule in the Basic Rules knowledge base.
+
+    Use it for any question about game mechanics: ability checks, combat,
+    spellcasting, conditions, resting. Ask in plain English, as a player would.
+    The lookup is a semantic search over the D&D Basic Rules PDF and returns the
+    single best-matching passage with its page number.
+
+    Example response:
+        "Page 74: When a hostile creature that you can see moves out of your reach, …"
+
+    Notes:
+        - Returns one short passage (about 100 characters), not the full rule text.
+        - Returns "KB unavailable" if the knowledge base has not been built yet
+          (see utils/create_knowledge_base.py), "No rules found" if nothing matches.
+
+    Args:
+        query: The rules question or topic, in plain English, e.g. "opportunity attack"
+            or "what are the rules for dexterity checks".
+
+    Returns:
+        A string with the page reference followed by the matching passage.
+    """
     return rules_kb.quick_query(query)
 
 DESCRIPTION="""D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base."""
