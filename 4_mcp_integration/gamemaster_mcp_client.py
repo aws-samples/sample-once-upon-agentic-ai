@@ -14,18 +14,4 @@ gamemaster = Agent(
     tools=[mcp_dice_client]
 )
 
-print("""
-🎲 Lady Luck - D&D Gamemaster with MCP Dice Rolling
-============================================================
-🎯 Try: 'Roll a d20' or 'Roll a d6' or 'Roll a d100'
-💡 Make sure the dice server is running: python dice_roll_mcp_server.py
-""")
-
-while True:
-    user_input = input("\n🎲 Your request: ")
-    if user_input.lower() in ["exit", "quit", "bye"]:
-        print("🎭 May fortune favor your future adventures!")
-        break
-
-    print("\n🎲 Rolling the dice of fate...\n")
-    gamemaster(user_input)
+gamemaster("Help me create a new D&D character! Roll the strength, wisdom, charisma and intelligence abilities scores using 4d6 drop lowest method.")
