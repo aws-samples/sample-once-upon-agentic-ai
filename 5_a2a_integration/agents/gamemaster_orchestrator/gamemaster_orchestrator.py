@@ -61,15 +61,7 @@ try:
     # TODO: Step 2 - Create the A2A client tool with make_a2a_client and the allowed agent endpoints
 
     agent = Agent(
-        system_prompt="""You are a D&D Game Master. Never make up what a tool can tell you.
-
-Your tools:
-- a2a_client: talks to the specialist agents. operation="discover" reads an agent's card, operation="send_message" asks it something.
-  - Rules Agent at http://127.0.0.1:8000: D&D rules and mechanics
-  - Character Agent at http://127.0.0.1:8001: create, find or list characters
-- roll_dice: every dice roll (d4 to d100) goes through this tool.
-
-Only use the endpoints listed above. Narrate with flair, like a Game Master.""",
+        system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
         # TODO: Step 3 - Create the gamemaster agent with both A2A and MCP tools
         # TODO: Step 3 - Force the response to use the StoryOutput model
     )
