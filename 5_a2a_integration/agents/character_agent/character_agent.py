@@ -57,19 +57,17 @@ def find_character_by_name(name: str) -> dict:
     Args:
         name: The character's name exactly as it was created, e.g. "Thorin".
 
+    Notes:
+        - Fails with an error if no character with that name exists.
+
     Returns:
         The stored character record as a dict (see the example above).
-
-    Raises:
-        ValueError: if no character with that name exists.
     """
     print(f"🔍 Searching for character with name: '{name}'")
     result = characters_db.search(Character_Query.name == name)
 
     if not result:
-        # Raising here lets Strands convert the exception into a
-        # status="error" tool result — the LLM will see it as a failure
-        # instead of a suspiciously-string-shaped success.
+        # Strands turns the exception into an error result the model can see
         raise ValueError(f"Character with name {name!r} not found")
 
     character = result[0]
@@ -82,12 +80,21 @@ def list_all_characters() -> list[dict]:
     """List every character stored in the database.
 
     Use it to see which characters exist before creating or looking one up, or
-    when a player asks for the whole party. It returns full records, so prefer
-    find_character_by_name when you already know the name.
+    when a player asks for the whole party.
+
+    Example response:
+        [{"character_id": "6ca1…", "name": "Thorin", "character_class": "Fighter",
+          "race": "Dwarf", "gender": "Male", "level": 1, "experience": 0,
+          "stats": {"strength": 16, …}, "inventory": […]},
+         …]
+
+    Notes:
+        - Takes no parameters and returns every character in full; prefer
+          find_character_by_name when you already know the name.
+        - Returns an empty list if no character has been created yet.
 
     Returns:
         A list of character records, same shape as find_character_by_name.
-        An empty list if no character has been created yet.
     """
     print("📋 Listing all characters in database")
     all_chars = characters_db.all()
@@ -117,6 +124,14 @@ def create_character(
     (roll them with the 4d6-drop-lowest method first). Every new character starts
     at level 1 with 0 experience, a Starting Equipment Pack and 100 gold pieces.
 
+    Example response:
+        {"character_id": "6ca1…", "name": "Thorin", "character_class": "Fighter",
+         "race": "Dwarf", "gender": "Male", "level": 1, "experience": 0,
+         "stats": {"strength": 16, "dexterity": 12, "constitution": 14,
+                   "intelligence": 10, "wisdom": 11, "charisma": 9},
+         "inventory": [{"item_name": "Starting Equipment Pack", "quantity": 1},
+                       {"item_name": "Gold Pieces", "quantity": 100}]}
+
     Notes:
         - Names are not checked for uniqueness: creating "Thorin" twice stores two
           characters. Check with find_character_by_name if in doubt.
@@ -126,7 +141,7 @@ def create_character(
         name: The character's name, e.g. "Thorin".
         character_class: A D&D class such as "Fighter", "Wizard" or "Rogue".
         race: A D&D race such as "Dwarf", "Elf" or "Human".
-        gender: The character's gender, as given by the player.
+        gender: The character's gender, e.g. "Female"; pick one if the player did not say.
         stats_dict: Ability scores as a dict with the keys strength, dexterity,
             constitution, intelligence, wisdom and charisma, each an integer
             (typically 3 to 18), e.g. {"strength": 16, "dexterity": 12}.
