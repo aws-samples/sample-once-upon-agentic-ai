@@ -1,5 +1,5 @@
-# TODO: Step 1 - Import Agent from strands, MCPClient from strands.tools.mcp and streamablehttp_client from mcp.client.streamable_http
 from strands import Agent
+# TODO: Step 1 - Import MCPClient from strands.tools.mcp and streamablehttp_client from mcp.client.streamable_http
 from strands.tools.mcp import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
 
