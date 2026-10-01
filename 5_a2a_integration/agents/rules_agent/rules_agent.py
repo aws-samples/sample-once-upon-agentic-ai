@@ -6,14 +6,12 @@ from strands.multiagent.a2a import A2AServer
 KB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "utils", "dnd_knowledge_base")
 _collection = None
 
-
 def rules_collection():
     """Open the ChromaDB collection on first use (fails loudly if the knowledge base was not built)."""
     global _collection
     if _collection is None:
         _collection = chromadb.PersistentClient(path=KB_PATH).get_collection("dnd_basic_rules")
     return _collection
-
 
 @tool
 def query_dnd_rules(query: str) -> str:
@@ -55,7 +53,6 @@ def create_agent(context_id: str) -> Agent:
     )
 
 # TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8000
-a2a_server = None
 
 if __name__ == "__main__":
     # TODO: Step 5 - Start the A2A server

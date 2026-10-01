@@ -41,7 +41,6 @@ CHARACTERS_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charac
 characters_db = TinyDB(CHARACTERS_DB, indent=4, separators=(',', ': '))
 Character_Query = Query()
 
-
 @tool
 def find_character_by_name(name: str) -> dict:
     """Find a stored D&D character by its exact name.
@@ -74,7 +73,6 @@ def find_character_by_name(name: str) -> dict:
     character = result[0]
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
-
 
 @tool
 def list_all_characters() -> list[dict]:
@@ -109,7 +107,6 @@ def list_all_characters() -> list[dict]:
         print(f"  - {char['name']} ({char['character_class']} {char['race']})")
 
     return all_chars
-
 
 @tool
 def create_character(
@@ -190,7 +187,6 @@ Confirm creations and summarize found characters briefly: class, race, key stats
     )
 
 # TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8001
-a2a_server = None
 
 if __name__ == "__main__":
     # TODO: Step 5 - Start the A2A server

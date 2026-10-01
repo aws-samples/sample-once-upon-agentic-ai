@@ -38,16 +38,14 @@ INSTRUCTIONS = """You are a D&D Game Master. Never make up what a tool can tell 
 Only use those endpoints. Keep each turn short: a few sentences of narration, then the options."""
 
 # TODO: Step 1 - Create the A2A client tool with make_a2a_client and the allowed agent endpoints (same as Chapter 5)
-a2a_client = None
 
-# TODO: Step 2 - Create the Game Master with create_harness:
+# TODO: Step 2 - Create the Game Master as agent with create_harness:
 # - instructions: INSTRUCTIONS
 # - mcp_servers: the dice server, {"dice": {"url": "http://127.0.0.1:8002/mcp"}}
 # - tools: [a2a_client]
 # - builtin_tools: [] (a Game Master needs no shell, file or web access)
 # - session: {"id": "dnd-campaign"} (resume the same campaign across restarts)
 # - structured_output_model: StoryOutput (forwarded to the underlying Agent)
-agent = None
 
 @app.get("/health")
 def health_check():
