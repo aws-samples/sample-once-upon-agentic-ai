@@ -4,9 +4,8 @@ import logging
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# TODO: Step 1 - Create an MCP server with the name "D&D Dice Roll Service" on port 8002
+# TODO: Step 1 - Create an MCP server on port 8002
 mcp = FastMCP(
-    # name=
     # port=
 )
 
