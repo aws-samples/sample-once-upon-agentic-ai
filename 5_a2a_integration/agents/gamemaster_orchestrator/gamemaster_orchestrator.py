@@ -47,16 +47,6 @@ def get_user(user_name):
 # Initialize MCPClient with a lambda that returns streamablehttp_client("http://localhost:8002/mcp")
 mcp_client = None
 
-SYSTEM_PROMPT = """You are a D&D Game Master. Never make up what a tool can tell you.
-
-Your tools:
-- a2a_client: talks to the specialist agents. operation="discover" reads an agent's card, operation="send_message" asks it something.
-  - Rules Agent at http://127.0.0.1:8000: D&D rules and mechanics
-  - Character Agent at http://127.0.0.1:8001: create, find or list characters
-- roll_dice: every dice roll (d4 to d100) goes through this tool.
-
-Only use the endpoints listed above. Narrate with flair, like a Game Master."""
-
 class DiceOutput(BaseModel):
     dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")
     result: int = Field(description="The dice result value alone")
@@ -75,7 +65,15 @@ try:
     a2a_client = None
 
     agent = Agent(
-        system_prompt=SYSTEM_PROMPT,
+        system_prompt="""You are a D&D Game Master. Never make up what a tool can tell you.
+
+Your tools:
+- a2a_client: talks to the specialist agents. operation="discover" reads an agent's card, operation="send_message" asks it something.
+  - Rules Agent at http://127.0.0.1:8000: D&D rules and mechanics
+  - Character Agent at http://127.0.0.1:8001: create, find or list characters
+- roll_dice: every dice roll (d4 to d100) goes through this tool.
+
+Only use the endpoints listed above. Narrate with flair, like a Game Master.""",
         # TODO: Step 3 - Create the gamemaster agent with both A2A and MCP tools
         # TODO: Step 3 - Force the response to use the StoryOutput model
     )

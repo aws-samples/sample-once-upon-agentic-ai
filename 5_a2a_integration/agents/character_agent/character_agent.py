@@ -166,20 +166,14 @@ def create_character(
     return character
 
 
-DESCRIPTION="""D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them."""
-
-SYSTEM_PROMPT="""You are a D&D character manager. Use your tools to create, find or list characters.
-When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
-Confirm creations and summarize found characters briefly: class, race, key stats."""
-
 def create_agent(context_id: str) -> Agent:
-    # TODO: Step 1 - Configure the Character Agent with:
-    # - model: optional
-    # - tools: List the tools [create_character, find_character_by_name, list_all_characters]
-    # - name: "Character Creator Agent"
-    # - description: DESCRIPTION
-    # - system_prompt: SYSTEM_PROMPT
-    pass
+    return Agent(
+        # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools and the name "Character Creator Agent" to the agent
+        description="D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them.",
+        system_prompt="""You are a D&D character manager. Use your tools to create, find or list characters.
+When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
+Confirm creations and summarize found characters briefly: class, race, key stats.""",
+    )
 
 # TODO: Step 2 - Create an A2AServer instance with:
 # - agent_factory: The create_agent function defined above
