@@ -175,9 +175,7 @@ When creating a character, roll each ability score with 4d6 drop lowest. If deta
 Confirm creations and summarize found characters briefly: class, race, key stats.""",
     )
 
-# TODO: Step 2 - Create an A2AServer instance with:
-# - agent_factory: The create_agent function defined above
-# - port: 8001 (Character Agent port)
+# TODO: Step 2 - Create an A2AServer with the create_agent factory on port 8001
 a2a_server = None
 
 if __name__ == "__main__":
