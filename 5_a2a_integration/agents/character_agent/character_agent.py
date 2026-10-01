@@ -180,18 +180,20 @@ def create_character(
 
 def create_agent(context_id: str) -> Agent:
     return Agent(
-        # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools and the name "Character Creator Agent" to the agent
+        # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools to the agent
         tools=[create_character, find_character_by_name, list_all_characters],
+        # TODO: Step 2 - Add the name "Character Creator Agent" to the agent
         name="Character Creator Agent",
+        # TODO: Step 3 - Add the description "D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them." to the agent
         description="D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them.",
         system_prompt="""You are a D&D character manager. Use your tools to create, find or list characters.
 When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
 Confirm creations and summarize found characters briefly: class, race, key stats.""",
     )
 
-# TODO: Step 2 - Create an A2AServer with the create_agent factory on port 8001
+# TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8001
 a2a_server = A2AServer(agent_factory=create_agent, port=8001)
 
 if __name__ == "__main__":
-    # TODO: Step 3 - Start the A2A server
+    # TODO: Step 5 - Start the A2A server
     a2a_server.serve()
