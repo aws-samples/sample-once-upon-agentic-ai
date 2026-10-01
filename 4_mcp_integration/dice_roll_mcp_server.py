@@ -1,6 +1,6 @@
-# TODO: Step 1 - Import FastMCP from mcp.server
 import random
 import logging
+# TODO: Step 1 - Import FastMCP from mcp.server
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
