@@ -1,8 +1,10 @@
 import uvicorn
+import os
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
+from tinydb import TinyDB, Query
 from typing import List
 from strands.vended_tools import make_a2a_client
 # TODO: Step 1 - Import create_harness from strands_harness
@@ -55,6 +57,23 @@ agent = create_harness(
 @app.get("/health")
 def health_check():
     return {"status": "healthy"}
+
+@app.get("/messages")
+def get_messages():
+    return agent.messages
+
+@app.get("/user/{user_name}")
+def get_user(user_name):
+    characters_db = TinyDB(os.path.join(os.path.dirname(os.path.abspath(__file__)), "../5_a2a_integration/agents", "character_agent", "characters.json"))
+    Character_Query = Query()
+    result = characters_db.search(Character_Query.name == user_name)
+    if not result:
+        return f":x: Character with name '{user_name}' not found"
+    
+    character = result[0]
+    print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
+    return character
+
 
 @app.post("/inquire")
 async def ask_agent(request: QuestionRequest):
