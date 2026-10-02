@@ -188,8 +188,8 @@ def create_agent(context_id: str) -> Agent:
     return Agent(
         # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools to the agent
         tools=[create_character, find_character_by_name, list_all_characters],
-        # TODO: Step 2 - Add the name "Character Creator Agent" to the agent
-        name="Character Creator Agent",
+        # TODO: Step 2 - Add the name "Character Agent" to the agent
+        name="Character Agent",
         # TODO: Step 3 - Add the description "D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them." to the agent
         description="D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them.",
         system_prompt="""You are a D&D character manager. Use your tools to create, find or list characters.
