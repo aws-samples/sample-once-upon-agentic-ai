@@ -4,6 +4,7 @@ from datetime import datetime
 from dataclasses import dataclass, asdict
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
+from strands.hooks import AfterInvocationEvent, HookProvider, HookRegistry
 from tinydb import TinyDB, Query
 
 @dataclass
@@ -176,6 +177,13 @@ def create_character(
     print(f"✅ Created character {name} ({character_class} {race}) with id {character_id}")
     return record
 
+class NewlineAfterTurn(HookProvider):
+    """Ends every answer with a newline. The streamed text never has one, so without it the
+    terminal keeps the last line of each answer in its buffer until the next request."""
+
+    def register_hooks(self, registry: HookRegistry) -> None:
+        registry.add_callback(AfterInvocationEvent, lambda event: print(flush=True))
+
 def create_agent(context_id: str) -> Agent:
     return Agent(
         # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools to the agent
@@ -184,6 +192,7 @@ def create_agent(context_id: str) -> Agent:
         system_prompt="""You are a D&D character manager. Use your tools to create, find or list characters.
 When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
 Confirm creations and summarize found characters briefly: class, race, key stats.""",
+        hooks=[NewlineAfterTurn()],
     )
 
 # TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8001
