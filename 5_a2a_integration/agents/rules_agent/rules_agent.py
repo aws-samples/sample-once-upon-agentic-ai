@@ -2,10 +2,10 @@ import os
 import chromadb
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
+from strands.hooks import AfterInvocationEvent, HookProvider, HookRegistry
 
 KB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "utils", "dnd_knowledge_base")
 _collection = None
-
 
 def rules_collection():
     """Open the ChromaDB collection on first use (fails loudly if the knowledge base was not built)."""
@@ -13,7 +13,6 @@ def rules_collection():
     if _collection is None:
         _collection = chromadb.PersistentClient(path=KB_PATH).get_collection("dnd_basic_rules")
     return _collection
-
 
 @tool
 def query_dnd_rules(query: str) -> str:
@@ -46,6 +45,13 @@ def query_dnd_rules(query: str) -> str:
         for doc, meta in zip(results["documents"][0], results["metadatas"][0])
     )
 
+class NewlineAfterTurn(HookProvider):
+    """Ends every answer with a newline. The streamed text never has one, so without it the
+    terminal keeps the last line of each answer in its buffer until the next request."""
+
+    def register_hooks(self, registry: HookRegistry) -> None:
+        registry.add_callback(AfterInvocationEvent, lambda event: print(flush=True))
+
 def create_agent(context_id: str) -> Agent:
     return Agent(
         # TODO: Step 1 - Add the query_dnd_rules tool to the agent
@@ -55,6 +61,7 @@ def create_agent(context_id: str) -> Agent:
         # TODO: Step 3 - Add the description "D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base." to the agent
         description="D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base.",
         system_prompt="""You are a D&D 5e rules expert. For each rules question, call query_dnd_rules once, then answer briefly with the page reference.""",
+        hooks=[NewlineAfterTurn()],
     )
 
 # TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8000

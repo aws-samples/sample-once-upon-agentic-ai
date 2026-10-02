@@ -4,6 +4,7 @@ from datetime import datetime
 from dataclasses import dataclass, asdict
 from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
+from strands.hooks import AfterInvocationEvent, HookProvider, HookRegistry
 from tinydb import TinyDB, Query
 
 @dataclass
@@ -41,7 +42,6 @@ CHARACTERS_DB = os.path.join(os.path.dirname(os.path.abspath(__file__)), "charac
 characters_db = TinyDB(CHARACTERS_DB, indent=4, separators=(',', ': '))
 Character_Query = Query()
 
-
 @tool
 def find_character_by_name(name: str) -> dict:
     """Find a stored D&D character by its exact name.
@@ -74,7 +74,6 @@ def find_character_by_name(name: str) -> dict:
     character = result[0]
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
-
 
 @tool
 def list_all_characters() -> list[dict]:
@@ -109,7 +108,6 @@ def list_all_characters() -> list[dict]:
         print(f"  - {char['name']} ({char['character_class']} {char['race']})")
 
     return all_chars
-
 
 @tool
 def create_character(
@@ -179,6 +177,13 @@ def create_character(
     print(f"✅ Created character {name} ({character_class} {race}) with id {character_id}")
     return record
 
+class NewlineAfterTurn(HookProvider):
+    """Ends every answer with a newline. The streamed text never has one, so without it the
+    terminal keeps the last line of each answer in its buffer until the next request."""
+
+    def register_hooks(self, registry: HookRegistry) -> None:
+        registry.add_callback(AfterInvocationEvent, lambda event: print(flush=True))
+
 def create_agent(context_id: str) -> Agent:
     return Agent(
         # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools to the agent
@@ -190,6 +195,7 @@ def create_agent(context_id: str) -> Agent:
         system_prompt="""You are a D&D character manager. Use your tools to create, find or list characters.
 When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
 Confirm creations and summarize found characters briefly: class, race, key stats.""",
+        hooks=[NewlineAfterTurn()],
     )
 
 # TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8001
