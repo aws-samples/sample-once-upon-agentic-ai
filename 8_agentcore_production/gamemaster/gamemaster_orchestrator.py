@@ -34,7 +34,7 @@ def get_messages():
 
 @app.get("/user/{user_name}")
 def get_user(user_name):
-    characters_db = TinyDB(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "..", "..", "5_a2a_integration", "agents", "character_agent", "characters.json"))
+    characters_db = TinyDB(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "5_a2a_integration", "agents", "character_agent", "characters.json"))
     Character_Query = Query()
     result = characters_db.search(Character_Query.name == user_name)
     if not result:

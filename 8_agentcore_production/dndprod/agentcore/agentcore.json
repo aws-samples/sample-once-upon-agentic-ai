@@ -12,7 +12,7 @@
       "name": "diceserver",
       "build": "CodeZip",
       "entrypoint": "dice_roll_mcp_server.py",
-      "codeLocation": "app/diceserver/",
+      "codeLocation": "../diceserver/",
       "runtimeVersion": "PYTHON_3_14",
       "networkMode": "PUBLIC",
       "instrumentation": {
