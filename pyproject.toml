@@ -30,6 +30,10 @@ dependencies = [
     # moved to run(transport="streamable-http", port=...). Do not raise this ceiling until those
     # chapters and the workshop catalog are ported together — see issue #50.
     "mcp<2",
+
+    # IAM-signed MCP transport: a local or deployed agent calling an MCP server on AgentCore Runtime
+    # (chapters 8 to 11).
+    "mcp-proxy-for-aws",
 ]
 
 [dependency-groups]

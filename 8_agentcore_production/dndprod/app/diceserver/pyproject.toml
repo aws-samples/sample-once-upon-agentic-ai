@@ -1,0 +1,8 @@
+[project]
+name = "diceserver"
+version = "0.1.0"
+description = "Chapter 4 dice server, deployed as an AgentCore MCP runtime"
+requires-python = ">=3.10"
+dependencies = [
+    "mcp<2",
+]
