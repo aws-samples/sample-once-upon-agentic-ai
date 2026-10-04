@@ -8,7 +8,7 @@ from tinydb import TinyDB, Query
 from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
-# TODO: Step 6 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
+# TODO: Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
 from mcp_proxy_for_aws.client import aws_iam_streamablehttp_client
 
 app = FastAPI(title="D&D Game Master API")
@@ -44,10 +44,10 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# The URL printed by `agentcore status` for the diceserver runtime
+# TODO: Step 1 - Set DICE_SERVER_URL to the diceserver URL printed by agentcore status
 DICE_SERVER_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
 
-# TODO: Step 6 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
+# TODO: Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
 mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVER_URL, aws_service="bedrock-agentcore", aws_region="us-west-2"))
 
 class DiceOutput(BaseModel):

@@ -4,7 +4,7 @@ from mcp.server import FastMCP
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# TODO: Step 2 - Create the MCP server listening on all interfaces, on the default port, with stateless HTTP
+# TODO: Step 1 - Create the MCP server listening on all interfaces, on the default port, with stateless HTTP
 mcp = FastMCP(host="0.0.0.0", stateless_http=True)
 
 @mcp.tool()
