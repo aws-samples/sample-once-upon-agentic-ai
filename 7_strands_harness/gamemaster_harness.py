@@ -40,10 +40,10 @@ INSTRUCTIONS = """You are a D&D Game Master. Never make up what a tool can tell 
 Only use those endpoints. Keep each turn short: a few sentences of narration, then the options."""
 
 # Same A2A client tool as in Chapter 5: the Rules Agent and the Character Agent are still just tools.
-a2a_client = make_a2a_client(allowed_endpoints={
-    "http://127.0.0.1:8000": None,  # Rules Agent
-    "http://127.0.0.1:8001": None,  # Character Agent
-})
+a2a_client = make_a2a_client(allowed_endpoints=[
+    "http://127.0.0.1:8000",  # Rules Agent
+    "http://127.0.0.1:8001",  # Character Agent
+])
 
 agent = create_harness(
     # TODO: Step 1 - Pass the INSTRUCTIONS to the harness
