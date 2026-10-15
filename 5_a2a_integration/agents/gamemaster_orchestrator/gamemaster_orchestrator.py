@@ -61,10 +61,10 @@ class StoryOutput(BaseModel):
 
 try:
     # TODO: Step 2 - Create the A2A client tool with make_a2a_client and the allowed agent endpoints
-    a2a_client = make_a2a_client(allowed_endpoints={
-        "http://127.0.0.1:8000": None,  # Rules Agent
-        "http://127.0.0.1:8001": None,  # Character Agent
-    })
+    a2a_client = make_a2a_client(allowed_endpoints=[
+        "http://127.0.0.1:8000",  # Rules Agent
+        "http://127.0.0.1:8001",  # Character Agent
+    ])
 
     agent = Agent(
         system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
