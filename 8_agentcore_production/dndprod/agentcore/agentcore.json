@@ -19,9 +19,27 @@
         "enableOtel": false
       },
       "protocol": "MCP"
+    },
+    {
+      "name": "characteragent",
+      "build": "CodeZip",
+      "entrypoint": "character_agent.py",
+      "codeLocation": "../characteragent/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "A2A",
+      "additionalPolicies": [
+        "memory-policy.json"
+      ]
     }
   ],
-  "memories": [],
+  "memories": [
+    {
+      "name": "characters",
+      "eventExpiryDuration": 365,
+      "strategies": []
+    }
+  ],
   "knowledgeBases": [],
   "credentials": [],
   "evaluators": [],

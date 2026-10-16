@@ -1,0 +1,11 @@
+[project]
+name = "characteragent"
+version = "0.1.0"
+description = "Chapter 5 Character Agent, deployed as an AgentCore A2A runtime with its characters in AgentCore Memory"
+requires-python = ">=3.10"
+dependencies = [
+    "strands-agents[a2a]>=1.61",
+    "bedrock-agentcore[a2a]>=1.24",
+    "a2a-sdk[all]>=0.3,<0.4",
+    "boto3",
+]
