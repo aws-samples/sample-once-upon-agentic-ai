@@ -23,6 +23,9 @@ dependencies = [
     # Database
     "tinydb",
 
+    # Configuration — chapter 8 reads the URLs of the deployed runtimes from a .env file
+    "python-dotenv",
+
     # Model Context Protocol — imported directly by chapters 4 and 5, so declared here rather
     # than inherited from strands-agents. Ceiling pinned because mcp 2.0 renamed both symbols the
     # chapters teach: mcp.server.FastMCP -> MCPServer, and streamablehttp_client ->
@@ -30,4 +33,13 @@ dependencies = [
     # moved to run(transport="streamable-http", port=...). Do not raise this ceiling until those
     # chapters and the workshop catalog are ported together — see issue #50.
     "mcp<2",
+
+    # IAM-signed MCP transport: a local or deployed agent calling an MCP server on AgentCore Runtime
+    # (chapters 8 to 11).
+    "mcp-proxy-for-aws",
+
+    # AWS SDK — imported directly by chapter 8 (ui_proxy calls invoke_agent_runtime), so declared
+    # here rather than inherited from strands-agents, whose floor (1.26) predates AgentCore.
+    # 1.40 is the first release with the bedrock-agentcore stop_runtime_session operation.
+    "boto3>=1.40",
 ]

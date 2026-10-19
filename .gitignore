@@ -215,3 +215,9 @@ rules_knowledge_base/
 
 # Strands harness state (chapter 7): sessions and long-term memory
 .agent/
+
+# AgentCore deploy chapters (8+): deployment targets and CLI state are account-specific
+*_agentcore_*/**/aws-targets.json
+*_agentcore_*/**/.cli/
+# Re-include the CDK stack sources (root "lib/" rule would hide them)
+!*_agentcore_*/**/cdk/lib/

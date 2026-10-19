@@ -1,0 +1,11 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "WriteCharacterRecords",
+      "Effect": "Allow",
+      "Action": "bedrock-agentcore:BatchCreateMemoryRecords",
+      "Resource": "arn:aws:bedrock-agentcore:*:*:memory/gameprod_characters-*"
+    }
+  ]
+}
