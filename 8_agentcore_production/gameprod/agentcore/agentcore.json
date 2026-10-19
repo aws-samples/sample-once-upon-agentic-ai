@@ -1,11 +1,11 @@
 {
   "$schema": "https://schema.agentcore.aws.dev/v1/agentcore.json",
-  "name": "dndprod",
+  "name": "gameprod",
   "version": 1,
   "managedBy": "CDK",
   "tags": {
     "agentcore:created-by": "agentcore-cli",
-    "agentcore:project-name": "dndprod"
+    "agentcore:project-name": "gameprod"
   },
   "runtimes": [
     {
@@ -28,9 +28,7 @@
       "runtimeVersion": "PYTHON_3_14",
       "networkMode": "PUBLIC",
       "protocol": "A2A",
-      "additionalPolicies": [
-        "memory-policy.json"
-      ]
+      "additionalPolicies": ["memory-policy.json"]
     },
     {
       "name": "rulesagent",
@@ -58,9 +56,12 @@
       "runtimeVersion": "PYTHON_3_14",
       "networkMode": "PUBLIC",
       "protocol": "HTTP",
-      "additionalPolicies": [
-        "invoke-policy.json"
-      ]
+      "envVars": [
+        {"name": "DICE_SERVER_URL", "value": "<your diceserver URL>"},
+        {"name": "CHARACTER_AGENT_URL", "value": "<your characteragent URL>"},
+        {"name": "RULES_AGENT_URL", "value": "<your rulesagent URL>"}
+      ],
+      "additionalPolicies": ["invoke-policy.json"]
     }
   ],
   "memories": [
@@ -79,11 +80,11 @@
     {
       "type": "AgentCoreKnowledgeBase",
       "name": "rules",
-      "description": "D&D 5e Basic Rules",
+      "description": "Basic Rules",
       "dataSources": [
         {
           "type": "S3",
-          "uri": "s3://dndprod-rules-<your-account-id>/"
+          "uri": "s3://gameprod-rules-<your-account-id>/"
         }
       ]
     }
