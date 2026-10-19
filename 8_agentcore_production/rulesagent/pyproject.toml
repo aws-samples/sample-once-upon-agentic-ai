@@ -8,4 +8,5 @@ dependencies = [
     "bedrock-agentcore[a2a]>=1.24",
     "a2a-sdk[all]>=0.3,<0.4",
     "boto3",
+    "aws-opentelemetry-distro",
 ]

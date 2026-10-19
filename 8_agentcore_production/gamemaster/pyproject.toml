@@ -10,6 +10,7 @@ dependencies = [
     "mcp<2",
     "mcp-proxy-for-aws",
     "boto3",
+    "aws-opentelemetry-distro",
     "httpx",
     "python-dotenv",
 ]
