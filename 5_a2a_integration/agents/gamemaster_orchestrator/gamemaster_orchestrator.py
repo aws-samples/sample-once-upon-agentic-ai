@@ -10,7 +10,7 @@ from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
 from mcp.client.streamable_http import streamablehttp_client
 
-app = FastAPI(title="D&D Game Master API")
+app = FastAPI(title="Game Master API")
 origins = ["*"]
 app.add_middleware(
     CORSMiddleware,
@@ -67,7 +67,7 @@ try:
     ])
 
     agent = Agent(
-        system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
+        system_prompt="""You are a Game Master for a fantasy role-playing game. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
         # TODO: Step 3 - Add the mcp_client and a2a_client tools to the agent
         tools=[mcp_client, a2a_client],
         # TODO: Step 4 - Force the response to use the StoryOutput model

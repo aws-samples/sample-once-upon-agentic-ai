@@ -10,7 +10,7 @@ from strands.vended_tools import make_a2a_client
 # TODO: Step 1 - Import create_harness from strands_harness
 from strands_harness import create_harness
 
-app = FastAPI(title="D&D Game Master API (Strands harness)")
+app = FastAPI(title="Game Master API (Strands harness)")
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,7 +35,7 @@ class StoryOutput(BaseModel):
     dice_rolls: List[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
 # Domain instructions only: Strands harness prepends its own behavioral contract.
-INSTRUCTIONS = """You are a D&D Game Master. Never make up what a tool can tell you.
+INSTRUCTIONS = """You are a Game Master for a fantasy role-playing game. Never make up what a tool can tell you.
 - roll_dice (dice MCP server) rolls the dice.
 - a2a_client talks to the Rules Agent (http://127.0.0.1:8000) and the Character Agent (http://127.0.0.1:8001).
 Only use those endpoints. Keep each turn short: a few sentences of narration, then the options."""
@@ -55,8 +55,8 @@ agent = create_harness(
     tools=[a2a_client],
     # TODO: Step 4 - Disable the built-in tools
     builtin_tools=[],
-    # TODO: Step 5 - Name the session "dnd-campaign"
-    session={"id": "dnd-campaign"},
+    # TODO: Step 5 - Name the session "fantasy-campaign"
+    session={"id": "fantasy-campaign"},
     # TODO: Step 6 - Force the response to use the StoryOutput model
     structured_output_model=StoryOutput,
 )

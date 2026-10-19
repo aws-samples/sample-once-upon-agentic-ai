@@ -67,7 +67,7 @@ game_masters = {}
 def get_game_master(session_id: str) -> Agent:
     if session_id not in game_masters:
         game_masters[session_id] = Agent(
-            system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
+            system_prompt="""You are a Game Master for a fantasy role-playing game. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
             tools=[mcp_client, a2a_client],
             structured_output_model=StoryOutput,
             # TODO: 8.4 Step 2 - Keep the conversation in the conversations memory with an AgentCoreMemorySessionManager for this session and the actor "player"

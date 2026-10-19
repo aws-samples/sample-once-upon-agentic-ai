@@ -16,7 +16,7 @@ from pydantic import BaseModel
 REGION = "us-west-2"
 # One session id = one campaign: the Game Master finds its conversation again under this id.
 # AgentCore requires at least 33 characters.
-SESSION_ID = "dnd-campaign-once-upon-agentic-ai-0001"
+SESSION_ID = "campaign-once-upon-agentic-ai-0001"
 
 control = boto3.client("bedrock-agentcore-control", region_name=REGION)
 # A Game Master turn can call several agents: allow it more than the default 60 seconds
@@ -25,16 +25,16 @@ agentcore = boto3.client("bedrock-agentcore", region_name=REGION, config=Config(
 def find_game_master_arn() -> str:
     for page in control.get_paginator("list_agent_runtimes").paginate():
         for runtime in page["agentRuntimes"]:
-            if runtime["agentRuntimeName"] == "dndprod_gamemaster":
+            if runtime["agentRuntimeName"] == "gameprod_gamemaster":
                 return runtime["agentRuntimeArn"]
-    raise RuntimeError("No dndprod_gamemaster runtime in us-west-2: deploy the Game Master first")
+    raise RuntimeError("No gameprod_gamemaster runtime in us-west-2: deploy the Game Master first")
 
 def find_characters_memory_id() -> str:
     for page in control.get_paginator("list_memories").paginate():
         for memory in page["memories"]:
-            if memory["id"].startswith("dndprod_characters-"):
+            if memory["id"].startswith("gameprod_characters-"):
                 return memory["id"]
-    raise RuntimeError("No dndprod characters memory in us-west-2: deploy the Character Agent first")
+    raise RuntimeError("No gameprod characters memory in us-west-2: deploy the Character Agent first")
 
 GAME_MASTER_ARN = find_game_master_arn()
 CHARACTERS_MEMORY_ID = find_characters_memory_id()
@@ -47,7 +47,7 @@ def ask_game_master(payload: dict):
     )
     return json.loads(response["response"].read())
 
-app = FastAPI(title="D&D Game Master UI proxy")
+app = FastAPI(title="Game Master UI proxy")
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
 
 class QuestionRequest(BaseModel):

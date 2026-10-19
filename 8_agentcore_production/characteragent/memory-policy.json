@@ -5,7 +5,7 @@
       "Sid": "WriteCharacterRecords",
       "Effect": "Allow",
       "Action": "bedrock-agentcore:BatchCreateMemoryRecords",
-      "Resource": "arn:aws:bedrock-agentcore:*:*:memory/dndprod_characters-*"
+      "Resource": "arn:aws:bedrock-agentcore:*:*:memory/gameprod_characters-*"
     }
   ]
 }

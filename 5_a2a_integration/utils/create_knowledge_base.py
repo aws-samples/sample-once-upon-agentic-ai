@@ -1,4 +1,4 @@
-"""Build the Rules Agent knowledge base: a local ChromaDB collection of D&D Basic Rules passages.
+"""Build the Rules Agent knowledge base: a local ChromaDB collection of Basic Rules passages.
 
 Run it once from this folder, with DnD_BasicRules_2018.pdf next to it:
     python create_knowledge_base.py
@@ -11,8 +11,8 @@ import chromadb
 from pypdf import PdfReader
 
 PDF_FILE = "DnD_BasicRules_2018.pdf"
-DB_PATH = "./dnd_knowledge_base"
-COLLECTION = "dnd_basic_rules"
+DB_PATH = "./rules_knowledge_base"
+COLLECTION = "basic_rules"
 # Printed at the top of almost every page; useless for search, so it is stripped.
 FOOTER = "D&D Basic Rules (Version 1.0). Not for resale. Permission granted to print and photocopy this document for personal use only."
 CHUNK_SIZE = 1000    # characters per passage

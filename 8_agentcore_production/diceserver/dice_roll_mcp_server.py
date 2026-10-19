@@ -38,5 +38,5 @@ def roll_dice(faces: int = 6) -> int:
     return result
 
 if __name__ == "__main__":
-    print("Starting D&D Dice Roll MCP Server...")
+    print("Starting Dice Roll MCP Server...")
     mcp.run(transport="streamable-http")

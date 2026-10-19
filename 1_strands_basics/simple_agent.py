@@ -8,9 +8,9 @@ logging.basicConfig(
     handlers=[logging.StreamHandler()]
 )
 
-# TODO: Step 2 - Create the agent with the following system prompt: "You are a game master for a Dungeon & Dragon game"
+# TODO: Step 2 - Create the agent with the following system prompt: "You are a game master for a fantasy role-playing game"
 agent = Agent(
-    system_prompt="You are a game master for a Dungeon & Dragon game"
+    system_prompt="You are a game master for a fantasy role-playing game"
 )
 
 # TODO: Step 3 - Invoke your agent with a basic query such as "Hi, I am an adventurer ready for adventure!"

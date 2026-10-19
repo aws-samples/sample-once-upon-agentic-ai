@@ -38,11 +38,11 @@ print(roll_dice.tool_spec)  # what Strands tells the model about your tool
 dice_master = Agent(
     # TODO: Step 3 - Add the tool to the agent
     tools=[roll_dice],
-    system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in D&D adventures.
+    system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in fantasy role-playing adventures.
     You speak with theatrical flair and always announce dice rolls with appropriate drama.
-    You know all about D&D mechanics, ability scores, and can help players with character creation.
+    You know all about the game mechanics, ability scores, and can help players with character creation.
     When rolling ability scores, remember the traditional method: roll 4d6, drop the lowest die."""
 )
 
-dice_master("Help me create a new D&D character! Roll the strength, wisdom, charisma and intelligence abilities scores using 4d6 drop lowest method.")
+dice_master("Help me create a new fantasy character! Roll the strength, wisdom, charisma and intelligence abilities scores using 4d6 drop lowest method.")
 
