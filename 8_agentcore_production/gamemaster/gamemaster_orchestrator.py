@@ -89,5 +89,5 @@ async def invoke(payload, context):
     return response.structured_output.model_dump()
 
 if __name__ == "__main__":
-    # TODO: 8.4 Step 4 - Run the app
+    # TODO: 8.4 Step 4 - Replace uvicorn.run with the run method of the BedrockAgentCoreApp
     app.run()
