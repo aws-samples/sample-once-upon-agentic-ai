@@ -8,9 +8,9 @@ from tinydb import TinyDB, Query
 from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
-# TODO: Ch8 Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
+# TODO: 8.1 Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
 from mcp_proxy_for_aws.client import aws_iam_streamablehttp_client
-# TODO: Ch9 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
+# TODO: 8.2 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
 from a2a.client import ClientConfig
 from mcp_proxy_for_aws.sigv4_helper import SigV4HTTPXAuth
 import uuid
@@ -50,16 +50,16 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# TODO: Ch8 Step 1 - Set DICE_SERVER_URL to the diceserver URL printed by agentcore status
+# TODO: 8.1 Step 1 - Set DICE_SERVER_URL to the diceserver URL printed by agentcore status
 DICE_SERVER_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
 
-# TODO: Ch8 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
+# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
 mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVER_URL, aws_service="bedrock-agentcore", aws_region="us-west-2"))
 
-# TODO: Ch9 Step 1 - Set CHARACTER_AGENT_URL to the characteragent URL printed by agentcore status
+# TODO: 8.2 Step 1 - Set CHARACTER_AGENT_URL to the characteragent URL printed by agentcore status
 CHARACTER_AGENT_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
 
-# TODO: Ch9 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in us-west-2 and sends a session id
+# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in us-west-2 and sends a session id
 character_agent_config = ClientConfig(httpx_client=httpx.AsyncClient(
     auth=SigV4HTTPXAuth(boto3.Session().get_credentials(), "bedrock-agentcore", "us-west-2"),
     # AgentCore runs one microVM per session; the id must be at least 33 characters long
@@ -81,7 +81,7 @@ class StoryOutput(BaseModel):
 
 
 try:
-    # TODO: Ch9 Step 3 - Replace the local Character Agent with CHARACTER_AGENT_URL and character_agent_config
+    # TODO: 8.2 Step 3 - Replace the local Character Agent with CHARACTER_AGENT_URL and character_agent_config
     a2a_client = make_a2a_client(allowed_endpoints=[
         "http://127.0.0.1:8000",  # Rules Agent
         (CHARACTER_AGENT_URL, character_agent_config),  # Character Agent, on AgentCore
