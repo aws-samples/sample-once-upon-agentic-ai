@@ -37,6 +37,11 @@ dependencies = [
     # IAM-signed MCP transport: a local or deployed agent calling an MCP server on AgentCore Runtime
     # (chapters 8 to 11).
     "mcp-proxy-for-aws",
+
+    # AWS SDK — imported directly by chapter 8 (ui_proxy calls invoke_agent_runtime), so declared
+    # here rather than inherited from strands-agents, whose floor (1.26) predates AgentCore.
+    # 1.40 is the first release with the bedrock-agentcore stop_runtime_session operation.
+    "boto3>=1.40",
 ]
 
 [dependency-groups]
