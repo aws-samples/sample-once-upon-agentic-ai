@@ -60,12 +60,15 @@ mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVE
 CHARACTER_AGENT_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
 
 # TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in us-west-2 and sends a session id
-character_agent_config = ClientConfig(httpx_client=httpx.AsyncClient(
+agentcore_config = ClientConfig(httpx_client=httpx.AsyncClient(
     auth=SigV4HTTPXAuth(boto3.Session().get_credentials(), "bedrock-agentcore", "us-west-2"),
     # AgentCore runs one microVM per session; the id must be at least 33 characters long
     headers={"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id": str(uuid.uuid4())},
     timeout=300,
 ))
+
+# TODO: 8.3 Step 1 - Set RULES_AGENT_URL to the rulesagent URL printed by agentcore status
+RULES_AGENT_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
 
 class DiceOutput(BaseModel):
     dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")
@@ -81,10 +84,11 @@ class StoryOutput(BaseModel):
 
 
 try:
-    # TODO: 8.2 Step 3 - Replace the local Character Agent with CHARACTER_AGENT_URL and character_agent_config
     a2a_client = make_a2a_client(allowed_endpoints=[
-        "http://127.0.0.1:8000",  # Rules Agent
-        (CHARACTER_AGENT_URL, character_agent_config),  # Character Agent, on AgentCore
+        # TODO: 8.3 Step 2 - Replace the local Rules Agent with RULES_AGENT_URL and agentcore_config
+        (RULES_AGENT_URL, agentcore_config),  # Rules Agent, on AgentCore
+        # TODO: 8.2 Step 3 - Replace the local Character Agent with CHARACTER_AGENT_URL and agentcore_config
+        (CHARACTER_AGENT_URL, agentcore_config),  # Character Agent, on AgentCore
     ])
 
     agent = Agent(

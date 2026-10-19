@@ -31,6 +31,24 @@
       "additionalPolicies": [
         "memory-policy.json"
       ]
+    },
+    {
+      "name": "rulesagent",
+      "build": "CodeZip",
+      "entrypoint": "rules_agent.py",
+      "codeLocation": "../rulesagent/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "A2A",
+      "envVars": [
+        {
+          "name": "KNOWLEDGE_BASE_RULES_ID",
+          "value": "<your-knowledge-base-id>"
+        }
+      ],
+      "additionalPolicies": [
+        "kb-policy.json"
+      ]
     }
   ],
   "memories": [
@@ -40,7 +58,19 @@
       "strategies": []
     }
   ],
-  "knowledgeBases": [],
+  "knowledgeBases": [
+    {
+      "type": "AgentCoreKnowledgeBase",
+      "name": "rules",
+      "description": "D&D 5e Basic Rules",
+      "dataSources": [
+        {
+          "type": "S3",
+          "uri": "s3://dndprod-rules-<your-account-id>/"
+        }
+      ]
+    }
+  ],
   "credentials": [],
   "evaluators": [],
   "onlineEvalConfigs": [],
