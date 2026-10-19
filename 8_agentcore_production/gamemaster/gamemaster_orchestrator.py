@@ -2,6 +2,7 @@ import os
 import uuid
 import boto3
 import httpx
+from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from strands import Agent
 from strands.vended_tools import make_a2a_client
@@ -20,14 +21,17 @@ from bedrock_agentcore.memory.integrations.strands.session_manager import AgentC
 # TODO: 8.4 Step 1 - Replace the FastAPI app and its endpoints with a BedrockAgentCoreApp
 app = BedrockAgentCoreApp()
 
-# TODO: 8.1 Step 1 - Set DICE_SERVER_URL to the diceserver URL printed by agentcore status
-DICE_SERVER_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
+# The URLs of your runtimes are read from the .env file of the chapter folder (see .env.example)
+load_dotenv()
+
+# TODO: 8.1 Step 1 - Read DICE_SERVER_URL from the environment
+DICE_SERVER_URL = os.environ["DICE_SERVER_URL"]
 
 # TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
 mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVER_URL, aws_service="bedrock-agentcore", aws_region="us-west-2"))
 
-# TODO: 8.2 Step 1 - Set CHARACTER_AGENT_URL to the characteragent URL printed by agentcore status
-CHARACTER_AGENT_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
+# TODO: 8.2 Step 1 - Read CHARACTER_AGENT_URL from the environment
+CHARACTER_AGENT_URL = os.environ["CHARACTER_AGENT_URL"]
 
 # TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in us-west-2 and sends a session id
 agentcore_config = ClientConfig(httpx_client=httpx.AsyncClient(
@@ -37,8 +41,8 @@ agentcore_config = ClientConfig(httpx_client=httpx.AsyncClient(
     timeout=300,
 ))
 
-# TODO: 8.3 Step 1 - Set RULES_AGENT_URL to the rulesagent URL printed by agentcore status
-RULES_AGENT_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
+# TODO: 8.3 Step 1 - Read RULES_AGENT_URL from the environment
+RULES_AGENT_URL = os.environ["RULES_AGENT_URL"]
 
 class DiceOutput(BaseModel):
     dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")

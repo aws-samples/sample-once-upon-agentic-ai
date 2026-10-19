@@ -5,7 +5,7 @@
       "Sid": "RetrieveRules",
       "Effect": "Allow",
       "Action": "bedrock:Retrieve",
-      "Resource": "arn:aws:bedrock:us-west-2:*:knowledge-base/<your-knowledge-base-id>"
+      "Resource": "arn:aws:bedrock:us-west-2:*:knowledge-base/*"
     }
   ]
 }

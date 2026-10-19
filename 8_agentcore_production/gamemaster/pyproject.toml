@@ -11,4 +11,5 @@ dependencies = [
     "mcp-proxy-for-aws",
     "boto3",
     "httpx",
+    "python-dotenv",
 ]
