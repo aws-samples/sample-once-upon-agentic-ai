@@ -4,7 +4,7 @@ from mcp.server import FastMCP
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# TODO: Step 1 - Create the MCP server listening on all interfaces, on the default port, with stateless HTTP
+# TODO: Step 1 - Create the MCP server as mcp, listening on all interfaces, on the default port, with stateless HTTP
 
 @mcp.tool()
 def roll_dice(faces: int = 6) -> int:
