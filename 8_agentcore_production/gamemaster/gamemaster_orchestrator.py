@@ -7,6 +7,7 @@ from pydantic import BaseModel, Field
 from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
+# TODO: 8.4 Step 5 - Delete the fastapi, uvicorn and tinydb imports
 # TODO: 8.1 Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
 from mcp_proxy_for_aws.client import aws_iam_streamablehttp_client
 # TODO: 8.2 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
