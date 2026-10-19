@@ -2,16 +2,17 @@ import os
 import uuid
 import boto3
 import httpx
-import uvicorn
 from dotenv import load_dotenv
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
-from tinydb import TinyDB, Query
 from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
+# TODO: 8.4 Step 5 - Delete the fastapi, uvicorn and tinydb imports
+import uvicorn
+from fastapi import FastAPI
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+from tinydb import TinyDB, Query
 # TODO: 8.1 Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
 # TODO: 8.2 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
 # TODO: 8.4 Step 1 - Import BedrockAgentCoreApp from bedrock_agentcore.runtime
@@ -68,11 +69,11 @@ load_dotenv()
 
 # TODO: 8.1 Step 1 - Read DICE_SERVER_URL from the environment
 
-# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
+# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service
 
 # TODO: 8.2 Step 1 - Read CHARACTER_AGENT_URL from the environment
 
-# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in us-west-2 and sends a session id
+# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
 
 # TODO: 8.3 Step 1 - Read RULES_AGENT_URL from the environment
 

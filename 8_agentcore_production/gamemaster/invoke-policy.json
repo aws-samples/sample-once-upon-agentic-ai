@@ -9,7 +9,7 @@
         "bedrock-agentcore:GetAgentCard"
       ],
       "Resource": [
-        "arn:aws:bedrock-agentcore:us-west-2:*:runtime/gameprod_*"
+        "arn:aws:bedrock-agentcore:*:*:runtime/gameprod_*"
       ]
     }
   ]

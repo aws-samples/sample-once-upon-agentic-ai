@@ -42,7 +42,7 @@ class Character:
 # The characters live in AgentCore Memory: one memory record per character, under /characters/.
 # AgentCore sets MEMORY_CHARACTERS_ID for the "characters" memory of the project.
 MEMORY_ID = os.environ["MEMORY_CHARACTERS_ID"]
-memory = boto3.client("bedrock-agentcore", region_name=os.environ.get("AWS_REGION", "us-west-2"))
+memory = boto3.client("bedrock-agentcore")
 
 def save_character(record: dict) -> None:
     # TODO: Step 1 - Save the record as a memory record in the namespace /characters/<character_id>
