@@ -4,23 +4,23 @@ from strands import Agent, tool
 from strands.multiagent.a2a import A2AServer
 from strands.hooks import AfterInvocationEvent, HookProvider, HookRegistry
 
-KB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "utils", "dnd_knowledge_base")
+KB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "utils", "rules_knowledge_base")
 _collection = None
 
 def rules_collection():
     """Open the ChromaDB collection on first use (fails loudly if the knowledge base was not built)."""
     global _collection
     if _collection is None:
-        _collection = chromadb.PersistentClient(path=KB_PATH).get_collection("dnd_basic_rules")
+        _collection = chromadb.PersistentClient(path=KB_PATH).get_collection("basic_rules")
     return _collection
 
 @tool
-def query_dnd_rules(query: str) -> str:
-    """Look up a D&D 5e rule in the Basic Rules knowledge base.
+def query_rules(query: str) -> str:
+    """Look up a rule in the Basic Rules knowledge base.
 
     Use it for any question about game mechanics: ability checks, combat,
     spellcasting, conditions, resting. Ask in plain English, as a player would.
-    The lookup is a semantic search over the D&D Basic Rules PDF: the three
+    The lookup is a semantic search over the Basic Rules PDF: the three
     passages closest to the question come back, each with its page number.
 
     Example response:
@@ -54,10 +54,10 @@ class NewlineAfterTurn(HookProvider):
 
 def create_agent(context_id: str) -> Agent:
     return Agent(
-        # TODO: Step 1 - Add the query_dnd_rules tool to the agent
+        # TODO: Step 1 - Add the query_rules tool to the agent
         # TODO: Step 2 - Add the name "Rules Agent" to the agent
-        # TODO: Step 3 - Add the description "D&D 5e rules lookup: fast, page-referenced answers from the Basic Rules knowledge base." to the agent
-        system_prompt="""You are a D&D 5e rules expert. For each rules question, call query_dnd_rules once, then answer briefly with the page reference.""",
+        # TODO: Step 3 - Add the description "Rules lookup: fast, page-referenced answers from the Basic Rules knowledge base." to the agent
+        system_prompt="""You are a rules expert for a fantasy role-playing game. For each rules question, call query_rules once, then answer briefly with the page reference.""",
         hooks=[NewlineAfterTurn()],
     )
 

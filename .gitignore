@@ -210,8 +210,8 @@ A2A_BUG_REPORT.md
 output/
 
 # ChromaDB knowledge base (generated files)
-dnd_knowledge_base/
-**/dnd_knowledge_base/
+rules_knowledge_base/
+**/rules_knowledge_base/
 
 # Strands harness state (chapter 7): sessions and long-term memory
 .agent/

@@ -44,7 +44,7 @@ Character_Query = Query()
 
 @tool
 def find_character_by_name(name: str) -> dict:
-    """Find a stored D&D character by its exact name.
+    """Find a stored character by its exact name.
 
     Use it when a player refers to an existing character and you need its sheet:
     class, race, level, ability scores, inventory. Names are matched exactly and
@@ -117,7 +117,7 @@ def create_character(
     gender: str,
     stats_dict: dict[str, int]
     ) -> dict:
-    """Create a new D&D character and save it to the database.
+    """Create a new character and save it to the database.
 
     Use it once per new character, after the ability scores have been decided
     (roll them with the 4d6-drop-lowest method first). Every new character starts
@@ -138,8 +138,8 @@ def create_character(
 
     Args:
         name: The character's name, e.g. "Thorin".
-        character_class: A D&D class such as "Fighter", "Wizard" or "Rogue".
-        race: A D&D race such as "Dwarf", "Elf" or "Human".
+        character_class: A class such as "Fighter", "Wizard" or "Rogue".
+        race: A race such as "Dwarf", "Elf" or "Human".
         gender: The character's gender, e.g. "Female"; pick one if the player did not say.
         stats_dict: Ability scores as a dict with the keys strength, dexterity,
             constitution, intelligence, wisdom and charisma, each an integer
@@ -188,8 +188,8 @@ def create_agent(context_id: str) -> Agent:
     return Agent(
         # TODO: Step 1 - Add the create_character, find_character_by_name and list_all_characters tools to the agent
         # TODO: Step 2 - Add the name "Character Agent" to the agent
-        # TODO: Step 3 - Add the description "D&D character management: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them." to the agent
-        system_prompt="""You are a D&D character manager. Use your tools to create, find or list characters.
+        # TODO: Step 3 - Add the description "Character management for a fantasy role-playing game: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them." to the agent
+        system_prompt="""You are a character manager for a fantasy role-playing game. Use your tools to create, find or list characters.
 When creating a character, roll each ability score with 4d6 drop lowest. If details are missing (gender, some scores), choose or roll them yourself instead of asking back.
 Confirm creations and summarize found characters briefly: class, race, key stats.""",
         hooks=[NewlineAfterTurn()],
