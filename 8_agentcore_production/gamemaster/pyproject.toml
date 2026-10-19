@@ -1,0 +1,14 @@
+[project]
+name = "gamemaster"
+version = "0.1.0"
+description = "Chapter 5 Game Master, deployed as an AgentCore HTTP runtime with its conversation in AgentCore Memory"
+requires-python = ">=3.10"
+dependencies = [
+    "strands-agents[a2a]>=1.61",
+    "bedrock-agentcore[strands-agents]>=1.24",
+    "a2a-sdk[all]>=0.3,<0.4",
+    "mcp<2",
+    "mcp-proxy-for-aws",
+    "boto3",
+    "httpx",
+]

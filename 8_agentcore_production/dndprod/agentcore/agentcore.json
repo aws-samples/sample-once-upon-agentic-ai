@@ -38,16 +38,28 @@
       "entrypoint": "rules_agent.py",
       "codeLocation": "../rulesagent/",
       "runtimeVersion": "PYTHON_3_14",
-      "networkMode": "PUBLIC",
-      "protocol": "A2A",
       "envVars": [
         {
           "name": "KNOWLEDGE_BASE_RULES_ID",
           "value": "<your-knowledge-base-id>"
         }
       ],
+      "networkMode": "PUBLIC",
+      "protocol": "A2A",
       "additionalPolicies": [
         "kb-policy.json"
+      ]
+    },
+    {
+      "name": "gamemaster",
+      "build": "CodeZip",
+      "entrypoint": "gamemaster_orchestrator.py",
+      "codeLocation": "../gamemaster/",
+      "runtimeVersion": "PYTHON_3_14",
+      "networkMode": "PUBLIC",
+      "protocol": "HTTP",
+      "additionalPolicies": [
+        "invoke-policy.json"
       ]
     }
   ],
@@ -55,6 +67,11 @@
     {
       "name": "characters",
       "eventExpiryDuration": 365,
+      "strategies": []
+    },
+    {
+      "name": "conversations",
+      "eventExpiryDuration": 30,
       "strategies": []
     }
   ],

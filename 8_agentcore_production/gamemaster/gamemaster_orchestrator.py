@@ -1,10 +1,8 @@
 import os
-import uvicorn
-from fastapi import FastAPI
-from fastapi.responses import JSONResponse
-from fastapi.middleware.cors import CORSMiddleware
+import uuid
+import boto3
+import httpx
 from pydantic import BaseModel, Field
-from tinydb import TinyDB, Query
 from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
@@ -13,42 +11,14 @@ from mcp_proxy_for_aws.client import aws_iam_streamablehttp_client
 # TODO: 8.2 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
 from a2a.client import ClientConfig
 from mcp_proxy_for_aws.sigv4_helper import SigV4HTTPXAuth
-import uuid
-import boto3
-import httpx
+# TODO: 8.4 Step 1 - Import BedrockAgentCoreApp from bedrock_agentcore.runtime
+from bedrock_agentcore.runtime import BedrockAgentCoreApp
+# TODO: 8.4 Step 2 - Import AgentCoreMemoryConfig and AgentCoreMemorySessionManager from bedrock_agentcore.memory.integrations.strands
+from bedrock_agentcore.memory.integrations.strands.config import AgentCoreMemoryConfig
+from bedrock_agentcore.memory.integrations.strands.session_manager import AgentCoreMemorySessionManager
 
-app = FastAPI(title="D&D Game Master API")
-origins = ["*"]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-class QuestionRequest(BaseModel):
-    question: str
-
-@app.get("/health")
-def health_check():
-    return {"status": "healthy"}
-
-@app.get("/messages")
-def get_messages():
-    return agent.messages
-
-@app.get("/user/{user_name}")
-def get_user(user_name):
-    characters_db = TinyDB(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "5_a2a_integration", "agents", "character_agent", "characters.json"))
-    Character_Query = Query()
-    result = characters_db.search(Character_Query.name == user_name)
-    if not result:
-        return f":x: Character with name '{user_name}' not found"
-    
-    character = result[0]
-    print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
-    return character
+# TODO: 8.4 Step 1 - Replace the FastAPI app and its endpoints with a BedrockAgentCoreApp
+app = BedrockAgentCoreApp()
 
 # TODO: 8.1 Step 1 - Set DICE_SERVER_URL to the diceserver URL printed by agentcore status
 DICE_SERVER_URL = "https://bedrock-agentcore.us-west-2.amazonaws.com/runtimes/<your-url-encoded-runtime-arn>/invocations"
@@ -83,35 +53,41 @@ class StoryOutput(BaseModel):
     dice_rolls: list[DiceOutput] = Field(default=[], description="List of dice rolls with dice_type, result, and reason")
 
 
-try:
-    a2a_client = make_a2a_client(allowed_endpoints=[
-        # TODO: 8.3 Step 2 - Replace the local Rules Agent with RULES_AGENT_URL and agentcore_config
-        (RULES_AGENT_URL, agentcore_config),  # Rules Agent, on AgentCore
-        # TODO: 8.2 Step 3 - Replace the local Character Agent with CHARACTER_AGENT_URL and agentcore_config
-        (CHARACTER_AGENT_URL, agentcore_config),  # Character Agent, on AgentCore
-    ])
 
-    agent = Agent(
-        system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
-        tools=[mcp_client, a2a_client],
-        structured_output_model=StoryOutput
-    )
-    print(agent)
+a2a_client = make_a2a_client(allowed_endpoints=[
+    # TODO: 8.3 Step 2 - Replace the local Rules Agent with RULES_AGENT_URL and agentcore_config
+    (RULES_AGENT_URL, agentcore_config),  # Rules Agent, on AgentCore
+    # TODO: 8.2 Step 3 - Replace the local Character Agent with CHARACTER_AGENT_URL and agentcore_config
+    (CHARACTER_AGENT_URL, agentcore_config),  # Character Agent, on AgentCore
+])
 
-except Exception as e:
-    print(f"Error occurred: {str(e)}")
+# One Game Master per session, created on its first invocation
+game_masters = {}
 
-@app.post("/inquire")
-async def ask_agent(request: QuestionRequest):
-    print("Processing request...")
-    try:
-        response = await agent.invoke_async(request.question)
-        print(response.structured_output)
-        return JSONResponse(content={ "response": response.structured_output.model_dump()})
-        
-    except Exception as e:
-        print(f"Error occurred: {str(e)}")
-        return JSONResponse(content={"error": "Internal server error"}, status_code=500)
+def get_game_master(session_id: str) -> Agent:
+    if session_id not in game_masters:
+        game_masters[session_id] = Agent(
+            system_prompt="""You are a D&D Game Master. Discover the agents you can reach and ask them instead of guessing: rules questions, character creation and lookups are their job. Every dice roll goes through roll_dice. Never make up what a tool can tell you, and narrate with flair.""",
+            tools=[mcp_client, a2a_client],
+            structured_output_model=StoryOutput,
+            # TODO: 8.4 Step 2 - Keep the conversation in the conversations memory with an AgentCoreMemorySessionManager for this session and the actor "player"
+            session_manager=AgentCoreMemorySessionManager(
+                AgentCoreMemoryConfig(memory_id=os.environ["MEMORY_CONVERSATIONS_ID"], session_id=session_id, actor_id="player"),
+                region_name="us-west-2",
+            ),
+            callback_handler=None,
+        )
+    return game_masters[session_id]
+
+# TODO: 8.4 Step 3 - Create the entrypoint: return the messages of the session's Game Master if the payload asks for them, otherwise answer the prompt with a StoryOutput
+@app.entrypoint
+async def invoke(payload, context):
+    game_master = get_game_master(context.session_id)
+    if payload.get("messages"):
+        return game_master.messages
+    response = await game_master.invoke_async(payload["prompt"])
+    return response.structured_output.model_dump()
 
 if __name__ == "__main__":
-    uvicorn.run(app, port=8009)
+    # TODO: 8.4 Step 4 - Run the app
+    app.run()

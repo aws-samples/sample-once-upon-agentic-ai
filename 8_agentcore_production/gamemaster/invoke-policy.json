@@ -1,0 +1,16 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CallTheOtherBricks",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:InvokeAgentRuntime",
+        "bedrock-agentcore:GetAgentCard"
+      ],
+      "Resource": [
+        "arn:aws:bedrock-agentcore:us-west-2:*:runtime/dndprod_*"
+      ]
+    }
+  ]
+}
