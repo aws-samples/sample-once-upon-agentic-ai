@@ -27,15 +27,15 @@ load_dotenv()
 # TODO: 8.1 Step 1 - Read DICE_SERVER_URL from the environment
 DICE_SERVER_URL = os.environ["DICE_SERVER_URL"]
 
-# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service in us-west-2
-mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVER_URL, aws_service="bedrock-agentcore", aws_region="us-west-2"))
+# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service
+mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVER_URL, aws_service="bedrock-agentcore"))
 
 # TODO: 8.2 Step 1 - Read CHARACTER_AGENT_URL from the environment
 CHARACTER_AGENT_URL = os.environ["CHARACTER_AGENT_URL"]
 
-# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in us-west-2 and sends a session id
+# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
 agentcore_config = ClientConfig(httpx_client=httpx.AsyncClient(
-    auth=SigV4HTTPXAuth(boto3.Session().get_credentials(), "bedrock-agentcore", "us-west-2"),
+    auth=SigV4HTTPXAuth(boto3.Session().get_credentials(), "bedrock-agentcore", boto3.Session().region_name),
     # AgentCore runs one microVM per session; the id must be at least 33 characters long
     headers={"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id": str(uuid.uuid4())},
     timeout=300,
@@ -77,7 +77,6 @@ def get_game_master(session_id: str) -> Agent:
             # TODO: 8.4 Step 2 - Keep the conversation in the conversations memory with an AgentCoreMemorySessionManager for this session and the actor "player"
             session_manager=AgentCoreMemorySessionManager(
                 AgentCoreMemoryConfig(memory_id=os.environ["MEMORY_CONVERSATIONS_ID"], session_id=session_id, actor_id="player"),
-                region_name="us-west-2",
             ),
             callback_handler=None,
         )

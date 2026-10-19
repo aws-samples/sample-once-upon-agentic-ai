@@ -13,28 +13,27 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 
-REGION = "us-west-2"
 # One session id = one campaign: the Game Master finds its conversation again under this id.
 # AgentCore requires at least 33 characters.
 SESSION_ID = "campaign-once-upon-agentic-ai-0001"
 
-control = boto3.client("bedrock-agentcore-control", region_name=REGION)
+control = boto3.client("bedrock-agentcore-control")
 # A Game Master turn can call several agents: allow it more than the default 60 seconds
-agentcore = boto3.client("bedrock-agentcore", region_name=REGION, config=Config(read_timeout=300))
+agentcore = boto3.client("bedrock-agentcore", config=Config(read_timeout=300))
 
 def find_game_master_arn() -> str:
     for page in control.get_paginator("list_agent_runtimes").paginate():
         for runtime in page["agentRuntimes"]:
             if runtime["agentRuntimeName"] == "gameprod_gamemaster":
                 return runtime["agentRuntimeArn"]
-    raise RuntimeError("No gameprod_gamemaster runtime in us-west-2: deploy the Game Master first")
+    raise RuntimeError(f"No gameprod_gamemaster runtime in {control.meta.region_name}: deploy the Game Master first")
 
 def find_characters_memory_id() -> str:
     for page in control.get_paginator("list_memories").paginate():
         for memory in page["memories"]:
             if memory["id"].startswith("gameprod_characters-"):
                 return memory["id"]
-    raise RuntimeError("No gameprod characters memory in us-west-2: deploy the Character Agent first")
+    raise RuntimeError(f"No gameprod characters memory in {control.meta.region_name}: deploy the Character Agent first")
 
 GAME_MASTER_ARN = find_game_master_arn()
 CHARACTERS_MEMORY_ID = find_characters_memory_id()
