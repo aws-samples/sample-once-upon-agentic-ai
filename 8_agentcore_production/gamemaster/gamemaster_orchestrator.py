@@ -15,7 +15,7 @@ from a2a.client import ClientConfig
 from mcp_proxy_for_aws.sigv4_helper import SigV4HTTPXAuth
 # TODO: 8.4 Step 1 - Import BedrockAgentCoreApp from bedrock_agentcore.runtime
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
-# TODO: 8.4 Step 2 - Import AgentCoreMemoryConfig and AgentCoreMemorySessionManager from bedrock_agentcore.memory.integrations.strands
+# TODO: 8.4 Step 2 - Import AgentCoreMemoryConfig from bedrock_agentcore.memory.integrations.strands.config and AgentCoreMemorySessionManager from bedrock_agentcore.memory.integrations.strands.session_manager
 from bedrock_agentcore.memory.integrations.strands.config import AgentCoreMemoryConfig
 from bedrock_agentcore.memory.integrations.strands.session_manager import AgentCoreMemorySessionManager
 
