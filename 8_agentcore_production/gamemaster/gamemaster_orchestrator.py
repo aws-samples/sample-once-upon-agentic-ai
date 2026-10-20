@@ -16,7 +16,7 @@ from tinydb import TinyDB, Query
 # TODO: 8.1 Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
 # TODO: 8.2 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
 # TODO: 8.4 Step 1 - Import BedrockAgentCoreApp from bedrock_agentcore.runtime
-# TODO: 8.4 Step 2 - Import AgentCoreMemoryConfig and AgentCoreMemorySessionManager from bedrock_agentcore.memory.integrations.strands
+# TODO: 8.4 Step 2 - Import AgentCoreMemoryConfig from bedrock_agentcore.memory.integrations.strands.config and AgentCoreMemorySessionManager from bedrock_agentcore.memory.integrations.strands.session_manager
 
 # TODO: 8.4 Step 1 - Replace the FastAPI app and its endpoints with a BedrockAgentCoreApp
 app = FastAPI(title="Game Master API")
