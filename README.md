@@ -20,7 +20,7 @@ source .venv/bin/activate  # .venv\Scripts\activate on Windows
 
 No `uv`? Install it from [docs.astral.sh/uv](https://docs.astral.sh/uv/getting-started/installation/), or use plain pip: `pip install .` from the repository root.
 
-The agents run on Amazon Bedrock by default (Claude Sonnet 4.6; chapter 7 uses Claude Opus 5). You need AWS credentials with access to those models, see [Chapter 0](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites). Chapter 8 deploys to AgentCore: in the workshop Code Editor everything it needs is already set up; in an AWS account of your own, it also needs Node.js 20+ and the [AgentCore CLI](https://github.com/aws/agentcore-cli), which its instructions install.
+The agents run on Amazon Bedrock by default (Claude Sonnet 4.6). You need AWS credentials with access to that model, see [Chapter 0](https://catalog.us-east-1.prod.workshops.aws/workshops/e1493217-4bc7-42f4-87d9-e231acd743bc/en-US/0-pre-requisites). Chapter 8 deploys to AgentCore: in the workshop Code Editor everything it needs is already set up; in an AWS account of your own, it also needs Node.js 20+ and the [AgentCore CLI](https://github.com/aws/agentcore-cli), which its instructions install.
 
 ## The Adventure Map
 

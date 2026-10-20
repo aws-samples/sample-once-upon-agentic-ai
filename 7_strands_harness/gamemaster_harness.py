@@ -46,6 +46,7 @@ a2a_client = make_a2a_client(allowed_endpoints=[
 ])
 
 agent = create_harness(
+    model="bedrock/global.anthropic.claude-sonnet-4-6",  # Claude Sonnet 4.6, as in the other chapters
     # TODO: Step 1 - Pass the INSTRUCTIONS to the harness
     # TODO: Step 2 - Add the dice MCP server {"dice": {"url": "http://127.0.0.1:8002/mcp"}} to mcp_servers
     # TODO: Step 3 - Add the a2a_client tool to the harness
