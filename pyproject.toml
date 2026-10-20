@@ -35,7 +35,7 @@ dependencies = [
     "mcp<2",
 
     # IAM-signed MCP transport: a local or deployed agent calling an MCP server on AgentCore Runtime
-    # (chapters 8 to 11).
+    # (chapter 8).
     "mcp-proxy-for-aws",
 
     # AWS SDK — imported directly by chapter 8 (ui_proxy calls invoke_agent_runtime), so declared
