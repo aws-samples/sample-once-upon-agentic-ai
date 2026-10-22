@@ -1,10 +1,9 @@
 from strands import Agent
-# TODO: Step 1 - Import MCPClient from strands.tools.mcp and streamablehttp_client from mcp.client.streamable_http
+# TODO: Step 1 - Import MCPClient from strands.tools.mcp
 from strands.tools.mcp import MCPClient
-from mcp.client.streamable_http import streamablehttp_client
 
-# TODO: Step 1 - Create a streamable http MCPClient connecting to "http://localhost:8002/mcp"
-mcp_dice_client = MCPClient(lambda: streamablehttp_client("http://localhost:8002/mcp"))
+# TODO: Step 1 - Create an MCPClient with the url "http://localhost:8002/mcp"
+mcp_dice_client = MCPClient(url="http://localhost:8002/mcp")
 
 gamemaster = Agent(
     system_prompt="""You are Lady Luck, the mystical keeper of dice and fortune in fantasy role-playing adventures.

@@ -8,7 +8,6 @@ from tinydb import TinyDB, Query
 from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
-from mcp.client.streamable_http import streamablehttp_client
 
 app = FastAPI(title="Game Master API")
 origins = ["*"]
@@ -43,8 +42,8 @@ def get_user(user_name):
     print(f"✅ Found character: {character['name']} (ID: {character['character_id']}, {character['character_class']} {character['race']})")
     return character
 
-# TODO: Step 1 - Create a streamable http MCPClient connecting to "http://localhost:8002/mcp"
-mcp_client = MCPClient(lambda: streamablehttp_client("http://localhost:8002/mcp"))
+# TODO: Step 1 - Create an MCPClient with the url "http://localhost:8002/mcp"
+mcp_client = MCPClient(url="http://localhost:8002/mcp")
 
 class DiceOutput(BaseModel):
     dice_type: str = Field(description="The dice type. Ex: d4, d6, d20, etc")

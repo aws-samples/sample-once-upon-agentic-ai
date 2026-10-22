@@ -46,7 +46,7 @@ Complete the chapters in order: each one reuses what the previous one built. Cha
 
 ## Dependencies
 
-The workshop ships no lockfile (`uv.lock` is gitignored), so `uv sync` installs the latest compatible releases. Three bounds are pinned in `pyproject.toml`, each with a comment explaining why: a floor on `strands-agents` (the release the instructions were written against), `strands-harness` for chapter 7, and a `mcp<2` ceiling because mcp 2.0 renamed the `FastMCP` and `streamablehttp_client` symbols chapters 4 and 5 teach. If a chapter breaks against a newer release, please open an issue.
+The workshop ships no lockfile (`uv.lock` is gitignored), so `uv sync` installs the latest compatible releases. Three bounds are pinned in `pyproject.toml`, each with a comment explaining why: a floor on `strands-agents` (the release the instructions were written against), `strands-harness` for chapter 7, and a `mcp<2` ceiling because mcp 2.0 renamed the `FastMCP` server class chapter 4 teaches. If a chapter breaks against a newer release, please open an issue.
 
 ## Tests
 
