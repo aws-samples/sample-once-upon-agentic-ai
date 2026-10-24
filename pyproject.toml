@@ -43,3 +43,13 @@ dependencies = [
     # 1.40 is the first release with the bedrock-agentcore stop_runtime_session operation.
     "boto3>=1.40",
 ]
+
+[tool.uv]
+# chromadb pulls onnxruntime transitively for the Chapter 5 knowledge base. onnxruntime stopped
+# shipping Intel-Mac wheels after 1.23.2 and has no source distribution, so on x86_64 macOS uv's
+# universal resolver otherwise picks a newer, wheel-less version and `uv sync` hard-fails (issue
+# #49). Requiring the Intel-Mac environment forces uv to backtrack to an onnxruntime release that
+# does ship an x86_64 macOS wheel. Apple Silicon and Linux are unaffected.
+required-environments = [
+    "sys_platform == 'darwin' and platform_machine == 'x86_64'",
+]
