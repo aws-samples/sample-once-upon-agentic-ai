@@ -54,15 +54,19 @@ class NewlineAfterTurn(HookProvider):
 
 def create_agent(context_id: str) -> Agent:
     return Agent(
-        # TODO: Step 1 - Add the query_rules tool to the agent
-        # TODO: Step 2 - Add the name "Rules Agent" to the agent
-        # TODO: Step 3 - Add the description "Rules lookup: fast, page-referenced answers from the Basic Rules knowledge base." to the agent
+        # Step 1 - Add the query_rules tool to the agent
+        tools=[query_rules],
+        # Step 2 - Add the name "Rules Agent" to the agent
+        name="Rules Agent",
+        # Step 3 - Add the description to the agent
+        description="Rules lookup: fast, page-referenced answers from the Basic Rules knowledge base.",
         system_prompt="""You are a rules expert for a fantasy role-playing game. For each rules question, call query_rules once, then answer briefly with the page reference.""",
         hooks=[NewlineAfterTurn()],
     )
 
-# TODO: Step 4 - Create an A2AServer with the create_agent factory on port 8000
+# Step 4 - Create an A2AServer with the create_agent factory on port 8000
+a2a_server = A2AServer(agent_factory=create_agent, port=8000)
 
 if __name__ == "__main__":
-    # TODO: Step 5 - Start the A2A server
-    pass
+    # Step 5 - Start the A2A server
+    a2a_server.serve()
