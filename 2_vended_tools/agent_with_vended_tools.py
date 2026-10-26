@@ -1,9 +1,9 @@
 from strands import Agent
-# TODO: Step 1 - Import http_request from strands.vended_tools
+from strands.vended_tools import http_request
 
 agent = Agent(
     tools=[
-        # TODO: Step 1 - Add the http_request tool to your agent
+        http_request,
     ],
     system_prompt="""You are a game master for a fantasy role-playing game.
     When asked about a spell or a monster, look it up on the Open5e API and answer from the data:
