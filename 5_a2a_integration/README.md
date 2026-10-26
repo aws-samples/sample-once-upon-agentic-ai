@@ -15,7 +15,7 @@ Chapter 4 connected an agent to tools with MCP. Here agents talk to each other w
 | Part | What | File | Status |
 |---|---|---|---|
 | 1 | Rules Agent | `agents/rules_agent/rules_agent.py` | done |
-| 2 | Character Agent | `agents/character_agent/character_agent.py` | to do |
+| 2 | Character Agent | `agents/character_agent/character_agent.py` | done |
 | 3 | Game Master Orchestrator | `agents/gamemaster_orchestrator/gamemaster_orchestrator.py` | to do |
 
 ## Part 1: the Rules Agent
@@ -79,10 +79,42 @@ The real card also has `protocolVersion` (`0.3.0`) and `preferredTransport` (`JS
 
 Leave this terminal open: the orchestrator needs the agent in Part 4.
 
+## Part 2: the Character Agent
+
+The Character Agent creates, finds and lists characters. Its three tools are already written and store the sheets in a local TinyDB file, `agents/character_agent/characters.json`:
+
+| Tool | What it does |
+|---|---|
+| `create_character` | stores a new level 1 character with the given class, race, gender and ability scores, a Starting Equipment Pack and 100 gold pieces |
+| `find_character_by_name` | exact, case-sensitive lookup; raises an error if the name is unknown |
+| `list_all_characters` | returns every stored character |
+
+The same steps as the Rules Agent, with this agent's tools and card:
+
+| Step | Change |
+|---|---|
+| 1 | `tools=[create_character, find_character_by_name, list_all_characters]` |
+| 2 | `name="Character Agent"` |
+| 3 | `description="Character management for a fantasy role-playing game: creates characters (ability scores rolled 4d6 drop lowest), stores them, finds and lists them."` |
+| 4 | `a2a_server = A2AServer(agent_factory=create_agent, port=8001)`: every agent needs its own port |
+| 5 | `a2a_server.serve()` under `if __name__ == "__main__":` |
+
+Launch it in a second terminal, the Rules Agent keeps running in the first (activate the virtual environment again):
+
+```bash
+cd agents/character_agent
+python character_agent.py
+```
+
+You should see Uvicorn running on `http://127.0.0.1:8001`. The card is at `http://127.0.0.1:8001/.well-known/agent-card.json`. It has the name and description above, `url` `http://127.0.0.1:8001/`, and one skill per tool: `create_character`, `find_character_by_name` and `list_all_characters`. Each skill description is the tool's docstring without its `Args:` section. Leave this terminal open too.
+
+The system prompt asks for 4d6 drop lowest, but this agent has no dice tool. The dice come from the MCP server on port 8002, which the orchestrator will use in Part 3, so ask for scores to be rolled there rather than by this agent alone.
+
 ## Troubleshooting
 
 - `Collection [basic_rules] does not exist`, or an error from `get_collection`: the knowledge base was not built, or was built from the wrong folder. Run `create_knowledge_base.py` from `utils/`.
 - `Address already in use` on port 8000: an earlier Rules Agent is still running.
+- `Address already in use` on port 8001: an earlier Character Agent is still running.
 - The agent card loads but questions fail: the agent calls Bedrock, so it needs AWS credentials as in [Chapter 1](../1_strands_basics/). The card itself needs none.
 
 Previous: [Chapter 4](../4_mcp_integration/).
