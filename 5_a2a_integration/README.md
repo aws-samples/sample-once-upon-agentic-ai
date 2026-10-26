@@ -16,7 +16,7 @@ Chapter 4 connected an agent to tools with MCP. Here agents talk to each other w
 |---|---|---|---|
 | 1 | Rules Agent | `agents/rules_agent/rules_agent.py` | done |
 | 2 | Character Agent | `agents/character_agent/character_agent.py` | done |
-| 3 | Game Master Orchestrator | `agents/gamemaster_orchestrator/gamemaster_orchestrator.py` | to do |
+| 3 | Game Master Orchestrator | `agents/gamemaster_orchestrator/gamemaster_orchestrator.py` | done |
 
 ## Part 1: the Rules Agent
 
@@ -110,11 +110,79 @@ You should see Uvicorn running on `http://127.0.0.1:8001`. The card is at `http:
 
 The system prompt asks for 4d6 drop lowest, but this agent has no dice tool. The dice come from the MCP server on port 8002, which the orchestrator will use in Part 3, so ask for scores to be rolled there rather than by this agent alone.
 
+## Part 3: the Game Master Orchestrator
+
+The orchestrator is the chapter's API (FastAPI, port 8009). It has no rules or character logic of its own: it calls the Rules and Character agents over A2A and rolls dice through the Chapter 4 MCP server. The API routes (`/inquire`, `/health`, `/messages`, `/user/{name}`) were already written; the four steps configure the agent.
+
+| Step | Change | Why |
+|---|---|---|
+| 1 | `mcp_client = MCPClient(url="http://localhost:8002/mcp")` | same client as Chapter 4; passed straight to `tools=[...]`, no `with` block |
+| 2 | `a2a_client = make_a2a_client(allowed_endpoints=["http://127.0.0.1:8000", "http://127.0.0.1:8001"])` | one tool: `operation="discover"` reads an agent card, `operation="send_message"` sends it a request; any other URL is rejected before a connection is made |
+| 3 | `tools=[mcp_client, a2a_client]` | `roll_dice` from the dice server, plus access to both agents |
+| 4 | `structured_output_model=StoryOutput` | every turn comes back as validated JSON: `response`, `actions_suggestions`, `details`, `dice_rolls` |
+
+Structured output matters because the Chapter 6 interface renders those fields separately.
+
+### Launch it
+
+Four terminals are needed. **Start the dice server before the Game Master**: the agent lists the MCP tools at startup, and the file's `try/except` hides a failure there, so the API still comes up with `/health` returning 200 but without a working agent.
+
+```bash
+# terminal 3
+cd 4_mcp_integration && python dice_roll_mcp_server.py
+# terminal 4
+cd 5_a2a_integration/agents/gamemaster_orchestrator && python gamemaster_orchestrator.py
+```
+
+You should see Uvicorn running on `http://127.0.0.1:8009`. The Rules and Character agents are only contacted when a question needs them.
+
+### Try it
+
+```bash
+curl -X POST http://0.0.0.0:8009/inquire \
+  -H "Content-Type: application/json" \
+  -d '{"question": "Roll a d20 for initiative!"}'
+```
+
+Output from a real run (abridged):
+
+```json
+{
+  "response": {
+    "response": "The air crackles with tension ... Thorin rolls for Initiative: 5 + 1 (Dexterity modifier) = 6 ...",
+    "actions_suggestions": ["Take your turn in combat - attack an enemy!", "Use your action to Dodge ...", "Survey the battlefield ..."],
+    "details": "Rolled a d20 for initiative using roll_dice (result: 5). Added Thorin's Dexterity modifier of +1 ...",
+    "dice_rolls": [{"dice_type": "d20", "result": 5, "reason": "Initiative roll + Dexterity modifier (+1) = 6"}]
+  }
+}
+```
+
+`result` is the raw die value; the total goes in `reason`.
+
+What each kind of question showed:
+
+| Question | Result |
+|---|---|
+| "What are the rules for dexterity checks?" | worked: answer cites "Basic Rules, Page 63", so it came from the Rules Agent |
+| "Roll a d20 for initiative!" | worked: one `roll_dice` call through MCP, correct arithmetic |
+| "Create a character named Thorin, a Dwarf Fighter ..." | dice worked (12 rolls for 4d6 drop lowest, totals correct), but the Character Agent call ended in task state `failed` three times; nothing was stored. The Game Master reported this honestly |
+| "What is Thorin's constitution?" | the Character Agent again failed to respond; the Game Master said so and answered from the earlier conversation |
+
+The Character Agent failure was not yet diagnosed when this was written: its terminal log (port 8001) shows the real error.
+
+### Things to know
+
+- **One agent, one history.** The orchestrator is a single global `Agent`, so conversation carries across requests (`GET /messages` shows it). It can answer about "Thorin" from earlier turns even if he was never stored. Fine for one player.
+- **Markdown in answers.** The narration uses markdown and emoji; a UI that does not render markdown will show it raw.
+
 ## Troubleshooting
 
 - `Collection [basic_rules] does not exist`, or an error from `get_collection`: the knowledge base was not built, or was built from the wrong folder. Run `create_knowledge_base.py` from `utils/`.
 - `Address already in use` on port 8000: an earlier Rules Agent is still running.
 - `Address already in use` on port 8001: an earlier Character Agent is still running.
+- `client failed to initialize` when starting the Game Master: the dice server on port 8002 is not running. Start it first.
+- `Address already in use` on port 8009: an earlier Game Master is still running.
+- The Game Master reports the Character Agent as unreachable or `failed`: read the Character Agent terminal (port 8001) for the real error, and test it directly with a `message/send` POST to `http://127.0.0.1:8001/`.
 - The agent card loads but questions fail: the agent calls Bedrock, so it needs AWS credentials as in [Chapter 1](../1_strands_basics/). The card itself needs none.
 
 Previous: [Chapter 4](../4_mcp_integration/).
