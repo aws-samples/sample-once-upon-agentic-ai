@@ -50,6 +50,9 @@ dependencies = [
 # universal resolver otherwise picks a newer, wheel-less version and `uv sync` hard-fails (issue
 # #49). Requiring the Intel-Mac environment forces uv to backtrack to an onnxruntime release that
 # does ship an x86_64 macOS wheel. Apple Silicon and Linux are unaffected.
+# The requirement is limited to Python < 3.14: onnxruntime 1.23.2, the last Intel-Mac release, only
+# ships x86_64 macOS wheels for cp310-cp313, so requiring Intel Mac on 3.14+ makes the whole
+# resolution unsatisfiable. Intel-Mac users need Python 3.13 or older (the .python-version pin).
 required-environments = [
-    "sys_platform == 'darwin' and platform_machine == 'x86_64'",
+    "sys_platform == 'darwin' and platform_machine == 'x86_64' and python_full_version < '3.14'",
 ]
