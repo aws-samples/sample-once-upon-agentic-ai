@@ -168,7 +168,7 @@ What each kind of question showed:
 | "Create a character named Thorin, a Dwarf Fighter ..." | dice worked (12 rolls for 4d6 drop lowest, totals correct), but the Character Agent call ended in task state `failed` three times; nothing was stored. The Game Master reported this honestly |
 | "What is Thorin's constitution?" | the Character Agent again failed to respond; the Game Master said so and answered from the earlier conversation |
 
-The Character Agent failure was not yet diagnosed when this was written: its terminal log (port 8001) shows the real error.
+In that run the Character Agent's terminal showed the cause: `AccessDeniedException` on `bedrock:InvokeModelWithResponseStream` in `us-east-1`, because that terminal had a different AWS region than the others (see Troubleshooting). Restart it with the same `AWS_REGION` and repeat the two character requests.
 
 ### Things to know
 
@@ -183,6 +183,7 @@ The Character Agent failure was not yet diagnosed when this was written: its ter
 - `client failed to initialize` when starting the Game Master: the dice server on port 8002 is not running. Start it first.
 - `Address already in use` on port 8009: an earlier Game Master is still running.
 - The Game Master reports the Character Agent as unreachable or `failed`: read the Character Agent terminal (port 8001) for the real error, and test it directly with a `message/send` POST to `http://127.0.0.1:8001/`.
+- `AccessDeniedException ... bedrock:InvokeModelWithResponseStream` in an agent's terminal, with `Bedrock region: us-east-1`: that agent started with a different AWS region or profile than your other terminals, and the Game Master only sees task state `failed`. Every terminal needs the same `AWS_REGION` (and `AWS_PROFILE`, if you use one); check with `aws sts get-caller-identity`. If it still fails in the right region, the IAM policy lacks that Bedrock action.
 - The agent card loads but questions fail: the agent calls Bedrock, so it needs AWS credentials as in [Chapter 1](../1_strands_basics/). The card itself needs none.
 
 Previous: [Chapter 4](../4_mcp_integration/).
