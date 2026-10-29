@@ -47,7 +47,8 @@ def ask_game_master(payload: dict):
     return json.loads(response["response"].read())
 
 app = FastAPI(title="Game Master UI proxy")
-app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+# The web UI is a public HTTPS page calling localhost, so Chrome sends a Private Network Access preflight
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"], allow_private_network=True)
 
 class QuestionRequest(BaseModel):
     question: str
