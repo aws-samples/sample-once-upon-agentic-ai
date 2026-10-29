@@ -16,6 +16,8 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
+    # The web UI is a public HTTPS page calling localhost, so Chrome sends a Private Network Access preflight
+    allow_private_network=True,
 )
 
 class QuestionRequest(BaseModel):
