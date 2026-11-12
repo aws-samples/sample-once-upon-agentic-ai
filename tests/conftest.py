@@ -19,3 +19,6 @@ for p in (
 ):
     if p.exists():
         sys.path.insert(0, str(p))
+
+# Appended, not prepended: its gamemaster_orchestrator must not shadow the chapter 5 one
+sys.path.append(str(ROOT / "8_agentcore_production" / "gamemaster"))

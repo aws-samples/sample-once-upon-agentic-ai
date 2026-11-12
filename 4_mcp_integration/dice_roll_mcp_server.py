@@ -1,12 +1,13 @@
 import random
 import logging
-# TODO: Step 1 - Import FastMCP from mcp.server
-from mcp.server import FastMCP
+# TODO: Step 1 - Import MCPServer from mcp.server
+from mcp.server import MCPServer
+from mcp.server.mcpserver.exceptions import ToolError
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# TODO: Step 1 - Create an MCP server on port 8002
-mcp = FastMCP(port=8002)
+# TODO: Step 1 - Create an MCP server
+mcp = MCPServer()
 
 # TODO: Step 2 - Add the decorator to expose roll_dice as an MCP tool
 @mcp.tool()
@@ -31,7 +32,8 @@ def roll_dice(faces: int = 6) -> int:
         An integer between 1 and faces, inclusive.
     """
     if faces < 1:
-        raise ValueError("Dice must have at least 1 face")
+        # A ToolError keeps its message; any other exception reaches the client as "Error executing tool roll_dice"
+        raise ToolError("Dice must have at least 1 face")
 
     result = random.randint(1, faces)
 
@@ -41,5 +43,5 @@ def roll_dice(faces: int = 6) -> int:
 
 if __name__ == "__main__":
     print("Starting Dice Roll MCP Server...")
-    # TODO: Step 3 - Run the MCP server with the streamable-http transport
-    mcp.run(transport="streamable-http")
+    # TODO: Step 3 - Run the MCP server with the streamable-http transport on port 8002
+    mcp.run(transport="streamable-http", port=8002)
