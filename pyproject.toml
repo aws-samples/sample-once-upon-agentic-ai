@@ -27,16 +27,10 @@ dependencies = [
     "python-dotenv",
 
     # Model Context Protocol — imported directly by the chapter 4 server, so declared here rather
-    # than inherited from strands-agents. Ceiling pinned because mcp 2.0 renamed the server class
-    # the chapter teaches (mcp.server.FastMCP -> MCPServer) and moved port= from the constructor
-    # to run(transport="streamable-http", port=...). The clients use MCPClient(url=...) and import
-    # nothing from mcp. Do not raise this ceiling until chapter 4 and the workshop catalog are
-    # ported together — see issue #50.
-    "mcp<2",
-
-    # IAM-signed MCP transport: a local or deployed agent calling an MCP server on AgentCore Runtime
-    # (chapter 8).
-    "mcp-proxy-for-aws",
+    # than inherited from strands-agents. Floor pinned because chapters 4 and 8 teach the mcp 2
+    # server: MCPServer() with host, port and stateless_http passed to run(...). The clients use
+    # MCPClient(url=...) and import nothing from mcp.
+    "mcp>=2",
 
     # AWS SDK — imported directly by chapter 8 (ui_proxy calls invoke_agent_runtime), so declared
     # here rather than inherited from strands-agents, whose floor (1.26) predates AgentCore.
