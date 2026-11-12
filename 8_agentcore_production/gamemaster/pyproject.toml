@@ -13,4 +13,5 @@ dependencies = [
     "aws-opentelemetry-distro",
     "httpx",
     "python-dotenv",
+    "tinydb",
 ]
