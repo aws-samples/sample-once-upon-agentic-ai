@@ -1,5 +1,6 @@
 import os
 import uuid
+import boto3
 import httpx
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
@@ -7,10 +8,11 @@ from strands import Agent
 from strands.vended_tools import make_a2a_client
 from strands.tools.mcp import MCPClient
 # TODO: 8.4 Step 5 - Delete the fastapi, uvicorn and tinydb imports
-# TODO: 8.1 Step 2 - Import SigV4Auth from sigv4_auth
-from sigv4_auth import SigV4Auth
-# TODO: 8.2 Step 2 - Import ClientConfig from a2a.client
+# TODO: 8.1 Step 2 - Import aws_iam_streamablehttp_client from mcp_proxy_for_aws.client
+from mcp_proxy_for_aws.client import aws_iam_streamablehttp_client
+# TODO: 8.2 Step 2 - Import ClientConfig from a2a.client and SigV4HTTPXAuth from mcp_proxy_for_aws.sigv4_helper
 from a2a.client import ClientConfig
+from mcp_proxy_for_aws.sigv4_helper import SigV4HTTPXAuth
 # TODO: 8.4 Step 1 - Import BedrockAgentCoreApp from bedrock_agentcore.runtime
 from bedrock_agentcore.runtime import BedrockAgentCoreApp
 # TODO: 8.4 Step 2 - Import AgentCoreMemoryConfig from bedrock_agentcore.memory.integrations.strands.config and AgentCoreMemorySessionManager from bedrock_agentcore.memory.integrations.strands.session_manager
@@ -26,15 +28,15 @@ load_dotenv()
 # TODO: 8.1 Step 1 - Read DICE_SERVER_URL from the environment
 DICE_SERVER_URL = os.environ["DICE_SERVER_URL"]
 
-# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL, its requests signed by SigV4Auth for the bedrock-agentcore service
-mcp_client = MCPClient(url=DICE_SERVER_URL, auth_provider=SigV4Auth(service="bedrock-agentcore"))
+# TODO: 8.1 Step 2 - Create an MCPClient connecting to DICE_SERVER_URL with aws_iam_streamablehttp_client for the bedrock-agentcore service
+mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVER_URL, aws_service="bedrock-agentcore"))
 
 # TODO: 8.2 Step 1 - Read CHARACTER_AGENT_URL from the environment
 CHARACTER_AGENT_URL = os.environ["CHARACTER_AGENT_URL"]
 
-# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4Auth for bedrock-agentcore and sends a session id
+# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
 agentcore_config = ClientConfig(httpx_client=httpx.AsyncClient(
-    auth=SigV4Auth(service="bedrock-agentcore"),
+    auth=SigV4HTTPXAuth(boto3.Session().get_credentials(), "bedrock-agentcore", boto3.Session().region_name),
     # AgentCore runs one microVM per session; the id must be at least 33 characters long
     headers={"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id": str(uuid.uuid4())},
     timeout=300,

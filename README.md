@@ -46,7 +46,7 @@ Complete the chapters in order: each one reuses what the previous one built. Cha
 
 ## Dependencies
 
-The workshop ships no lockfile (`uv.lock` is gitignored), so `uv sync` installs the latest compatible releases. Three bounds are pinned in `pyproject.toml`, each with a comment explaining why: a floor on `strands-agents` (the release the instructions were written against), `strands-harness` for chapter 7, and a `mcp>=2` floor because chapters 4 and 8 teach the mcp 2 server class, `MCPServer`. If a chapter breaks against a newer release, please open an issue.
+The workshop ships no lockfile (`uv.lock` is gitignored), so `uv sync` installs the latest compatible releases. Three bounds are pinned in `pyproject.toml`, each with a comment explaining why: a floor on `strands-agents` (the release the instructions were written against), `strands-harness` for chapter 7, and a `mcp>=2` floor for chapters 4 to 7, because chapter 4 teaches the mcp 2 server class, `MCPServer`. Chapter 8's Game Master uses its own environment for now (`8_agentcore_production/gamemaster/pyproject.toml`, `mcp<2` with `mcp-proxy-for-aws`). If a chapter breaks against a newer release, please open an issue.
 
 ## Tests
 

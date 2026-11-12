@@ -1,11 +1,11 @@
 import random
 import logging
-from mcp.server import MCPServer
-from mcp.server.mcpserver.exceptions import ToolError
+from mcp.server import FastMCP
 
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-mcp = MCPServer()
+# TODO: Step 1 - Create the MCP server as mcp, listening on all interfaces, on the default port, with stateless HTTP
+mcp = FastMCP(host="0.0.0.0", stateless_http=True)
 
 @mcp.tool()
 def roll_dice(faces: int = 6) -> int:
@@ -29,8 +29,7 @@ def roll_dice(faces: int = 6) -> int:
         An integer between 1 and faces, inclusive.
     """
     if faces < 1:
-        # A ToolError keeps its message; any other exception reaches the client as "Error executing tool roll_dice"
-        raise ToolError("Dice must have at least 1 face")
+        raise ValueError("Dice must have at least 1 face")
 
     result = random.randint(1, faces)
 
@@ -40,5 +39,4 @@ def roll_dice(faces: int = 6) -> int:
 
 if __name__ == "__main__":
     print("Starting Dice Roll MCP Server...")
-    # TODO: Step 1 - Run the MCP server listening on all interfaces, on the default port, with stateless HTTP
-    mcp.run(transport="streamable-http", host="0.0.0.0", stateless_http=True)
+    mcp.run(transport="streamable-http")

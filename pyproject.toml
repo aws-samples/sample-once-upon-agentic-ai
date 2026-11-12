@@ -27,9 +27,11 @@ dependencies = [
     "python-dotenv",
 
     # Model Context Protocol — imported directly by the chapter 4 server, so declared here rather
-    # than inherited from strands-agents. Floor pinned because chapters 4 and 8 teach the mcp 2
-    # server: MCPServer() with host, port and stateless_http passed to run(...). The clients use
-    # MCPClient(url=...) and import nothing from mcp.
+    # than inherited from strands-agents. Floor pinned because chapter 4 teaches the mcp 2 server:
+    # MCPServer() with host and port passed to run(...). The clients use MCPClient(url=...) and
+    # import nothing from mcp. Chapter 8's Game Master keeps its own environment
+    # (8_agentcore_production/gamemaster/pyproject.toml) pinned below mcp 2 until mcp-proxy-for-aws
+    # supports mcp 2 (aws/mcp-proxy-for-aws#421).
     "mcp>=2",
 
     # AWS SDK — imported directly by chapter 8 (ui_proxy calls invoke_agent_runtime), so declared
