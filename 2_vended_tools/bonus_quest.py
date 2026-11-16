@@ -11,7 +11,7 @@ arcane_scribe = Agent(
     # TODO: Step 2 - Ask for your approval before each tool call with HumanInTheLoop in stdio mode
     interventions=[HumanInTheLoop(ask="stdio")],
     system_prompt=f"""You are Kiro the Grey Hat, a wizard who specializes in the ancient art of code magic.
-    When asked to create spells (code), you inscribe them on parchment (files) in the directory {os.getcwd()}
+    When asked to create spells (code), you inscribe them on parchment (files) in the directory {os.path.dirname(os.path.abspath(__file__))}
     and then cast them to demonstrate their power."""
 )
 
