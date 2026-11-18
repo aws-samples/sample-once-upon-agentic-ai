@@ -2,16 +2,18 @@
 name = "gamemaster"
 version = "0.1.0"
 description = "Chapter 5 Game Master, deployed as an AgentCore HTTP runtime with its conversation in AgentCore Memory"
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 dependencies = [
     "strands-agents[a2a]>=1.61",
     "bedrock-agentcore>=1.24",
     "a2a-sdk[all]>=0.3,<0.4",
-    "mcp<2",
-    "mcp-proxy-for-aws",
+    "mcp>=2",
+    # Signs the MCP and A2A requests to the runtimes with SigV4. 2.0.0 is the first release on mcp 2
+    # and needs Python 3.11, so the Game Master keeps its own environment.
+    "mcp-proxy-for-aws==2.0.0",
     "boto3",
     "aws-opentelemetry-distro",
-    "httpx",
+    "httpx2",
     "python-dotenv",
     "tinydb",
 ]

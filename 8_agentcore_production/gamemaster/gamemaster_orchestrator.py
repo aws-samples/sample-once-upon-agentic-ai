@@ -1,7 +1,7 @@
 import os
 import uuid
 import boto3
-import httpx
+import httpx2
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from strands import Agent
@@ -34,8 +34,8 @@ mcp_client = MCPClient(lambda: aws_iam_streamablehttp_client(endpoint=DICE_SERVE
 # TODO: 8.2 Step 1 - Read CHARACTER_AGENT_URL from the environment
 CHARACTER_AGENT_URL = os.environ["CHARACTER_AGENT_URL"]
 
-# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
-agentcore_config = ClientConfig(httpx_client=httpx.AsyncClient(
+# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx2 client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
+agentcore_config = ClientConfig(httpx_client=httpx2.AsyncClient(
     auth=SigV4HTTPXAuth(boto3.Session().get_credentials(), "bedrock-agentcore", boto3.Session().region_name),
     # AgentCore runs one microVM per session; the id must be at least 33 characters long
     headers={"X-Amzn-Bedrock-AgentCore-Runtime-Session-Id": str(uuid.uuid4())},
