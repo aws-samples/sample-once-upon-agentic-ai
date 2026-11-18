@@ -1,7 +1,7 @@
 import os
 import uuid
 import boto3
-import httpx
+import httpx2
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 from strands import Agent
@@ -75,7 +75,7 @@ load_dotenv()
 
 # TODO: 8.2 Step 1 - Read CHARACTER_AGENT_URL from the environment
 
-# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
+# TODO: 8.2 Step 2 - Create a ClientConfig whose httpx2 client signs requests with SigV4 for bedrock-agentcore in the region of your boto3 session and sends a session id
 
 # TODO: 8.3 Step 1 - Read RULES_AGENT_URL from the environment
 
